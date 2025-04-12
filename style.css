@@ -35,8 +35,9 @@ body {
     font-family: var(--body-font);
     line-height: 1.7;
     color: var(--text-color);
-    background-color: var(--background-color); /* Dark Background */
+    background: radial-gradient(circle at top left, rgba(155, 89, 182, 0.15), var(--background-color) 70%); /* Faint purple circle fades out */
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
 .container {
