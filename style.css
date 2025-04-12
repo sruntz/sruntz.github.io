@@ -148,7 +148,7 @@ section { padding: 80px 0; overflow: hidden; }
     align-items: center;
     text-align: center;
     /* Subtle dark gradient */
-    background: linear-gradient(135deg, rgba(155, 89, 182, 0.05), rgba(0, 0, 0, 0.1)), var(--background-color);
+    /*background: linear-gradient(135deg, rgba(155, 89, 182, 0.05), rgba(0, 0, 0, 0.1)), var(--background-color);/*
     position: relative;
     padding-top: 100px;
 }
