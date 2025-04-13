@@ -15,253 +15,262 @@
     <!-- Persistent Particle Background -->
     <div id="page-particles"></div>
 
-    <!-- Pre-loader with Typing Headline -->
+    <!-- Pre-loader with Keyword Animation -->
     <div id="preloader">
-        <h1 id="preloader-headline" aria-label="Crafting Clear, Compelling Content for the Digital Age."></h1>
+        <div id="preloader-headline-container">
+             <span class="preloader-base-text">Crafting</span>
+             <span class="preloader-keyword animate-keyword-1">Clear</span>,
+             <span class="preloader-keyword animate-keyword-2">Compelling</span>
+             <span class="preloader-base-text"> Content for the Digital Age.</span>
+        </div>
     </div>
 
     <header class="site-header">
-       
-       <div class="container">
-           <div class="logo"><a href="#">Jared Banks</a></div>
-           <nav class="main-nav" id="main-nav">
-               <ul>
-                   <li><a href="#hero" class="nav-link">Home</a></li>
-                   <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-                   <li><a href="#about" class="nav-link">About</a></li>
-                   <li><a href="#skills" class="nav-link">Skills</a></li>
-                   <li><a href="#contact" class="nav-link">Contact</a></li>
-               </ul>
-           </nav>
-           <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
-               <span class="hamburger-line"></span>
-               <span class="hamburger-line"></span>
-               <span class="hamburger-line"></span>
-           </button>
-       </div>
+      
+        <div class="container">
+            <div class="logo"><a href="#">Jared Banks</a></div>
+            <nav class="main-nav" id="main-nav">
+                <ul>
+                    <li><a href="#hero" class="nav-link">Home</a></li>
+                    <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
     </header>
 
     <!-- Mobile Navigation Overlay -->
     <div class="mobile-nav-overlay" id="mobile-nav-overlay">
         {/* Mobile nav content remains the same */}
-        <nav class="mobile-nav">
-           <ul>
-               <li><a href="#hero" class="mobile-nav-link">Home</a></li>
-               <li><a href="#portfolio" class="mobile-nav-link">Portfolio</a></li>
-               <li><a href="#about" class="mobile-nav-link">About</a></li>
-               <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
-               <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-           </ul>
-       </nav>
+         <nav class="mobile-nav">
+            <ul>
+                <li><a href="#hero" class="mobile-nav-link">Home</a></li>
+                <li><a href="#portfolio" class="mobile-nav-link">Portfolio</a></li>
+                <li><a href="#about" class="mobile-nav-link">About</a></li>
+                <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+                <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+            </ul>
+        </nav>
     </div>
 
-    <main id="main-content">
-        {/* Rest of the main content (Hero, Portfolio, About, etc.) remains the same */}
-        {/* ... */}
-        <!-- Hero Section -->
-        <section id="hero" class="hero-section section">
-            <div class="container hero-content">
-                <h1 class="animate-on-scroll fade-in-up">
-                    Crafting <span class="highlight">Clear</span>, <span class="highlight highlight-alt">Compelling</span> Content for the Digital Age.
-                </h1>
-                <p class="subtitle animate-on-scroll fade-in-up delay-1">
-                    Aspiring Content Writer & Copywriter specializing in SEO, Tech Communication, and User-Centric Content.
-                </p>
-                <a href="#portfolio" class="cta-button animate-on-scroll fade-in-up delay-2">Explore My Work</a>
-            </div>
-            <div class="scroll-down-indicator animate-on-scroll fade-in-up delay-3">
-                <a href="#portfolio" aria-label="Scroll down">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-                </a>
-            </div>
-        </section>
-
-        <!-- Portfolio Section -->
-        <section id="portfolio" class="portfolio-section section">
-            <div class="container">
-                <h2 class="section-title animate-on-scroll fade-in-up">Portfolio Projects</h2>
-                <p class="section-intro animate-on-scroll fade-in-up delay-1">
-                    Demonstrating practical application of content writing skills through simulated projects relevant to modern digital needs.
-                </p>
-
-                <div class="portfolio-grid">
-                    <!-- Project 1: SEO Blog Post -->
-                    <a href="seo-blog.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-1">
-                        <div class="portfolio-item">
-                            <div class="portfolio-image-container">
-                                <!-- REPLACE with your actual image path -->
-                                <img src="https://via.placeholder.com/600x400/3a1a4f/eee?text=SEO+VoIP+Blog" alt="Mockup for SEO Blog Post Project" loading="lazy">
-                                <div class="portfolio-image-overlay"></div>
-                            </div>
-                            <div class="portfolio-text">
-                                <h3>SEO Blog Post: "Unlocking Growth with VoIP"</h3>
-                                <p>Targeting small businesses researching VoIP solutions, aiming for relevant keyword ranking.</p>
-                                <div class="skills-tags"><span>SEO</span><span>B2B</span><span>Tech</span></div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Project 2: E-commerce Website Copy -->
-                     <a href="website-copy.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-2">
-                         <div class="portfolio-item">
-                            <div class="portfolio-image-container">
-                                <!-- REPLACE with your actual image path -->
-                                <img src="https://via.placeholder.com/600x400/4a2a5f/eee?text=Skincare+Copy" alt="Skincare Product Mockup" loading="lazy">
-                                <div class="portfolio-image-overlay"></div>
-                            </div>
-                            <div class="portfolio-text">
-                                <h3>Website Copy: Skincare Brand</h3>
-                                <p>Engaging, benefit-driven product descriptions focused on conversion and brand voice.</p>
-                                 <div class="skills-tags"><span>E-commerce</span><span>Copywriting</span><span>Brand Voice</span></div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Project 3: Technical User Guide Excerpt -->
-                    <a href="tech-guide.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-1">
-                        <div class="portfolio-item">
-                            <div class="portfolio-image-container">
-                                <!-- REPLACE with your actual image path -->
-                                <img src="https://via.placeholder.com/600x400/5f3d71/eee?text=Tech+Guide" alt="Mockup for Technical User Guide Project" loading="lazy">
-                                <div class="portfolio-image-overlay"></div>
-                            </div>
-                            <div class="portfolio-text">
-                                <h3>User Guide: Trading Platform Feature</h3>
-                                <p>Clearly explaining a complex "Advanced Chart Analysis" feature for end-users.</p>
-                                <div class="skills-tags"><span>Technical</span><span>User Guide</span><span>Finance</span></div>
-                            </div>
-                        </div>
-                    </a>
-
-                     <!-- Project 4: Government Contact Centre Script -->
-                     <a href="gov-script.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-2">
-                         <div class="portfolio-item">
-                            <div class="portfolio-image-container">
-                                <!-- REPLACE with your actual image path -->
-                                <img src="https://via.placeholder.com/600x400/7c5a90/bbb?text=Gov+Script" alt="Mockup for Government Contact Centre Script Project" loading="lazy">
-                                <div class="portfolio-image-overlay"></div>
-                            </div>
-                            <div class="portfolio-text">
-                                <h3>Contact Centre Script: Passport Queries</h3>
-                                <p>User-centric script for agents handling passport application status inquiries efficiently.</p>
-                                <div class="skills-tags"><span>Scripting</span><span>User-Centric</span><span>Gov Comms</span></div>
-                            </div>
-                        </div>
+    {/* Main content wrapper needed for initial hiding if preloader shown */}
+    <div id="content-wrapper" class="content-hidden">
+        <main id="main-content">
+            {/* ALL previous main content (Hero, Portfolio, About, etc.) goes inside here */}
+            {/* ... */}
+             <!-- Hero Section -->
+            <section id="hero" class="hero-section section">
+                <div class="container hero-content">
+                    <h1 class="animate-on-scroll fade-in-up">
+                        Crafting <span class="highlight">Clear</span>, <span class="highlight highlight-alt">Compelling</span> Content for the Digital Age.
+                    </h1>
+                    <p class="subtitle animate-on-scroll fade-in-up delay-1">
+                        Aspiring Content Writer & Copywriter specializing in SEO, Tech Communication, and User-Centric Content.
+                    </p>
+                    <a href="#portfolio" class="cta-button animate-on-scroll fade-in-up delay-2">Explore My Work</a>
+                </div>
+                <div class="scroll-down-indicator animate-on-scroll fade-in-up delay-3">
+                    <a href="#portfolio" aria-label="Scroll down">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
                     </a>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- About Section -->
-        <section id="about" class="about-section section">
-            <div class="container about-layout">
-                 <div class="about-image-wrapper animate-on-scroll fade-in-left">
-                     <!-- REPLACE with your actual photo path -->
-                     <img src="https://via.placeholder.com/400x400/cccccc/888888?text=Your+Photo" alt="Professional photo of Jared Banks" class="about-image" loading="lazy">
-                     <div class="about-image-bg-element"></div>
-                 </div>
-                <div class="about-text animate-on-scroll fade-in-right delay-1">
-                    <h2 class="section-title--left">About Me</h2>
-                    <p>Hi, I'm Jared Banks, an enthusiastic and detail-oriented aspiring content writer eager to leverage strong communication skills and a passion for impactful digital media. I'm dedicated to honing the craft of writing clear, compelling content that resonates with audiences and achieves business goals.</p>
-                    <p>I excel at transforming complex ideas (Tech, Finance, E-commerce, Government processes) into accessible language, grounded in SEO principles and user experience. My focus is on bridging the gap between organizations and their target audiences through strategic content.</p>
-                    <p>As a quick learner committed to producing high-quality work, I'm seeking an entry-level opportunity to contribute meaningful content, grow professionally, and make a tangible impact within a dynamic team. <a href="#contact" class="inline-link">Let's connect!</a></p>
+            <!-- Portfolio Section -->
+            <section id="portfolio" class="portfolio-section section">
+                <div class="container">
+                    <h2 class="section-title animate-on-scroll fade-in-up">Portfolio Projects</h2>
+                    <p class="section-intro animate-on-scroll fade-in-up delay-1">
+                        Demonstrating practical application of content writing skills through simulated projects relevant to modern digital needs.
+                    </p>
+
+                    <div class="portfolio-grid">
+                        <!-- Project 1: SEO Blog Post -->
+                        <a href="seo-blog.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-1">
+                            <div class="portfolio-item">
+                                <div class="portfolio-image-container">
+                                    <!-- REPLACE with your actual image path -->
+                                    <img src="https://via.placeholder.com/600x400/3a1a4f/eee?text=SEO+VoIP+Blog" alt="Mockup for SEO Blog Post Project" loading="lazy">
+                                    <div class="portfolio-image-overlay"></div>
+                                </div>
+                                <div class="portfolio-text">
+                                    <h3>SEO Blog Post: "Unlocking Growth with VoIP"</h3>
+                                    <p>Targeting small businesses researching VoIP solutions, aiming for relevant keyword ranking.</p>
+                                    <div class="skills-tags"><span>SEO</span><span>B2B</span><span>Tech</span></div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Project 2: E-commerce Website Copy -->
+                         <a href="website-copy.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-2">
+                             <div class="portfolio-item">
+                                <div class="portfolio-image-container">
+                                    <!-- REPLACE with your actual image path -->
+                                    <img src="https://via.placeholder.com/600x400/4a2a5f/eee?text=Skincare+Copy" alt="Skincare Product Mockup" loading="lazy">
+                                    <div class="portfolio-image-overlay"></div>
+                                </div>
+                                <div class="portfolio-text">
+                                    <h3>Website Copy: Skincare Brand</h3>
+                                    <p>Engaging, benefit-driven product descriptions focused on conversion and brand voice.</p>
+                                     <div class="skills-tags"><span>E-commerce</span><span>Copywriting</span><span>Brand Voice</span></div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Project 3: Technical User Guide Excerpt -->
+                        <a href="tech-guide.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-1">
+                            <div class="portfolio-item">
+                                <div class="portfolio-image-container">
+                                    <!-- REPLACE with your actual image path -->
+                                    <img src="https://via.placeholder.com/600x400/5f3d71/eee?text=Tech+Guide" alt="Mockup for Technical User Guide Project" loading="lazy">
+                                    <div class="portfolio-image-overlay"></div>
+                                </div>
+                                <div class="portfolio-text">
+                                    <h3>User Guide: Trading Platform Feature</h3>
+                                    <p>Clearly explaining a complex "Advanced Chart Analysis" feature for end-users.</p>
+                                    <div class="skills-tags"><span>Technical</span><span>User Guide</span><span>Finance</span></div>
+                                </div>
+                            </div>
+                        </a>
+
+                         <!-- Project 4: Government Contact Centre Script -->
+                         <a href="gov-script.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-2">
+                             <div class="portfolio-item">
+                                <div class="portfolio-image-container">
+                                    <!-- REPLACE with your actual image path -->
+                                    <img src="https://via.placeholder.com/600x400/7c5a90/bbb?text=Gov+Script" alt="Mockup for Government Contact Centre Script Project" loading="lazy">
+                                    <div class="portfolio-image-overlay"></div>
+                                </div>
+                                <div class="portfolio-text">
+                                    <h3>Contact Centre Script: Passport Queries</h3>
+                                    <p>User-centric script for agents handling passport application status inquiries efficiently.</p>
+                                    <div class="skills-tags"><span>Scripting</span><span>User-Centric</span><span>Gov Comms</span></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Skills Section -->
-        <section id="skills" class="skills-section section">
-            <div class="container">
-                <h2 class="section-title animate-on-scroll fade-in-up">Core Competencies</h2>
-                 <p class="section-intro animate-on-scroll fade-in-up delay-1">Key skills honed through self-study and practical application in diverse writing scenarios.</p>
-                <div class="skills-grid">
-                    <!-- Skill 1 -->
-                    <div class="skill-item animate-on-scroll scale-in delay-1">
-                        <div class="skill-icon-wrapper">
-                            <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L21.5,20L20,21.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-                        </div>
-                        <h3>SEO & Keyword Research</h3>
-                        <p>Applying SEO fundamentals, keyword analysis (intent, volume), and on-page optimization.</p>
-                    </div>
-                    <!-- Skill 2 -->
-                     <div class="skill-item animate-on-scroll scale-in delay-2">
-                        <div class="skill-icon-wrapper">
-                           <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-                        </div>
-                        <h3>Content & Copywriting</h3>
-                        <p>Writing clear, concise, engaging content for blogs, websites, and product descriptions.</p>
-                    </div>
-                    <!-- Skill 3 -->
-                     <div class="skill-item animate-on-scroll scale-in delay-3">
-                         <div class="skill-icon-wrapper">
-                            <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,1L9,9L1,12L9,15L12,23L15,15L23,12L15,9L12,1Z" /></svg>
-                        </div>
-                        <h3>Technical Simplification</h3>
-                        <p>Distilling complex technical or procedural info into easily digestible language for users.</p>
-                    </div>
-                    <!-- Skill 4 -->
-                     <div class="skill-item animate-on-scroll scale-in delay-1">
-                         <div class="skill-icon-wrapper">
-                            <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
-                        </div>
-                        <h3>Audience Adaptation</h3>
-                        <p>Identifying audience needs and tailoring writing style, tone, and complexity accordingly.</p>
-                    </div>
-                    <!-- Skill 5 -->
-                    <div class="skill-item animate-on-scroll scale-in delay-2">
-                        <div class="skill-icon-wrapper">
-                            <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5,9C17.3,9 18,8.3 18,7.5C18,6.7 17.3,6 16.5,6C15.7,6 15,6.7 15,7.5C15,8.3 15.7,9 16.5,9M9,7.5C9,8.3 8.3,9 7.5,9C6.7,9 6,8.3 6,7.5C6,6.7 6.7,6 7.5,6C8.3,6 9,6.7 9,7.5M12,2C6.5,2 2,6.5 2,12C2,17.5 6.5,22 12,22C17.5,22 22,17.5 22,12C22,6.5 17.5,2 12,2M12,20C7.6,20 4,16.4 4,12C4,11.7 4,11.4 4.1,11.1C6.3,10.4 8.2,9.3 9.6,7.8C10.1,8.6 11,9 12,9C13,9 13.9,8.6 14.4,7.8C15.8,9.3 17.7,10.4 19.9,11.1C20,11.4 20,11.7 20,12C20,16.4 16.4,20 12,20Z" /></svg>
-                        </div>
-                        <h3>User-Centric Focus</h3>
-                        <p>Writing from the user's perspective, anticipating needs, and structuring information logically.</p>
-                    </div>
-                    <!-- Skill 6 -->
-                    <div class="skill-item animate-on-scroll scale-in delay-3">
-                        <div class="skill-icon-wrapper">
-                            <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.4,6.6L18.8,6C18.5,5.7 18.1,5.6 17.7,5.6C17.3,5.6 16.9,5.7 16.6,6L10.3,12.3L7.4,9.4C7.1,9.1 6.7,9 6.3,9C5.9,9 5.5,9.1 5.2,9.4L4.6,10C4.3,10.3 4.2,10.7 4.2,11.1C4.2,11.5 4.3,11.9 4.6,12.2L9.5,17.1C9.8,17.4 10.2,17.5 10.6,17.5C11,17.5 11.4,17.4 11.7,17.1L19.4,9.4C19.7,9.1 19.8,8.7 19.8,8.3C19.8,7.9 19.7,7.5 19.4,6.6Z" /></svg>
-                        </div>
-                        <h3>Editing & Proofreading</h3>
-                        <p>Meticulous attention to detail ensuring accuracy, clarity, consistency, and polish.</p>
+            <!-- About Section -->
+            <section id="about" class="about-section section">
+                <div class="container about-layout">
+                     <div class="about-image-wrapper animate-on-scroll fade-in-left">
+                         <!-- REPLACE with your actual photo path -->
+                         <img src="https://via.placeholder.com/400x400/cccccc/888888?text=Your+Photo" alt="Professional photo of Jared Banks" class="about-image" loading="lazy">
+                         <div class="about-image-bg-element"></div>
+                     </div>
+                    <div class="about-text animate-on-scroll fade-in-right delay-1">
+                        <h2 class="section-title--left">About Me</h2>
+                        <p>Hi, I'm Jared Banks, an enthusiastic and detail-oriented aspiring content writer eager to leverage strong communication skills and a passion for impactful digital media. I'm dedicated to honing the craft of writing clear, compelling content that resonates with audiences and achieves business goals.</p>
+                        <p>I excel at transforming complex ideas (Tech, Finance, E-commerce, Government processes) into accessible language, grounded in SEO principles and user experience. My focus is on bridging the gap between organizations and their target audiences through strategic content.</p>
+                        <p>As a quick learner committed to producing high-quality work, I'm seeking an entry-level opportunity to contribute meaningful content, grow professionally, and make a tangible impact within a dynamic team. <a href="#contact" class="inline-link">Let's connect!</a></p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="contact-section section">
-            <div class="container">
-                <h2 class="section-title animate-on-scroll fade-in-up">Get In Touch</h2>
-                <p class="section-intro animate-on-scroll fade-in-up delay-1">Interested in discussing opportunities or learning more? Let's connect.</p>
-                <div class="contact-wrapper animate-on-scroll fade-in-up delay-2">
-                     <div class="contact-info">
-                        <h3>Let's Collaborate</h3>
-                        <p>Seeking entry-level / junior content roles where I can contribute and grow. Open to remote opportunities.</p>
-                        <div class="contact-links">
-                            <p>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V6C22,4.89 21.1,4 20,4Z" /></svg>
-                                <a href="mailto:[YOUR EMAIL HERE]">[YOUR EMAIL HERE]</a>
-                            </p>
-                            <p>
-                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M18.5,18.5V13.2A3.26,3.26 0 0,0 15.24,9.94C14.39,9.94 13.4,10.46 12.92,11.24V10.13H10.13V18.5H12.92V13.57C12.92,12.8 13.54,12.17 14.31,12.17C15.08,12.17 15.7,12.8 15.7,13.57V18.5H18.5M6.88,8.56A1.68,1.68 0 0,0 8.56,6.88C8.56,5.95 7.81,5.19 6.88,5.19C5.95,5.19 5.19,5.95 5.19,6.88C5.19,7.81 5.95,8.56 6.88,8.56M8.27,18.5V10.13H5.5V18.5H8.27Z" /></svg>
-                                <a href="[YOUR LINKEDIN PROFILE URL]" target="_blank" rel="noopener noreferrer">[Your LinkedIn Profile URL]</a>
-                            </p>
-                            <p>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>
-                               <span>[Your City, State] (Open to Remote)</span>
-                            </p>
+            <!-- Skills Section -->
+            <section id="skills" class="skills-section section">
+                <div class="container">
+                    <h2 class="section-title animate-on-scroll fade-in-up">Core Competencies</h2>
+                     <p class="section-intro animate-on-scroll fade-in-up delay-1">Key skills honed through self-study and practical application in diverse writing scenarios.</p>
+                    <div class="skills-grid">
+                        <!-- Skill 1 -->
+                        <div class="skill-item animate-on-scroll scale-in delay-1">
+                            <div class="skill-icon-wrapper">
+                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L21.5,20L20,21.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+                            </div>
+                            <h3>SEO & Keyword Research</h3>
+                            <p>Applying SEO fundamentals, keyword analysis (intent, volume), and on-page optimization.</p>
+                        </div>
+                        <!-- Skill 2 -->
+                         <div class="skill-item animate-on-scroll scale-in delay-2">
+                            <div class="skill-icon-wrapper">
+                               <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+                            </div>
+                            <h3>Content & Copywriting</h3>
+                            <p>Writing clear, concise, engaging content for blogs, websites, and product descriptions.</p>
+                        </div>
+                        <!-- Skill 3 -->
+                         <div class="skill-item animate-on-scroll scale-in delay-3">
+                             <div class="skill-icon-wrapper">
+                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,1L9,9L1,12L9,15L12,23L15,15L23,12L15,9L12,1Z" /></svg>
+                            </div>
+                            <h3>Technical Simplification</h3>
+                            <p>Distilling complex technical or procedural info into easily digestible language for users.</p>
+                        </div>
+                        <!-- Skill 4 -->
+                         <div class="skill-item animate-on-scroll scale-in delay-1">
+                             <div class="skill-icon-wrapper">
+                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
+                            </div>
+                            <h3>Audience Adaptation</h3>
+                            <p>Identifying audience needs and tailoring writing style, tone, and complexity accordingly.</p>
+                        </div>
+                        <!-- Skill 5 -->
+                        <div class="skill-item animate-on-scroll scale-in delay-2">
+                            <div class="skill-icon-wrapper">
+                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5,9C17.3,9 18,8.3 18,7.5C18,6.7 17.3,6 16.5,6C15.7,6 15,6.7 15,7.5C15,8.3 15.7,9 16.5,9M9,7.5C9,8.3 8.3,9 7.5,9C6.7,9 6,8.3 6,7.5C6,6.7 6.7,6 7.5,6C8.3,6 9,6.7 9,7.5M12,2C6.5,2 2,6.5 2,12C2,17.5 6.5,22 12,22C17.5,22 22,17.5 22,12C22,6.5 17.5,2 12,2M12,20C7.6,20 4,16.4 4,12C4,11.7 4,11.4 4.1,11.1C6.3,10.4 8.2,9.3 9.6,7.8C10.1,8.6 11,9 12,9C13,9 13.9,8.6 14.4,7.8C15.8,9.3 17.7,10.4 19.9,11.1C20,11.4 20,11.7 20,12C20,16.4 16.4,20 12,20Z" /></svg>
+                            </div>
+                            <h3>User-Centric Focus</h3>
+                            <p>Writing from the user's perspective, anticipating needs, and structuring information logically.</p>
+                        </div>
+                        <!-- Skill 6 -->
+                        <div class="skill-item animate-on-scroll scale-in delay-3">
+                            <div class="skill-icon-wrapper">
+                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.4,6.6L18.8,6C18.5,5.7 18.1,5.6 17.7,5.6C17.3,5.6 16.9,5.7 16.6,6L10.3,12.3L7.4,9.4C7.1,9.1 6.7,9 6.3,9C5.9,9 5.5,9.1 5.2,9.4L4.6,10C4.3,10.3 4.2,10.7 4.2,11.1C4.2,11.5 4.3,11.9 4.6,12.2L9.5,17.1C9.8,17.4 10.2,17.5 10.6,17.5C11,17.5 11.4,17.4 11.7,17.1L19.4,9.4C19.7,9.1 19.8,8.7 19.8,8.3C19.8,7.9 19.7,7.5 19.4,6.6Z" /></svg>
+                            </div>
+                            <h3>Editing & Proofreading</h3>
+                            <p>Meticulous attention to detail ensuring accuracy, clarity, consistency, and polish.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
 
-    <footer class="site-footer-bottom">
-        
-        <div class="container">
-            <p>© <span id="current-year">2024</span> Jared Banks. Crafted with passion and code.</p>
-        </div>
-    </footer>
+            <!-- Contact Section -->
+            <section id="contact" class="contact-section section">
+                <div class="container">
+                    <h2 class="section-title animate-on-scroll fade-in-up">Get In Touch</h2>
+                    <p class="section-intro animate-on-scroll fade-in-up delay-1">Interested in discussing opportunities or learning more? Let's connect.</p>
+                    <div class="contact-wrapper animate-on-scroll fade-in-up delay-2">
+                         <div class="contact-info">
+                            <h3>Let's Collaborate</h3>
+                            <p>Seeking entry-level / junior content roles where I can contribute and grow. Open to remote opportunities.</p>
+                            <div class="contact-links">
+                                <p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V6C22,4.89 21.1,4 20,4Z" /></svg>
+                                    <a href="mailto:[YOUR EMAIL HERE]">[YOUR EMAIL HERE]</a>
+                                </p>
+                                <p>
+                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M18.5,18.5V13.2A3.26,3.26 0 0,0 15.24,9.94C14.39,9.94 13.4,10.46 12.92,11.24V10.13H10.13V18.5H12.92V13.57C12.92,12.8 13.54,12.17 14.31,12.17C15.08,12.17 15.7,12.8 15.7,13.57V18.5H18.5M6.88,8.56A1.68,1.68 0 0,0 8.56,6.88C8.56,5.95 7.81,5.19 6.88,5.19C5.95,5.19 5.19,5.95 5.19,6.88C5.19,7.81 5.95,8.56 6.88,8.56M8.27,18.5V10.13H5.5V18.5H8.27Z" /></svg>
+                                    <a href="[YOUR LINKEDIN PROFILE URL]" target="_blank" rel="noopener noreferrer">[Your LinkedIn Profile URL]</a>
+                                </p>
+                                <p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>
+                                   <span>[Your City, State] (Open to Remote)</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer-bottom">
+         
+             <div class="container">
+                <p>© <span id="current-year">2024</span> Jared Banks. Crafted with passion and code.</p>
+            </div>
+        </footer>
+    </div> <!-- End of #content-wrapper -->
+
 
     <!-- tsParticles Library via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
