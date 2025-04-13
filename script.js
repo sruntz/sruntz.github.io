@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Element Selections ---
     const preloader = document.getElementById('preloader');
-    const preloaderKeywords = document.querySelectorAll('#preloader .preloader-keyword');
+    const preloaderKeywords = document.querySelectorAll('#preloader .preloader-keyword'); // Select new elements
     const pageParticlesContainerId = 'page-particles';
     const header = document.querySelector('.site-header');
     const menuToggle = document.getElementById('menu-toggle');
@@ -11,108 +11,109 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.section');
     const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
     const currentYearSpan = document.getElementById('current-year');
-    const contentWrapper = document.getElementById('content-wrapper'); // Wrapper for main/footer
+    const contentWrapper = document.getElementById('content-wrapper'); // Wrapper is crucial
 
     const PRELOADER_SESSION_KEY = 'preloaderShown';
 
     // --- Config: Background Particles ---
-    const pageParticlesOptions = {
-        // Configuration remains the same as previous step
+    const pageParticlesOptions = { /* Configuration remains the same */
         interactivity: { events: { onHover: { enable: false }, onClick: { enable: false }, resize: true, }, },
         particles: { color: { value: "#a020f0" }, links: { color: "#c879ff", distance: 160, enable: true, opacity: 0.15, width: 1, }, collisions: { enable: false }, move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.8, straight: false, }, number: { density: { enable: true, area: 1000, }, value: 50, }, opacity: { value: 0.3 }, shape: { type: "circle" }, size: { value: { min: 1, max: 2 } }, },
         detectRetina: true, fullScreen: { enable: false }
     };
 
     // --- Initialize Background tsParticles ---
-    function initBackgroundParticles() {
+    function initBackgroundParticles() { /* Function remains the same */
         if (document.getElementById(pageParticlesContainerId) && typeof tsParticles !== 'undefined') {
             tsParticles.load(pageParticlesContainerId, pageParticlesOptions)
                 .then(container => { console.log("Background tsParticles loaded"); })
                 .catch(error => { console.error("Error loading background tsParticles:", error); });
-        } else {
-            console.error("Page particles container or tsParticles library not found.");
-        }
+        } else { console.error("Page particles container or tsParticles library not found."); }
     }
 
-    // --- Preloader Animation Sequence ---
+    // --- Preloader Animation Sequence (Keywords) ---
     function animateKeywords(callback) {
-        let delay = 500; // Initial delay after base text fades (defined in CSS)
-        const interval = 400; // Delay between each keyword animation
+        if (!preloaderKeywords || preloaderKeywords.length === 0) {
+             console.warn("No preloader keywords found to animate.");
+             if(callback) callback(); // Proceed if no keywords
+             return;
+        }
+
+        let delay = 300; // Start faster after page load
+        const interval = 450; // Time between each word appearing
 
         preloaderKeywords.forEach((keyword, index) => {
             setTimeout(() => {
-                keyword.classList.add('visible');
-                // If it's the last keyword, set a timeout for the callback
+                keyword.classList.add('visible'); // Trigger CSS transition
+                // If it's the last keyword, schedule the callback
                 if (index === preloaderKeywords.length - 1) {
-                    setTimeout(callback, interval + 500); // Add extra pause after last word
+                    // Add a final pause *after* the last animation should finish
+                    const lastKeywordTransitionDuration = 500; // Match CSS transition duration
+                    const finalPause = 600; // Extra breathing room
+                    setTimeout(callback, lastKeywordTransitionDuration + finalPause);
                 }
             }, delay + (index * interval));
         });
     }
 
     // --- Show/Hide Functions ---
-    function hidePreloader(callback) {
+    function hidePreloader(callback) { /* Function remains the same */
         if (preloader) {
             preloader.classList.add('hidden');
-            // Use transitionend for cleaner removal
             preloader.addEventListener('transitionend', () => {
-                if (preloader.classList.contains('hidden')) {
-                    preloader.remove();
-                }
-                if (callback) callback(); // Call next step after transition
+                if (preloader && preloader.parentNode) { preloader.remove(); } // Check before removing
+                if (callback) callback();
             }, { once: true });
-             // Fallback if transitionend doesn't fire
+            // Fallback timeout
              setTimeout(() => {
-                 if(preloader && preloader.parentNode) { // Check if still in DOM
-                     preloader.remove();
+                 if(preloader && preloader.parentNode) { preloader.remove(); }
+                 // Ensure callback runs even if transitionend fails
+                 if (typeof window.preloaderCallbackCalled === 'undefined' || !window.preloaderCallbackCalled) {
+                      window.preloaderCallbackCalled = true; // Prevent double calls
+                      if (callback) callback();
                  }
-                  if (callback) callback();
-             }, 600); // Slightly longer than CSS transition
+             }, 700); // Match CSS transition (0.6s) + small buffer
         } else {
-             if (callback) callback(); // Proceed if no preloader found
+            if (callback) callback();
         }
     }
 
-    function showContent() {
+    function showContent() { /* Function remains the same */
         if (contentWrapper) {
             contentWrapper.classList.add('visible');
-            contentWrapper.classList.remove('content-hidden'); // Remove display blocking class if used
+            // contentWrapper.classList.remove('content-hidden'); // Optional: If using display:none
         }
-        // Initialize scroll-based functionalities after content is shown
-        handleScroll();
-        updateActiveNavLink();
-        initScrollAnimations(); // Initialize IntersectionObserver here
+        handleScroll(); // Initial check for header style
+        updateActiveNavLink(); // Initial nav link state
+        initScrollAnimations(); // Start observing for scroll animations
     }
 
-    // --- Preloader Logic ---
+    // --- Preloader Logic (Using sessionStorage) ---
     const hasPreloaderShown = sessionStorage.getItem(PRELOADER_SESSION_KEY);
 
     if (!hasPreloaderShown) {
-        // First visit this session: Animate Preloader
-        console.log("First visit this session. Showing preloader animation.");
-        if (preloaderKeywords.length > 0) {
-             // Start keyword animation, then hide preloader, then show content
-            animateKeywords(() => {
-                 hidePreloader(() => {
-                     showContent();
-                     sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true'); // Mark as shown
-                 });
+        // First visit: Animate Preloader
+        console.log("First visit. Showing preloader animation.");
+         // Ensure content wrapper is hidden initially ONLY if preloader runs
+         if (contentWrapper) contentWrapper.classList.add('content-hidden'); // May not be needed if default opacity is 0
+
+        // Start keyword animation, then hide preloader, then show content
+        animateKeywords(() => {
+            hidePreloader(() => {
+                showContent();
+                sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true');
+                delete window.preloaderCallbackCalled; // Reset fallback flag
             });
-        } else {
-            // Fallback if keywords aren't found
-            console.log("Preloader keywords not found, hiding immediately.");
-             hidePreloader(() => {
-                 showContent();
-                 sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true');
-             });
-        }
+        });
     } else {
         // Subsequent visit: Hide preloader instantly, show content
-        console.log("Preloader already shown this session.");
+        console.log("Preloader already shown.");
         if (preloader) {
-             preloader.style.display = 'none'; // Hide immediately
-             preloader.remove(); // Remove from DOM
+            preloader.style.transition = 'none'; // Prevent fade-out animation
+            preloader.classList.add('hidden');
+            preloader.remove();
         }
+         if (contentWrapper) contentWrapper.style.transition = 'none'; // Prevent fade-in delay/animation
         showContent(); // Show content immediately
     }
 
@@ -120,14 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initBackgroundParticles();
 
     // --- Update Copyright Year ---
-    if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
-    }
+    // Logic remains the same
+    if (currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
 
     // --- Active Navigation Link Highlighting ---
     // Function definition remains the same
-    function updateActiveNavLink() {
-         let currentSectionId = '';
+    function updateActiveNavLink() { /* ... */
+        let currentSectionId = '';
         const headerHeight = header ? header.offsetHeight : 0;
         const scrollPosition = window.scrollY + headerHeight + 60;
 
@@ -165,13 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
              const homeLink = document.querySelector('.main-nav a[href="#hero"]');
              if (homeLink) homeLink.classList.add('active');
         }
-    };
-
+     }
 
     // --- Header Scroll Effect ---
     // Function definition remains the same
-    function handleScroll() {
-        if (header) {
+    function handleScroll() { /* ... */
+         if (header) {
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
             } else {
@@ -179,67 +178,51 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         updateActiveNavLink();
-    };
-
+    }
 
     // --- Scroll Event Listener (Throttled) ---
     // Logic remains the same
     let scrollTimeout;
-    window.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(handleScroll, 50);
-    });
-
+    window.addEventListener('scroll', () => { clearTimeout(scrollTimeout); scrollTimeout = setTimeout(handleScroll, 50); });
 
     // --- Intersection Observer for Animations ---
-    // Initialize separately, called by showContent
-    function initScrollAnimations() {
-        const observerOptions = {
-            root: null, rootMargin: '0px', threshold: 0.15
-        };
-        const observerCallback = (entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        };
+    // Function definition remains the same
+    function initScrollAnimations() { /* ... */
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observerCallback = (entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }); };
         const observer = new IntersectionObserver(observerCallback, observerOptions);
-        if (elementsToAnimate.length > 0) {
-            elementsToAnimate.forEach(el => observer.observe(el));
-        }
+        if (elementsToAnimate.length > 0) { elementsToAnimate.forEach(el => observer.observe(el)); }
     }
-
 
     // --- Mobile Menu Toggle ---
     // Logic remains the same
-    if (menuToggle && mobileNavOverlay) {
-       menuToggle.addEventListener('click', () => {
-           const isActive = mobileNavOverlay.classList.toggle('active');
-           menuToggle.classList.toggle('active');
-           menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-           document.body.style.overflow = isActive ? 'hidden' : '';
-       });
+    if (menuToggle && mobileNavOverlay) { /* ... */
+         menuToggle.addEventListener('click', () => {
+            const isActive = mobileNavOverlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            document.body.style.overflow = isActive ? 'hidden' : '';
+        });
     }
-
 
     // --- Close Mobile Menu on Link Click ---
     // Logic remains the same
-    if (mobileNavLinks.length > 0) {
-       mobileNavLinks.forEach(link => {
-           link.addEventListener('click', () => {
-               if (mobileNavOverlay) mobileNavOverlay.classList.remove('active');
-               if (menuToggle) {
-                    menuToggle.classList.remove('active');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-               }
-               document.body.style.overflow = '';
-           });
-       });
-    }
+     if (mobileNavLinks.length > 0) { /* ... */
+         mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileNavOverlay) mobileNavOverlay.classList.remove('active');
+                if (menuToggle) {
+                     menuToggle.classList.remove('active');
+                     menuToggle.setAttribute('aria-expanded', 'false');
+                }
+                document.body.style.overflow = '';
+            });
+        });
+     }
 
     // --- Initial Calls (if content shown immediately) ---
-    // Note: handleScroll & updateActiveNavLink are now called within showContent
+    // These are now called within showContent() or unconditionally if needed
+    // handleScroll(); // Called by showContent if wrapper exists
+    // updateActiveNavLink(); // Called by showContent if wrapper exists
 
 }); // End of DOMContentLoaded
