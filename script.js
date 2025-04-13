@@ -52,36 +52,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showContent() {
-        if (contentWrapper) { contentWrapper.classList.add('visible'); }
+        console.log("Attempting to show content...");
+        if (contentWrapper) {
+            contentWrapper.classList.add('visible');
+             console.log("Content wrapper visibility set to visible.");
+        } else { console.error("Content wrapper not found!"); }
         handleScroll(); updateActiveNavLink(); initScrollAnimations(); initPortfolioSwiper();
     }
 
     function initPortfolioSwiper() {
-        if (typeof Swiper !== 'undefined') {
-            const swiper = new Swiper('.portfolio-swiper', {
-                slidesPerView: 1, spaceBetween: 30, loop: true, grabCursor: true, centeredSlides: true,
-                 breakpoints: { 768: { slidesPerView: 1.8, spaceBetween: 40 }, 1024: { slidesPerView: 2.2, spaceBetween: 50 } },
-                pagination: { el: '.swiper-pagination', clickable: true, },
-                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', },
-            });
-             console.log("Portfolio Swiper initialized.");
-        } else { console.error("Swiper library not loaded."); }
+        setTimeout(() => {
+            if (typeof Swiper !== 'undefined' && document.querySelector('.portfolio-swiper')) {
+                try {
+                    const swiper = new Swiper('.portfolio-swiper', {
+                        slidesPerView: 1, spaceBetween: 30, loop: true, grabCursor: true, centeredSlides: true,
+                        breakpoints: { 768: { slidesPerView: 1.8, spaceBetween: 40 }, 1024: { slidesPerView: 2.2, spaceBetween: 50 } },
+                        pagination: { el: '.swiper-pagination', clickable: true, },
+                        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', },
+                    });
+                    console.log("Portfolio Swiper initialized successfully.");
+                } catch (error) { console.error("Swiper initialization failed:", error); }
+            } else {
+                if (typeof Swiper === 'undefined') console.error("Swiper library not loaded.");
+                if (!document.querySelector('.portfolio-swiper')) console.error("Portfolio Swiper container not found.");
+            }
+        }, 100);
     }
 
     const hasPreloaderShown = sessionStorage.getItem(PRELOADER_SESSION_KEY);
-    if (!hasPreloaderShown) {
+    if (!hasPreloaderShown && preloader) {
         console.log("First visit. Showing preloader animation.");
-        if (contentWrapper) contentWrapper.style.opacity = 0; // Ensure hidden
-        animateKeywords(() => {
-            hidePreloader(() => {
-                showContent();
-                sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true');
-            });
-        });
+        if (contentWrapper) { contentWrapper.style.opacity = 0; contentWrapper.style.visibility = 'hidden'; }
+        animateKeywords(() => { hidePreloader(() => { showContent(); sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true'); }); });
     } else {
-        console.log("Preloader already shown.");
+        if (hasPreloaderShown) console.log("Preloader already shown."); else console.log("Preloader element not found, skipping animation.");
         if (preloader) { preloader.style.display = 'none'; preloader.remove(); }
-        if (contentWrapper) { contentWrapper.style.transition = 'none'; }
+        if (contentWrapper) { contentWrapper.style.transition = 'none'; contentWrapper.classList.add('visible'); }
         showContent();
     }
 
@@ -128,4 +134,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (mobileNavLinks.length > 0) { mobileNavLinks.forEach(link => { link.addEventListener('click', () => { if (mobileNavOverlay) mobileNavOverlay.classList.remove('active'); if (menuToggle) { menuToggle.classList.remove('active'); menuToggle.setAttribute('aria-expanded', 'false'); } document.body.style.overflow = ''; }); }); }
 
-}); // End
+}); // End of DOMContentLoaded Listener
