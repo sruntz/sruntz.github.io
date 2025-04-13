@@ -1,5 +1,6 @@
 /* --- Global Styles & Variables --- */
 :root {
+    /* ... variables remain the same ... */
     --primary-glow: #a020f0; /* Neon Purple */
     --secondary-accent: #c879ff; /* Lighter Purple */
     --background-dark: #0a0a10; /* Very Dark Blue/Black */
@@ -22,6 +23,7 @@
     --border-radius-lg: 12px;
 }
 
+/* ... Reset and Body styles remain the same ... */
 /* --- Reset --- */
 * {
     margin: 0;
@@ -39,11 +41,13 @@ body {
     line-height: 1.7;
     color: var(--text-secondary);
     background-color: var(--background-dark);
+    /* Keep body gradient as the base */
     background: linear-gradient(45deg, var(--background-dark), #100518, var(--background-dark), #081018);
     background-size: 400% 400%;
     animation: gradientBG 25s ease infinite;
     overflow-x: hidden;
     min-height: 100vh;
+    position: relative; /* Needed for positioning page-particles */
 }
 
 @keyframes gradientBG {
@@ -52,40 +56,78 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* --- Pre-loader --- */
+/* --- Persistent Particle Background --- */
+#page-particles {
+    position: fixed; /* Sticks to viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Position behind all other content */
+    /* Background color is not needed as body gradient shows through */
+}
+
+/* --- Pre-loader Styles --- */
 #preloader {
     position: fixed;
     inset: 0;
-    background-color: var(--background-dark);
+    background-color: var(--background-dark); /* Solid background during typing */
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.8s ease-out 0.2s, visibility 0.8s ease-out 0.2s; /* Added slight delay */
+    /* Fade out transition - delay can be adjusted in JS if needed */
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+    padding: 20px; /* Ensure text doesn't touch edges */
 }
 
 #preloader.hidden {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
 }
 
-.loader-logo {
+/* Style for the typing headline */
+#preloader-headline {
     font-family: var(--heading-font);
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--primary-glow);
-    text-shadow: 0 0 10px var(--shadow-color);
-    animation: pulseLogo 1.5s infinite ease-in-out;
+    font-size: clamp(1.8rem, 5vw, 3rem); /* Responsive size */
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    max-width: 900px; /* Limit width */
+    line-height: 1.4;
+    position: relative; /* For cursor */
+    /* Add cursor style */
+    padding-right: 0.3em; /* Space for cursor */
 }
 
-@keyframes pulseLogo {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.1); opacity: 1; }
+#preloader-headline::after {
+    content: '_'; /* Blinking cursor */
+    display: inline-block; /* Needed for animation */
+    position: absolute; /* Position relative to text */
+    right: 0; /* Place at the end */
+    bottom: 0.05em; /* Align roughly with text baseline */
+    color: var(--primary-glow); /* Cursor color */
+    animation: blinkCursor 0.8s infinite steps(1);
+    opacity: 1; /* Start visible */
 }
+
+#preloader-headline.typing-done::after {
+    animation: none; /* Stop blinking */
+    opacity: 0; /* Hide cursor */
+    display: none;
+}
+
+@keyframes blinkCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
 
 /* --- Base Elements --- */
+/* ... Container, Headings, Links, etc. remain the same ... */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -110,9 +152,13 @@ a:hover { color: var(--primary-glow); }
 img { max-width: 100%; height: auto; display: block; }
 ul { list-style: none; }
 
+
 /* --- Header --- */
 .site-header {
+    /* Ensure header is above page particles */
     position: fixed;
+    z-index: 1000;
+    /* ... other header styles remain the same ... */
     top: 0;
     left: 0;
     width: 100%;
@@ -120,7 +166,6 @@ ul { list-style: none; }
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 0.8rem 0;
-    z-index: 1000;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     transition: background-color var(--transition-medium) ease, padding var(--transition-medium) ease;
 }
@@ -185,7 +230,9 @@ ul { list-style: none; }
     opacity: 1;
 }
 
+
 /* --- Hamburger Menu --- */
+/* ... Hamburger styles remain the same ... */
 .menu-toggle {
     display: none;
     background: none;
@@ -210,6 +257,7 @@ ul { list-style: none; }
 .menu-toggle.active .hamburger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* --- Mobile Navigation Overlay --- */
+/* ... Mobile nav styles remain the same ... */
 .mobile-nav-overlay {
     position: fixed;
     top: 0;
@@ -248,16 +296,20 @@ ul { list-style: none; }
 
 /* --- Main Content & Sections --- */
 main {
-    /* Optional: Add a slight delay to content appearance after preloader fades */
-    opacity: 0;
-    animation: fadeInMain 0.1s ease-in 1s forwards; /* 1s delay matches preloader transition+delay */
+    position: relative; /* Ensure main content is in stacking context */
+    z-index: 1; /* Ensure main content is above page particles */
+    opacity: 0; /* Start hidden */
+    /* Adjust delay to match preloader fade out */
+    animation: fadeInMain 0.5s ease-in 0.8s forwards; /* Example: 0.8s preloader fade + 0s delay = 0.8s */
+    /* animation-play-state: paused; /* Keep starting paused */
 }
 
 @keyframes fadeInMain {
     to { opacity: 1; }
 }
 
-
+/* ... Section, Hero, Portfolio, About, Skills, Contact, Footer styles remain the same ... */
+/* ... Animations and Responsive styles remain the same ... */
 .section { padding: 100px 0; overflow: hidden; position: relative; }
 .section:nth-child(odd) { background-color: var(--surface-dark); } /* Alternate bg */
 
@@ -543,8 +595,11 @@ main {
     text-align: center;
     font-size: 0.9rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative; /* Ensure footer is above page particles */
+    z-index: 1;
 }
 .site-footer-bottom p { margin: 0; }
+
 
 /* --- Animations --- */
 .animate-on-scroll {
@@ -565,15 +620,17 @@ main {
 .delay-3 { transition-delay: 0.45s; }
 
 /* --- Project Detail Page Specific Styles (Optional - Adapt if needed) --- */
+/* (These remain the same as the previous complete version) */
 .project-detail-header {
     background: linear-gradient(135deg, rgba(160, 32, 240, 0.1), rgba(10, 10, 16, 0.2)), var(--surface-dark);
     padding: 140px 0 70px 0;
     text-align: center;
     border-bottom: 1px solid var(--border-color);
+     position: relative; z-index: 1; /* Ensure above page particles */
 }
 .project-detail-header h1 { color: var(--primary-glow); text-shadow: 0 0 8px var(--shadow-color); }
 .project-detail-header .project-subtitle { color: var(--text-secondary); font-size: 1.2rem; margin-top: 0.8rem; max-width: 700px; margin-left: auto; margin-right: auto; }
-.project-content { padding: 80px 0; max-width: 900px; margin: 0 auto; color: var(--text-secondary); }
+.project-content { padding: 80px 0; max-width: 900px; margin: 0 auto; color: var(--text-secondary); position: relative; z-index: 1;} /* Ensure above page particles */
 .project-content h2 { color: var(--secondary-accent); margin-top: 3rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.7rem; font-weight: 600; }
 .project-content h2:first-of-type { margin-top: 0; }
 .project-content img.project-visual { margin: 2.5rem 0; border-radius: var(--border-radius-md); box-shadow: 0 8px 25px rgba(0,0,0,0.3); border: 1px solid rgba(255, 255, 255, 0.1); }
@@ -588,7 +645,9 @@ main {
 .back-link:hover { color: var(--primary-glow); transform: translateX(-5px); }
 .back-link:hover svg { transform: translateX(-3px); }
 
+
 /* --- Responsive Design --- */
+/* (Remains the same as the previous complete version) */
 @media (max-width: 992px) {
     .about-layout { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
     .about-text { order: 1; }
@@ -610,6 +669,7 @@ main {
     .skills-grid { grid-template-columns: 1fr; gap: 1.5rem;}
     .contact-info { padding: 2rem; }
     .project-content { padding: 60px 20px; }
+    #preloader-headline { font-size: clamp(1.5rem, 4vw, 2.5rem); }
 }
 
 @media (max-width: 480px) {
@@ -625,4 +685,6 @@ main {
     .contact-links svg { margin-bottom: 0.2rem; }
     .project-detail-header { padding: 120px 0 50px 0; }
     .project-sample { padding: 1.2rem 1.5rem; font-size: 0.85rem; }
+    #preloader-headline { font-size: clamp(1.3rem, 4.5vw, 2rem); }
+
 }

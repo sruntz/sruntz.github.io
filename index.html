@@ -8,50 +8,56 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Optional: Add your favicon link here -->
     <!-- <link rel="icon" href="favicon.ico"> -->
 </head>
 <body>
 
-    <!-- Pre-loader -->
+    <!-- Persistent Particle Background -->
+    <div id="page-particles"></div>
+
+    <!-- Pre-loader with Typing Headline -->
     <div id="preloader">
-        <div class="loader-logo">JB</div>
+        <h1 id="preloader-headline" aria-label="Crafting Clear, Compelling Content for the Digital Age."></h1>
     </div>
 
     <header class="site-header">
-        <div class="container">
-            <div class="logo"><a href="#">Jared Banks</a></div>
-            <nav class="main-nav" id="main-nav">
-                <ul>
-                    <li><a href="#hero" class="nav-link">Home</a></li>
-                    <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-                    <li><a href="#about" class="nav-link">About</a></li>
-                    <li><a href="#skills" class="nav-link">Skills</a></li>
-                    <li><a href="#contact" class="nav-link">Contact</a></li>
-                </ul>
-            </nav>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-        </div>
+       {/* Header content remains the same */}
+       <div class="container">
+           <div class="logo"><a href="#">Jared Banks</a></div>
+           <nav class="main-nav" id="main-nav">
+               <ul>
+                   <li><a href="#hero" class="nav-link">Home</a></li>
+                   <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                   <li><a href="#about" class="nav-link">About</a></li>
+                   <li><a href="#skills" class="nav-link">Skills</a></li>
+                   <li><a href="#contact" class="nav-link">Contact</a></li>
+               </ul>
+           </nav>
+           <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+               <span class="hamburger-line"></span>
+               <span class="hamburger-line"></span>
+               <span class="hamburger-line"></span>
+           </button>
+       </div>
     </header>
 
     <!-- Mobile Navigation Overlay -->
     <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+        {/* Mobile nav content remains the same */}
         <nav class="mobile-nav">
-            <ul>
-                <li><a href="#hero" class="mobile-nav-link">Home</a></li>
-                <li><a href="#portfolio" class="mobile-nav-link">Portfolio</a></li>
-                <li><a href="#about" class="mobile-nav-link">About</a></li>
-                <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
-                <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-            </ul>
-        </nav>
+           <ul>
+               <li><a href="#hero" class="mobile-nav-link">Home</a></li>
+               <li><a href="#portfolio" class="mobile-nav-link">Portfolio</a></li>
+               <li><a href="#about" class="mobile-nav-link">About</a></li>
+               <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
+               <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+           </ul>
+       </nav>
     </div>
 
     <main id="main-content">
+        {/* Rest of the main content (Hero, Portfolio, About, etc.) remains the same */}
+        {/* ... */}
         <!-- Hero Section -->
         <section id="hero" class="hero-section section">
             <div class="container hero-content">
@@ -251,11 +257,15 @@
     </main>
 
     <footer class="site-footer-bottom">
+        {/* Footer content remains the same */}
         <div class="container">
             <p>© <span id="current-year">2024</span> Jared Banks. Crafted with passion and code.</p>
         </div>
     </footer>
 
+    <!-- tsParticles Library via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <!-- Your Custom Script -->
     <script src="script.js"></script>
 </body>
 </html>
