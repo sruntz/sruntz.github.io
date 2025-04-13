@@ -8,13 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- <link rel="icon" href="favicon.ico"> -->
 </head>
 <body>
 
-    <!-- Persistent Particle Background -->
     <div id="page-particles"></div>
 
-    <!-- Pre-loader with Keyword Animation -->
     <div id="preloader">
         <div id="preloader-headline-container">
              <span class="preloader-keyword animate-keyword-1">Clarity</span><span class="preloader-punctuation">.</span>
@@ -24,7 +23,7 @@
     </div>
 
     <header class="site-header">
-       <div class="container">
+        <div class="container">
             <div class="logo"><a href="#">Jared Banks</a></div>
             <nav class="main-nav" id="main-nav">
                 <ul>
@@ -43,9 +42,8 @@
         </div>
     </header>
 
-    <!-- Mobile Navigation Overlay -->
     <div class="mobile-nav-overlay" id="mobile-nav-overlay">
-          <nav class="mobile-nav">
+         <nav class="mobile-nav">
             <ul>
                 <li><a href="#hero" class="mobile-nav-link">Home</a></li>
                 <li><a href="#portfolio" class="mobile-nav-link">Portfolio</a></li>
@@ -56,9 +54,8 @@
         </nav>
     </div>
 
-    <div id="content-wrapper" class="content-hidden">
+    <div id="content-wrapper">
         <main id="main-content">
-               <!-- Hero Section -->
             <section id="hero" class="hero-section section">
                 <div class="container hero-content">
                     <h1 class="animate-on-scroll fade-in-up">
@@ -76,88 +73,97 @@
                 </div>
             </section>
 
-            <!-- Portfolio Section -->
             <section id="portfolio" class="portfolio-section section">
                 <div class="container">
                     <h2 class="section-title animate-on-scroll fade-in-up">Portfolio Projects</h2>
                     <p class="section-intro animate-on-scroll fade-in-up delay-1">
-                        Demonstrating practical application of content writing skills through simulated projects relevant to modern digital needs.
+                        Hover over projects to see details. Click to view the full project page.
                     </p>
-
                     <div class="portfolio-grid">
-                        <!-- Project 1: SEO Blog Post -->
-                        <a href="seo-blog.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-1">
+                        <div class="portfolio-item-wrapper animate-on-scroll fade-in-up delay-1">
                             <div class="portfolio-item">
                                 <div class="portfolio-image-container">
-                                    <!-- REPLACE with your actual image path -->
-                                    <img src="https://via.placeholder.com/600x400/3a1a4f/eee?text=SEO+VoIP+Blog" alt="Mockup for SEO Blog Post Project" loading="lazy">
-                                    <div class="portfolio-image-overlay"></div>
+                                    <!-- === REPLACE IMAGE SRC === -->
+                                    <img src="https://via.placeholder.com/600x400/3a1a4f/eee?text=Project+1+Image" alt="Portfolio Project 1 Preview" loading="lazy">
+                                    <div class="portfolio-hover-overlay">
+                                        <div class="portfolio-hover-content">
+                                            <p><strong>Goal:</strong> Target small businesses researching VoIP solutions, aiming for relevant keyword ranking.</p>
+                                            <a href="seo-blog.html" class="portfolio-view-link">View Project</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="portfolio-text">
                                     <h3>SEO Blog Post: "Unlocking Growth with VoIP"</h3>
-                                    <p>Targeting small businesses researching VoIP solutions, aiming for relevant keyword ranking.</p>
                                     <div class="skills-tags"><span>SEO</span><span>B2B</span><span>Tech</span></div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
-                        <!-- Project 2: E-commerce Website Copy -->
-                         <a href="website-copy.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-2">
-                             <div class="portfolio-item">
+                        <div class="portfolio-item-wrapper animate-on-scroll fade-in-up delay-2">
+                            <div class="portfolio-item">
                                 <div class="portfolio-image-container">
-                                    <!-- REPLACE with your actual image path -->
-                                    <img src="https://via.placeholder.com/600x400/4a2a5f/eee?text=Skincare+Copy" alt="Skincare Product Mockup" loading="lazy">
-                                    <div class="portfolio-image-overlay"></div>
+                                     <!-- === REPLACE IMAGE SRC === -->
+                                    <img src="https://via.placeholder.com/600x400/4a2a5f/eee?text=Project+2+Image" alt="Portfolio Project 2 Preview" loading="lazy">
+                                    <div class="portfolio-hover-overlay">
+                                        <div class="portfolio-hover-content">
+                                            <p><strong>Goal:</strong> Write engaging, benefit-driven product descriptions focused on conversion and brand voice.</p>
+                                            <a href="website-copy.html" class="portfolio-view-link">View Project</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="portfolio-text">
                                     <h3>Website Copy: Skincare Brand</h3>
-                                    <p>Engaging, benefit-driven product descriptions focused on conversion and brand voice.</p>
-                                     <div class="skills-tags"><span>E-commerce</span><span>Copywriting</span><span>Brand Voice</span></div>
+                                    <div class="skills-tags"><span>E-commerce</span><span>Copywriting</span><span>Brand Voice</span></div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
-                        <!-- Project 3: Technical User Guide Excerpt -->
-                        <a href="tech-guide.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-1">
+                        <div class="portfolio-item-wrapper animate-on-scroll fade-in-up delay-1">
                             <div class="portfolio-item">
                                 <div class="portfolio-image-container">
-                                    <!-- REPLACE with your actual image path -->
-                                    <img src="https://via.placeholder.com/600x400/5f3d71/eee?text=Tech+Guide" alt="Mockup for Technical User Guide Project" loading="lazy">
-                                    <div class="portfolio-image-overlay"></div>
+                                     <!-- === REPLACE IMAGE SRC === -->
+                                    <img src="https://via.placeholder.com/600x400/5f3d71/eee?text=Project+3+Image" alt="Portfolio Project 3 Preview" loading="lazy">
+                                     <div class="portfolio-hover-overlay">
+                                        <div class="portfolio-hover-content">
+                                            <p><strong>Goal:</strong> Clearly explain a complex "Advanced Chart Analysis" feature on a trading platform for end-users.</p>
+                                            <a href="tech-guide.html" class="portfolio-view-link">View Project</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="portfolio-text">
                                     <h3>User Guide: Trading Platform Feature</h3>
-                                    <p>Clearly explaining a complex "Advanced Chart Analysis" feature for end-users.</p>
-                                    <div class="skills-tags"><span>Technical</span><span>User Guide</span><span>Finance</span></div>
+                                     <div class="skills-tags"><span>Technical</span><span>User Guide</span><span>Finance</span></div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
-                         <!-- Project 4: Government Contact Centre Script -->
-                         <a href="gov-script.html" class="portfolio-item-link animate-on-scroll fade-in-up delay-2">
-                             <div class="portfolio-item">
+                        <div class="portfolio-item-wrapper animate-on-scroll fade-in-up delay-2">
+                            <div class="portfolio-item">
                                 <div class="portfolio-image-container">
-                                    <!-- REPLACE with your actual image path -->
-                                    <img src="https://via.placeholder.com/600x400/7c5a90/bbb?text=Gov+Script" alt="Mockup for Government Contact Centre Script Project" loading="lazy">
-                                    <div class="portfolio-image-overlay"></div>
+                                     <!-- === REPLACE IMAGE SRC === -->
+                                    <img src="https://via.placeholder.com/600x400/7c5a90/bbb?text=Project+4+Image" alt="Portfolio Project 4 Preview" loading="lazy">
+                                     <div class="portfolio-hover-overlay">
+                                        <div class="portfolio-hover-content">
+                                             <p><strong>Goal:</strong> Develop a user-centric script for agents handling passport application status inquiries efficiently.</p>
+                                             <a href="gov-script.html" class="portfolio-view-link">View Project</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="portfolio-text">
                                     <h3>Contact Centre Script: Passport Queries</h3>
-                                    <p>User-centric script for agents handling passport application status inquiries efficiently.</p>
-                                    <div class="skills-tags"><span>Scripting</span><span>User-Centric</span><span>Gov Comms</span></div>
+                                     <div class="skills-tags"><span>Scripting</span><span>User-Centric</span><span>Gov Comms</span></div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- About Section -->
             <section id="about" class="about-section section">
                 <div class="container about-layout">
                      <div class="about-image-wrapper animate-on-scroll fade-in-left">
-                         <!-- REPLACE with your actual photo path -->
-                         <img src="https://via.placeholder.com/400x400/cccccc/888888?text=Your+Photo" alt="Professional photo of Jared Banks" class="about-image" loading="lazy">
+                          <!-- === REPLACE IMAGE SRC === -->
+                         <img src="https://via.placeholder.com/400x400/cccccc/888888?text=Your+Photo+Here" alt="Professional photo of Jared Banks" class="about-image" loading="lazy">
                          <div class="about-image-bg-element"></div>
                      </div>
                     <div class="about-text animate-on-scroll fade-in-right delay-1">
@@ -169,65 +175,39 @@
                 </div>
             </section>
 
-            <!-- Skills Section -->
             <section id="skills" class="skills-section section">
                 <div class="container">
                     <h2 class="section-title animate-on-scroll fade-in-up">Core Competencies</h2>
                      <p class="section-intro animate-on-scroll fade-in-up delay-1">Key skills honed through self-study and practical application in diverse writing scenarios.</p>
                     <div class="skills-grid">
-                        <!-- Skill 1 -->
                         <div class="skill-item animate-on-scroll scale-in delay-1">
-                            <div class="skill-icon-wrapper">
-                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L21.5,20L20,21.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-                            </div>
-                            <h3>SEO & Keyword Research</h3>
-                            <p>Applying SEO fundamentals, keyword analysis (intent, volume), and on-page optimization.</p>
+                            <div class="skill-icon-wrapper"><svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L21.5,20L20,21.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg></div>
+                            <h3>SEO & Keyword Research</h3><p>Applying SEO fundamentals, keyword analysis (intent, volume), and on-page optimization.</p>
                         </div>
-                        <!-- Skill 2 -->
-                         <div class="skill-item animate-on-scroll scale-in delay-2">
-                            <div class="skill-icon-wrapper">
-                               <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-                            </div>
-                            <h3>Content & Copywriting</h3>
-                            <p>Writing clear, concise, engaging content for blogs, websites, and product descriptions.</p>
-                        </div>
-                        <!-- Skill 3 -->
-                         <div class="skill-item animate-on-scroll scale-in delay-3">
-                             <div class="skill-icon-wrapper">
-                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,1L9,9L1,12L9,15L12,23L15,15L23,12L15,9L12,1Z" /></svg>
-                            </div>
-                            <h3>Technical Simplification</h3>
-                            <p>Distilling complex technical or procedural info into easily digestible language for users.</p>
-                        </div>
-                        <!-- Skill 4 -->
-                         <div class="skill-item animate-on-scroll scale-in delay-1">
-                             <div class="skill-icon-wrapper">
-                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
-                            </div>
-                            <h3>Audience Adaptation</h3>
-                            <p>Identifying audience needs and tailoring writing style, tone, and complexity accordingly.</p>
-                        </div>
-                        <!-- Skill 5 -->
                         <div class="skill-item animate-on-scroll scale-in delay-2">
-                            <div class="skill-icon-wrapper">
-                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5,9C17.3,9 18,8.3 18,7.5C18,6.7 17.3,6 16.5,6C15.7,6 15,6.7 15,7.5C15,8.3 15.7,9 16.5,9M9,7.5C9,8.3 8.3,9 7.5,9C6.7,9 6,8.3 6,7.5C6,6.7 6.7,6 7.5,6C8.3,6 9,6.7 9,7.5M12,2C6.5,2 2,6.5 2,12C2,17.5 6.5,22 12,22C17.5,22 22,17.5 22,12C22,6.5 17.5,2 12,2M12,20C7.6,20 4,16.4 4,12C4,11.7 4,11.4 4.1,11.1C6.3,10.4 8.2,9.3 9.6,7.8C10.1,8.6 11,9 12,9C13,9 13.9,8.6 14.4,7.8C15.8,9.3 17.7,10.4 19.9,11.1C20,11.4 20,11.7 20,12C20,16.4 16.4,20 12,20Z" /></svg>
-                            </div>
-                            <h3>User-Centric Focus</h3>
-                            <p>Writing from the user's perspective, anticipating needs, and structuring information logically.</p>
+                            <div class="skill-icon-wrapper"><svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg></div>
+                            <h3>Content & Copywriting</h3><p>Writing clear, concise, engaging content for blogs, websites, and product descriptions.</p>
                         </div>
-                        <!-- Skill 6 -->
                         <div class="skill-item animate-on-scroll scale-in delay-3">
-                            <div class="skill-icon-wrapper">
-                                <svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.4,6.6L18.8,6C18.5,5.7 18.1,5.6 17.7,5.6C17.3,5.6 16.9,5.7 16.6,6L10.3,12.3L7.4,9.4C7.1,9.1 6.7,9 6.3,9C5.9,9 5.5,9.1 5.2,9.4L4.6,10C4.3,10.3 4.2,10.7 4.2,11.1C4.2,11.5 4.3,11.9 4.6,12.2L9.5,17.1C9.8,17.4 10.2,17.5 10.6,17.5C11,17.5 11.4,17.4 11.7,17.1L19.4,9.4C19.7,9.1 19.8,8.7 19.8,8.3C19.8,7.9 19.7,7.5 19.4,6.6Z" /></svg>
-                            </div>
-                            <h3>Editing & Proofreading</h3>
-                            <p>Meticulous attention to detail ensuring accuracy, clarity, consistency, and polish.</p>
+                             <div class="skill-icon-wrapper"><svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,1L9,9L1,12L9,15L12,23L15,15L23,12L15,9L12,1Z" /></svg></div>
+                            <h3>Technical Simplification</h3><p>Distilling complex technical or procedural info into easily digestible language for users.</p>
+                        </div>
+                        <div class="skill-item animate-on-scroll scale-in delay-1">
+                             <div class="skill-icon-wrapper"><svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg></div>
+                            <h3>Audience Adaptation</h3><p>Identifying audience needs and tailoring writing style, tone, and complexity accordingly.</p>
+                        </div>
+                        <div class="skill-item animate-on-scroll scale-in delay-2">
+                            <div class="skill-icon-wrapper"><svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5,9C17.3,9 18,8.3 18,7.5C18,6.7 17.3,6 16.5,6C15.7,6 15,6.7 15,7.5C15,8.3 15.7,9 16.5,9M9,7.5C9,8.3 8.3,9 7.5,9C6.7,9 6,8.3 6,7.5C6,6.7 6.7,6 7.5,6C8.3,6 9,6.7 9,7.5M12,2C6.5,2 2,6.5 2,12C2,17.5 6.5,22 12,22C17.5,22 22,17.5 22,12C22,6.5 17.5,2 12,2M12,20C7.6,20 4,16.4 4,12C4,11.7 4,11.4 4.1,11.1C6.3,10.4 8.2,9.3 9.6,7.8C10.1,8.6 11,9 12,9C13,9 13.9,8.6 14.4,7.8C15.8,9.3 17.7,10.4 19.9,11.1C20,11.4 20,11.7 20,12C20,16.4 16.4,20 12,20Z" /></svg></div>
+                            <h3>User-Centric Focus</h3><p>Writing from the user's perspective, anticipating needs, and structuring information logically.</p>
+                        </div>
+                        <div class="skill-item animate-on-scroll scale-in delay-3">
+                            <div class="skill-icon-wrapper"><svg class="skill-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.4,6.6L18.8,6C18.5,5.7 18.1,5.6 17.7,5.6C17.3,5.6 16.9,5.7 16.6,6L10.3,12.3L7.4,9.4C7.1,9.1 6.7,9 6.3,9C5.9,9 5.5,9.1 5.2,9.4L4.6,10C4.3,10.3 4.2,10.7 4.2,11.1C4.2,11.5 4.3,11.9 4.6,12.2L9.5,17.1C9.8,17.4 10.2,17.5 10.6,17.5C11,17.5 11.4,17.4 11.7,17.1L19.4,9.4C19.7,9.1 19.8,8.7 19.8,8.3C19.8,7.9 19.7,7.5 19.4,6.6Z" /></svg></div>
+                            <h3>Editing & Proofreading</h3><p>Meticulous attention to detail ensuring accuracy, clarity, consistency, and polish.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Contact Section -->
             <section id="contact" class="contact-section section">
                 <div class="container">
                     <h2 class="section-title animate-on-scroll fade-in-up">Get In Touch</h2>
@@ -239,15 +219,18 @@
                             <div class="contact-links">
                                 <p>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V6C22,4.89 21.1,4 20,4Z" /></svg>
-                                    <a href="mailto:[YOUR EMAIL HERE]">[YOUR EMAIL HERE]</a>
+                                    {/* === REPLACE EMAIL === */}
+                                    <a href="mailto:your.email@example.com">your.email@example.com</a>
                                 </p>
                                 <p>
                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H19M18.5,18.5V13.2A3.26,3.26 0 0,0 15.24,9.94C14.39,9.94 13.4,10.46 12.92,11.24V10.13H10.13V18.5H12.92V13.57C12.92,12.8 13.54,12.17 14.31,12.17C15.08,12.17 15.7,12.8 15.7,13.57V18.5H18.5M6.88,8.56A1.68,1.68 0 0,0 8.56,6.88C8.56,5.95 7.81,5.19 6.88,5.19C5.95,5.19 5.19,5.95 5.19,6.88C5.19,7.81 5.95,8.56 6.88,8.56M8.27,18.5V10.13H5.5V18.5H8.27Z" /></svg>
-                                    <a href="[YOUR LINKEDIN PROFILE URL]" target="_blank" rel="noopener noreferrer">[Your LinkedIn Profile URL]</a>
+                                    {/* === REPLACE LINKEDIN URL === */}
+                                    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">linkedin.com/in/yourprofile</a>
                                 </p>
                                 <p>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>
-                                   <span>[Your City, State] (Open to Remote)</span>
+                                    {/* === REPLACE LOCATION === */}
+                                   <span>Your City, State (Open to Remote)</span>
                                 </p>
                             </div>
                         </div>
@@ -257,16 +240,13 @@
         </main>
 
         <footer class="site-footer-bottom">
-             <div class="container">
+            <div class="container">
                 <p>© <span id="current-year">2024</span> Jared Banks. Crafted with passion and code.</p>
             </div>
         </footer>
-    </div> <!-- End of #content-wrapper -->
+    </div>
 
-
-    <!-- tsParticles Library via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-    <!-- Your Custom Script -->
     <script src="script.js"></script>
 </body>
 </html>
