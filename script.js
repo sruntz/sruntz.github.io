@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
     const mainNavLinks = document.querySelectorAll('.main-nav .nav-link');
-    const sections = document.querySelectorAll('.section'); // Target sections for active link highlighting
+    const sections = document.querySelectorAll('.section');
     const currentYearSpan = document.getElementById('current-year');
 
     // --- Update Copyright Year ---
@@ -13,70 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // --- Header Scroll Effect ---
-    const handleScroll = () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-        updateActiveNavLink(); // Update active link on scroll
-    };
-
-    // Throttle scroll event listener for performance
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(handleScroll, 50); // Adjust timeout as needed
-    });
-    handleScroll(); // Initial check
-
-    // --- Intersection Observer for Animations ---
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15 // Trigger a bit earlier
-    };
-
-    const observerCallback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target); // Animate only once
-            }
-            // No 'else' needed if we unobserve
-        });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
-    elementsToAnimate.forEach(el => observer.observe(el));
-
-    // --- Mobile Menu Toggle ---
-    if (menuToggle && mobileNavOverlay) {
-        menuToggle.addEventListener('click', () => {
-            const isActive = mobileNavOverlay.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-            menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-            document.body.style.overflow = isActive ? 'hidden' : ''; // Prevent body scroll when menu open
-        });
-    }
-
-    // --- Close Mobile Menu on Link Click ---
-    mobileNavLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileNavOverlay.classList.remove('active');
-            menuToggle.classList.remove('active');
-            menuToggle.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = ''; // Restore body scroll
-        });
-    });
-
     // --- Active Navigation Link Highlighting ---
+    // DEFINE THIS FUNCTION *BEFORE* IT'S USED IN handleScroll or called initially
     const updateActiveNavLink = () => {
         let currentSectionId = '';
         const headerHeight = header.offsetHeight;
-        const scrollPosition = window.scrollY + headerHeight + 50; // Offset for better accuracy
+        const scrollPosition = window.scrollY + headerHeight + 50; // Offset
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
@@ -108,7 +50,72 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Initial call and add listener (already handled by scroll listener setup)
-    updateActiveNavLink();
 
-});
+    // --- Header Scroll Effect ---
+    const handleScroll = () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        updateActiveNavLink(); // NOW this call is valid
+    };
+
+    // Throttle scroll event listener for performance
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(handleScroll, 50);
+    });
+    handleScroll(); // Initial check (also valid now)
+    updateActiveNavLink(); // Also call initially to set state on load
+
+
+    // --- Intersection Observer for Animations ---
+    // (Rest of the Intersection Observer code remains the same)
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+    };
+
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+    elementsToAnimate.forEach(el => observer.observe(el));
+
+
+    // --- Mobile Menu Toggle ---
+    // (Rest of the Mobile Menu code remains the same)
+    if (menuToggle && mobileNavOverlay) {
+        menuToggle.addEventListener('click', () => {
+            const isActive = mobileNavOverlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            document.body.style.overflow = isActive ? 'hidden' : '';
+        });
+    }
+
+
+    // --- Close Mobile Menu on Link Click ---
+    // (Rest of the Close Mobile Menu code remains the same)
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileNavOverlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Note: updateActiveNavLink is already defined above now
+
+}); // End of DOMContentLoaded
