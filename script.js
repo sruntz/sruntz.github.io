@@ -1,5 +1,3 @@
-// --- START OF REPLACEMENT SCRIPT.JS ---
-
 document.addEventListener('DOMContentLoaded', () => {
     // --- Element Selections ---
     const preloader = document.getElementById('preloader');
@@ -79,9 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Portfolio Swiper Initialization ---
     function initPortfolioSwiper() {
-        // Prevent double initialization
         if (portfolioSwiperInstance) {
-             console.warn("Portfolio Swiper already initialized.");
+             console.warn("Portfolio Swiper already initialized. Skipping.");
              return;
         }
 
@@ -91,54 +88,26 @@ document.addEventListener('DOMContentLoaded', () => {
              console.log("Attempting to initialize Portfolio Swiper...");
              try {
                  portfolioSwiperInstance = new Swiper(swiperContainer, {
-                     // Core settings
-                     initialSlide: 0, // Start on the first logical slide
+                     initialSlide: 0,
                      slidesPerView: 1,
                      spaceBetween: 30,
-                     loop: true,          // Enable looping
+                     loop: true,
                      grabCursor: true,
-                     centeredSlides: true, // Center the active slide
-
-                     // Responsive Breakpoints
+                     centeredSlides: true,
                      breakpoints: {
-                         768: {
-                             slidesPerView: 1.8,
-                             spaceBetween: 40
-                         },
-                         1024: {
-                             slidesPerView: 2.2,
-                             spaceBetween: 50
-                         }
+                         768: { slidesPerView: 1.8, spaceBetween: 40 },
+                         1024: { slidesPerView: 2.2, spaceBetween: 50 }
                      },
-
-                     // Navigation & Pagination
-                     pagination: {
-                         el: '.swiper-pagination',
-                         clickable: true,
-                     },
-                     navigation: {
-                         nextEl: '.swiper-button-next',
-                         prevEl: '.swiper-button-prev',
-                     },
-
-                     // --- Important for dynamic content / visibility ---
-                     observer: true,        // Re-init Swiper on container mutations
-                     observeParents: true,  // Re-init Swiper on parent mutations
-                     observeSlideChildren: true, // Re-init Swiper on slide children mutations
-
-                     // Add a small delay before first calculation can sometimes help
-                     // init: false // Initialize manually slightly later (alternative approach, but timeout below is often sufficient)
-
+                     pagination: { el: '.swiper-pagination', clickable: true },
+                     navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                     observer: true, // Re-init on container changes
+                     observeParents: true, // Re-init on parent changes
+                     observeSlideChildren: true, // Re-init on slide children changes (like image load)
                  });
 
                  console.log("Portfolio Swiper instance created.");
 
-                 // Manually initialize if using init: false
-                 // portfolioSwiperInstance.init();
-
-                 // --- Force update shortly after initialization ---
-                 // This helps ensure calculations are correct after layout settles
-                 // and explicitly sets the visual state to match the logical start.
+                 // Force update shortly after initialization to ensure correct layout calculation
                  setTimeout(() => {
                      if (portfolioSwiperInstance && !portfolioSwiperInstance.destroyed) {
                          console.log("Updating Swiper state after short delay...");
@@ -148,18 +117,17 @@ document.addEventListener('DOMContentLoaded', () => {
                      } else {
                          console.log("Swiper instance not available or destroyed during timeout.");
                      }
-                 }, 50); // 50ms delay - adjust if needed, but keep it short
+                 }, 100); // 100ms delay - gives browser a tick to settle rendering
 
              } catch (error) {
                  console.error("Swiper initialization failed:", error);
-                 portfolioSwiperInstance = null; // Reset instance on error
+                 portfolioSwiperInstance = null;
              }
          } else {
              if (typeof Swiper === 'undefined') console.error("Swiper library not loaded.");
              if (!swiperContainer) console.error("Portfolio Swiper container (.portfolio-swiper) not found.");
          }
     }
-
 
     // --- Preloader Logic ---
     const hasPreloaderShown = sessionStorage.getItem(PRELOADER_SESSION_KEY);
@@ -169,36 +137,36 @@ document.addEventListener('DOMContentLoaded', () => {
         if (contentWrapper) { /* Content starts hidden via CSS */ }
         animateKeywords(() => {
              hidePreloader(() => {
-                 showContent();
+                 showContent(); // This will call initPortfolioSwiper
                  sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true');
              });
         });
     } else {
+        // Subsequent visit or no preloader
         if (hasPreloaderShown) console.log("Preloader already shown in this session.");
-        else console.log("Preloader element not found, skipping animation.");
+        else if (!preloader) console.log("Preloader element not found, skipping animation.");
 
         if (preloader) preloader.remove();
 
+        // Make content visible immediately and initialize scripts
         if (contentWrapper) {
              contentWrapper.classList.add('no-transition');
              contentWrapper.classList.add('visible');
-             requestAnimationFrame(() => {
+             requestAnimationFrame(() => { // Use rAF to ensure styles apply before removing class
                  requestAnimationFrame(() => {
                      contentWrapper.classList.remove('no-transition');
                  });
              });
-             // Directly call showContent logic IF content wrapper exists
+             // Directly initialize everything since content is visible
              handleScroll();
              updateActiveNavLink();
              initScrollAnimations();
              initPortfolioSwiper(); // Initialize Swiper immediately
         } else {
             console.error("Content wrapper not found on subsequent load path!");
-            // Fallback: Try initializing swiper anyway, but it might fail if container isn't ready
-             initPortfolioSwiper();
+            // Attempt to initialize swiper anyway, though it might fail if container isn't ready
+            initPortfolioSwiper();
         }
-
-
     }
 
     // --- Initialize Background Particles (Runs always) ---
@@ -210,30 +178,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Active Navigation Link Highlighting ---
     function updateActiveNavLink() {
         let currentSectionId = ''; const headerHeight = header ? header.offsetHeight : 0;
+        // Add a buffer to the scroll position for earlier activation
         const scrollPosition = window.scrollY + headerHeight + 60;
         sections.forEach(section => {
-            if (!section) return; const sectionTop = section.offsetTop; const sectionHeight = section.offsetHeight;
+            if (!section) return;
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
             const sectionId = section.getAttribute('id');
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) { currentSectionId = sectionId; }
+            // Check if the scroll position is within the section bounds
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSectionId = sectionId;
+            }
         });
+
         mainNavLinks.forEach(link => {
-            if (!link) return; link.classList.remove('active'); const linkHref = link.getAttribute('href');
-            if (linkHref === `#${currentSectionId}`) { link.classList.add('active'); }
+            if (!link) return;
+            link.classList.remove('active');
+            const linkHref = link.getAttribute('href');
+            // Match the link href with the current section ID
+            if (linkHref === `#${currentSectionId}`) {
+                link.classList.add('active');
+            }
         });
-        // Edge cases for top and bottom of page
-        if (sections.length > 0 && window.scrollY < sections[0].offsetTop - headerHeight - 60) {
-             mainNavLinks.forEach(link => link && link.classList.remove('active')); const homeLink = document.querySelector('.main-nav a[href="#hero"]'); if (homeLink) homeLink.classList.add('active');
-        } else if ((window.innerHeight + Math.ceil(window.scrollY)) >= document.body.offsetHeight - 2) {
-            mainNavLinks.forEach(link => link && link.classList.remove('active')); const contactLink = document.querySelector('.main-nav a[href="#contact"]'); if (contactLink) contactLink.classList.add('active');
-        } else if (!currentSectionId && window.scrollY < 100) { // Handle very top when no section is active yet
-             mainNavLinks.forEach(link => link && link.classList.remove('active')); const homeLink = document.querySelector('.main-nav a[href="#hero"]'); if (homeLink) homeLink.classList.add('active');
+
+        // Explicitly handle edge cases: top of page and bottom of page
+        const isNearBottom = (window.innerHeight + Math.ceil(window.scrollY)) >= document.body.offsetHeight - 50; // 50px buffer
+
+        if (isNearBottom && document.getElementById('contact')) { // If near bottom and contact section exists
+             mainNavLinks.forEach(link => link && link.classList.remove('active'));
+             const contactLink = document.querySelector('.main-nav a[href="#contact"]');
+             if (contactLink) contactLink.classList.add('active');
+        } else if (window.scrollY < sections[0].offsetTop - headerHeight - 60 ) { // Very top of page
+             mainNavLinks.forEach(link => link && link.classList.remove('active'));
+             const homeLink = document.querySelector('.main-nav a[href="#hero"]');
+             if (homeLink) homeLink.classList.add('active');
+        } else if (!currentSectionId && window.scrollY < 100 ) { // Fallback for top when no section matches yet
+             mainNavLinks.forEach(link => link && link.classList.remove('active'));
+             const homeLink = document.querySelector('.main-nav a[href="#hero"]');
+             if (homeLink) homeLink.classList.add('active');
         }
     };
+
 
     // --- Header Scroll Effect ---
     function handleScroll() {
         if (header) { if (window.scrollY > 50) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); } }
-        updateActiveNavLink();
+        updateActiveNavLink(); // Update nav link on scroll
     };
 
     // --- Scroll Event Listener (Throttled) ---
@@ -242,12 +232,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Intersection Observer for Animations ---
     function initScrollAnimations() {
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
-        const observerCallback = (entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }); };
+        const observerCallback = (entries, observer) => {
+             entries.forEach(entry => {
+                 if (entry.isIntersecting) {
+                     entry.target.classList.add('is-visible');
+                     observer.unobserve(entry.target); // Stop observing once visible
+                 }
+             });
+        };
         const observer = new IntersectionObserver(observerCallback, observerOptions);
-        // Ensure elements *inside* the swiper are not animated by this observer
         if (elementsToAnimate.length > 0) {
-            elementsToAnimate.forEach(el => {
-                 // Check if the element is inside a swiper slide
+             elementsToAnimate.forEach(el => {
+                 // IMPORTANT: Do not animate slides with this observer, Swiper handles slide visibility
                  if (!el.closest('.swiper-slide')) {
                      observer.observe(el);
                  }
@@ -256,11 +252,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Mobile Menu Toggle ---
-    if (menuToggle && mobileNavOverlay) { menuToggle.addEventListener('click', () => { const isActive = mobileNavOverlay.classList.toggle('active'); menuToggle.classList.toggle('active'); menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false'); document.body.style.overflow = isActive ? 'hidden' : ''; }); }
+    if (menuToggle && mobileNavOverlay) {
+         menuToggle.addEventListener('click', () => {
+             const isActive = mobileNavOverlay.classList.toggle('active');
+             menuToggle.classList.toggle('active');
+             menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+             // Prevent body scroll when mobile menu is open
+             document.body.style.overflow = isActive ? 'hidden' : '';
+         });
+    }
 
     // --- Close Mobile Menu on Link Click ---
-    if (mobileNavLinks.length > 0) { mobileNavLinks.forEach(link => { link.addEventListener('click', () => { if (mobileNavOverlay) mobileNavOverlay.classList.remove('active'); if (menuToggle) { menuToggle.classList.remove('active'); menuToggle.setAttribute('aria-expanded', 'false'); } document.body.style.overflow = ''; }); }); }
+    if (mobileNavLinks.length > 0) {
+         mobileNavLinks.forEach(link => {
+             link.addEventListener('click', () => {
+                 if (mobileNavOverlay) mobileNavOverlay.classList.remove('active');
+                 if (menuToggle) {
+                     menuToggle.classList.remove('active');
+                     menuToggle.setAttribute('aria-expanded', 'false');
+                 }
+                 document.body.style.overflow = ''; // Restore body scroll
+             });
+         });
+    }
+
+    // Initial call to set things up based on initial scroll position (if any)
+    handleScroll();
 
 }); // End DOMContentLoaded
-
-// --- END OF REPLACEMENT SCRIPT.JS ---
