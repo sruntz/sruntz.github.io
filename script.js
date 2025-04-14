@@ -84,9 +84,9 @@ function initPortfolioSwiper() {
 
                 slidesPerView: 1,
                 spaceBetween: 30,
-                loop: true,          // Keep loop: true if desired
+               // loop: true,          // Keep loop: true if desired
                 grabCursor: true,
-                centeredSlides: true, // Keep centeredSlides: true if desired
+               // centeredSlides: true, // Keep centeredSlides: true if desired
                 breakpoints: {
                     768: { slidesPerView: 1.8, spaceBetween: 40 },
                     1024: { slidesPerView: 2.2, spaceBetween: 50 }
