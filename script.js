@@ -74,24 +74,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Portfolio Swiper Initialization ---
-    function initPortfolioSwiper() {
-        // No need for extra timeout if showContent handles visibility first
-         if (typeof Swiper !== 'undefined' && document.querySelector('.portfolio-swiper')) {
-             try {
-                 const swiper = new Swiper('.portfolio-swiper', {
-                     slidesPerView: 1, spaceBetween: 30, loop: true, grabCursor: true, centeredSlides: true,
-                     breakpoints: { 768: { slidesPerView: 1.8, spaceBetween: 40 }, 1024: { slidesPerView: 2.2, spaceBetween: 50 } },
-                     pagination: { el: '.swiper-pagination', clickable: true, },
-                     navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', },
-                 });
-                 console.log("Portfolio Swiper initialized successfully.");
-             } catch (error) { console.error("Swiper initialization failed:", error); }
-         } else {
-             if (typeof Swiper === 'undefined') console.error("Swiper library not loaded.");
-             if (!document.querySelector('.portfolio-swiper')) console.error("Portfolio Swiper container not found.");
-         }
+// --- Portfolio Swiper Initialization ---
+function initPortfolioSwiper() {
+    if (typeof Swiper !== 'undefined' && document.querySelector('.portfolio-swiper')) {
+        try {
+            const swiper = new Swiper('.portfolio-swiper', {
+                // --- Add or ensure this line is present ---
+                initialSlide: 0, // Explicitly start at the first logical slide
+
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,          // Keep loop: true if desired
+                grabCursor: true,
+                centeredSlides: true, // Keep centeredSlides: true if desired
+                breakpoints: {
+                    768: { slidesPerView: 1.8, spaceBetween: 40 },
+                    1024: { slidesPerView: 2.2, spaceBetween: 50 }
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                // --- Optional: Add observer for dynamic content/resizing ---
+                // observer: true,
+                // observeParents: true,
+            });
+            console.log("Portfolio Swiper initialized successfully.");
+
+            // --- Force update after initialization ---
+            requestAnimationFrame(() => {
+                if (swiper && !swiper.destroyed) { // Check if swiper instance exists and wasn't destroyed
+                     swiper.update(); // Recalculate size, position etc.
+                     swiper.slideToLoop(0, 0); // Ensure it visibly snaps to the first LOGICAL slide instantly
+                     console.log("Swiper updated and snapped to initial slide after initialization.");
+                }
+            });
+
+        } catch (error) {
+            console.error("Swiper initialization failed:", error);
+        }
+    } else {
+        if (typeof Swiper === 'undefined') console.error("Swiper library not loaded.");
+        if (!document.querySelector('.portfolio-swiper')) console.error("Portfolio Swiper container not found.");
     }
+}
 
     // --- Preloader Logic ---
     const hasPreloaderShown = sessionStorage.getItem(PRELOADER_SESSION_KEY);
