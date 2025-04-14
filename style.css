@@ -73,7 +73,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.3rem); margin-bottom: 0.6rem; }
 p { margin-bottom: 1.2rem; font-size: 1rem; }
 a { color: var(--secondary-accent); text-decoration: none; transition: color var(--transition-fast) ease; }
 a:hover { color: var(--primary-glow); }
-img { max-width: 100%; height: auto; display: block; }
+img { max-width: 100%; height: auto; display: block; } /* General img rule */
 ul { list-style: none; }
 /* --- Header --- */
 .site-header { position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; background-color: rgba(10, 10, 16, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 0.8rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); transition: background-color var(--transition-medium) ease, padding var(--transition-medium) ease; }
@@ -117,6 +117,7 @@ main { position: relative; z-index: 1; }
 .scroll-down-indicator a { color: var(--secondary-accent); display: inline-block; padding: 10px; }
 .scroll-down-indicator svg { stroke: var(--secondary-accent); width: 30px; height: 30px; }
 @keyframes bounceArrow { 0%, 100% { transform: translate(-50%, 0); opacity: 0.8; } 50% { transform: translate(-50%, 10px); opacity: 1; } }
+
 /* --- Portfolio Section --- */
 .portfolio-section .container { position: relative; }
 .portfolio-swiper { width: 100%; padding-top: 20px; padding-bottom: 60px; overflow: visible; position: relative; }
@@ -125,9 +126,46 @@ main { position: relative; z-index: 1; }
 .swiper-slide .portfolio-item-wrapper { width: 90%; max-width: 550px; margin: 0 auto; border-radius: var(--border-radius-lg); overflow: hidden; transition: transform var(--transition-medium) ease, box-shadow var(--transition-medium) ease; }
 .swiper-slide-active .portfolio-item-wrapper:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px var(--shadow-color); }
 .swiper-slide .portfolio-item { background: var(--surface-medium); height: 100%; display: flex; flex-direction: column; border: 1px solid var(--border-color); }
-.swiper-slide .portfolio-image-container { position: relative; overflow: hidden; }
-.swiper-slide .portfolio-image-container img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; transition: transform var(--transition-slow) ease, filter var(--transition-medium) ease; filter: brightness(1) saturate(1); }
-.swiper-slide-active .portfolio-item-wrapper:hover .portfolio-image-container img { filter: brightness(0.7) saturate(0.9); }
+
+/* --- START: MODIFIED/ADDED FOR PLACEHOLDER --- */
+.swiper-slide .portfolio-image-container {
+    position: relative; /* Needed for absolute positioning of children */
+    overflow: hidden;
+    aspect-ratio: 16 / 10; /* IMPORTANT: Defines the space BEFORE content loads */
+    width: 100%;          /* Ensure container takes full width */
+    background-color: var(--surface-medium); /* Fallback/loading background */
+}
+
+/* Style for the placeholder DIV you added in HTML */
+.swiper-slide .portfolio-image-container .image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #2a2a35; /* Dark placeholder color */
+    /* You could add a subtle icon or pattern here */
+}
+
+/* Original IMG styling (kept in case you revert HTML, but won't apply to placeholder) */
+.swiper-slide .portfolio-image-container img {
+    position: absolute; /* Will fill the container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the area without distortion */
+    display: block;
+    transition: transform var(--transition-slow) ease, filter var(--transition-medium) ease;
+    filter: brightness(1) saturate(1);
+}
+/* --- END: MODIFIED/ADDED FOR PLACEHOLDER --- */
+
+.swiper-slide-active .portfolio-item-wrapper:hover .portfolio-image-container img {
+    /* This hover effect won't work on the placeholder, only on the actual image if present */
+    filter: brightness(0.7) saturate(0.9);
+}
+
 .swiper-slide .portfolio-hover-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(17, 17, 24, 0.95) 50%, rgba(17, 17, 24, 0.7) 100%); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transform: translateY(100%); opacity: 0; transition: transform var(--transition-medium) ease-out, opacity var(--transition-medium) ease-out; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; z-index: 2; overflow: hidden; }
 .swiper-slide-active .portfolio-item-wrapper:hover .portfolio-hover-overlay { transform: translateY(0); opacity: 1; }
 .swiper-slide .portfolio-hover-content p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
