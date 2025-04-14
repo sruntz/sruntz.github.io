@@ -134,4 +134,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (mobileNavLinks.length > 0) { mobileNavLinks.forEach(link => { link.addEventListener('click', () => { if (mobileNavOverlay) mobileNavOverlay.classList.remove('active'); if (menuToggle) { menuToggle.classList.remove('active'); menuToggle.setAttribute('aria-expanded', 'false'); } document.body.style.overflow = ''; }); }); }
 
-}); // End of DOMContentLoaded Listener
+});
