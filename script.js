@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Element Selections ---
     const preloader = document.getElementById('preloader');
     const preloaderKeywords = document.querySelectorAll('#preloader .preloader-keyword');
     const pageParticlesContainerId = 'page-particles';
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let portfolioSwiperInstance = null;
 
-    // --- Particles Options ---
     const pageParticlesOptions = {
         interactivity: { events: { onHover: { enable: false }, onClick: { enable: false }, resize: true } },
         particles: {
@@ -33,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fullScreen: { enable: false }
     };
 
-    // --- Initialize Background Particles ---
     function initBackgroundParticles() {
         if (document.getElementById(pageParticlesContainerId) && typeof tsParticles !== 'undefined') {
             tsParticles.load(pageParticlesContainerId, pageParticlesOptions)
@@ -42,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Preloader Animation ---
     function animateKeywords(callback) {
         if (!preloaderKeywords || preloaderKeywords.length === 0) { if (callback) callback(); return; }
         const delay = 300;
@@ -51,13 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 keyword.classList.add('visible');
                 if (index === preloaderKeywords.length - 1) {
-                    setTimeout(callback, 1100); // delay after the last keyword animation
+                    setTimeout(callback, 1100);
                 }
             }, delay + (index * interval));
         });
     }
 
-    // --- Hide Preloader ---
     function hidePreloader(callback) {
         if (preloader) {
             preloader.classList.add('hidden');
@@ -65,40 +60,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 preloader.remove();
                 if (callback) callback();
             }, { once: true });
-            // Fallback removal
             setTimeout(() => { if (preloader.parentNode) preloader.remove(); if (callback) callback(); }, 700);
         } else if (callback) {
             callback();
         }
     }
 
-    // --- Show Main Content ---
     function showContent() {
         if (contentWrapper) {
             contentWrapper.classList.add('visible');
             handleScroll();
             updateActiveNavLink();
             initScrollAnimations();
-            // NOTE: Portfolio Swiper is now initialized after window load
         }
     }
 
-    // --- Portfolio Swiper Initialization ---
-    // This function is now intended to be called once the entire window (assets included) has loaded.
     function initPortfolioSwiper() {
         const swiperContainer = document.querySelector('.portfolio-swiper');
         if (!swiperContainer || typeof Swiper === 'undefined') {
             console.error("Swiper not ready or container missing.");
             return;
         }
-        // Initialize Swiper with loop enabled and centeredSlides disabled
+
+        // Basic non-looped swiper
         portfolioSwiperInstance = new Swiper(swiperContainer, {
-            loop: true,
+            loop: false,
             initialSlide: 0,
             slidesPerView: 1,
             spaceBetween: 30,
             grabCursor: true,
-            centeredSlides: false, // disable centeredSlides to fix loop issues
+            centeredSlides: false,
             breakpoints: {
                 768: { slidesPerView: 1.8, spaceBetween: 40 },
                 1024: { slidesPerView: 2.2, spaceBetween: 50 }
@@ -112,13 +103,35 @@ document.addEventListener('DOMContentLoaded', () => {
             observeParents: true,
             observeSlideChildren: true
         });
+
+        // Manual loop logic for next/prev
+        const totalSlides = portfolioSwiperInstance.slides.length;
+        const nextBtn = document.querySelector('.swiper-button-next');
+        const prevBtn = document.querySelector('.swiper-button-prev');
+
+        nextBtn.addEventListener('click', () => {
+            const lastSlideIndex = totalSlides - 1;
+            if (portfolioSwiperInstance.activeIndex === lastSlideIndex) {
+                portfolioSwiperInstance.slideTo(0);
+            } else {
+                portfolioSwiperInstance.slideNext();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (portfolioSwiperInstance.activeIndex === 0) {
+                portfolioSwiperInstance.slideTo(totalSlides - 1);
+            } else {
+                portfolioSwiperInstance.slidePrev();
+            }
+        });
     }
 
-    // --- Update Navigation Highlight on Scroll ---
     function updateActiveNavLink() {
         let currentSectionId = '';
         const headerHeight = header ? header.offsetHeight : 0;
         const scrollPosition = window.scrollY + headerHeight + 60;
+
         sections.forEach(section => {
             const top = section.offsetTop;
             const height = section.offsetHeight;
@@ -126,12 +139,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentSectionId = section.getAttribute('id');
             }
         });
+
         mainNavLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === `#${currentSectionId}`) {
                 link.classList.add('active');
             }
         });
+
         const isNearBottom = (window.innerHeight + Math.ceil(window.scrollY)) >= document.body.offsetHeight - 50;
         if (isNearBottom && document.getElementById('contact')) {
             mainNavLinks.forEach(link => link.classList.remove('active'));
@@ -144,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Handle Header Scroll Effect ---
     function handleScroll() {
         if (header) {
             header.classList.toggle('scrolled', window.scrollY > 50);
@@ -152,14 +166,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateActiveNavLink();
     }
 
-    // --- Throttled Scroll Event ---
     let scrollTimeout;
     window.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(handleScroll, 50);
     });
 
-    // --- Intersection Observer for On-Scroll Animations ---
     function initScrollAnimations() {
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const observerCallback = (entries, observer) => {
@@ -178,7 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Mobile Menu Toggle ---
     if (menuToggle && mobileNavOverlay) {
         menuToggle.addEventListener('click', () => {
             const isActive = mobileNavOverlay.classList.toggle('active');
@@ -187,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = isActive ? 'hidden' : '';
         });
     }
+
     if (mobileNavLinks.length > 0) {
         mobileNavLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -198,8 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Preloader Flow ---
     const hasPreloaderShown = sessionStorage.getItem(PRELOADER_SESSION_KEY);
+
     if (!hasPreloaderShown && preloader) {
         animateKeywords(() => {
             hidePreloader(() => {
@@ -220,17 +232,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Initialize Background Particles ---
     initBackgroundParticles();
 
-    // --- Update Footer Year ---
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
-});
 
-// --- Initialize Portfolio Swiper on window load ---
-// This ensures that all images and assets have loaded so Swiper can correctly calculate slide sizes.
-window.addEventListener('load', () => {
-    initPortfolioSwiper();
+    // Swiper initialized only after full page load
+    window.addEventListener('load', () => {
+        initPortfolioSwiper();
+    });
 });
