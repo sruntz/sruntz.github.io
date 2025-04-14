@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 keyword.classList.add('visible');
                 if (index === preloaderKeywords.length - 1) {
-                    setTimeout(callback, 1100); // 500 transition + 600 pause
+                    setTimeout(callback, 1100);
                 }
             }, delay + (index * interval));
         });
@@ -69,25 +69,25 @@ document.addEventListener('DOMContentLoaded', () => {
             handleScroll();
             updateActiveNavLink();
             initScrollAnimations();
-            initPortfolioSwiper(); // Call after visibility
+            initPortfolioSwiper();
         }
     }
 
     function initPortfolioSwiper() {
         const swiperContainer = document.querySelector('.portfolio-swiper');
-    
+
         if (!swiperContainer || typeof Swiper === 'undefined') {
             console.error("Swiper not ready or container missing.");
             return;
         }
-    
-        // Step 1: Init with loop false to let layout stabilize
+
+        // Step 1: Init with loop false
         portfolioSwiperInstance = new Swiper(swiperContainer, {
             loop: false,
             slidesPerView: 1,
             spaceBetween: 30,
             grabCursor: true,
-            centeredSlides: true,
+            centeredSlides: false,
             breakpoints: {
                 768: { slidesPerView: 1.8, spaceBetween: 40 },
                 1024: { slidesPerView: 2.2, spaceBetween: 50 }
@@ -101,32 +101,32 @@ document.addEventListener('DOMContentLoaded', () => {
             observeParents: true,
             observeSlideChildren: true
         });
-    
+
         const images = swiperContainer.querySelectorAll('img');
         let imagesLoaded = 0;
-    
+
         function onAllImagesLoaded() {
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
-                    // Manually destroy current instance
+                    // Destroy initial instance
                     if (portfolioSwiperInstance && !portfolioSwiperInstance.destroyed) {
                         portfolioSwiperInstance.destroy(true, true);
                     }
-    
-                    // Clean up any leftover cloned slides
+
+                    // Clean up leftover cloned slides
                     const wrapper = swiperContainer.querySelector('.swiper-wrapper');
                     if (wrapper) {
                         wrapper.querySelectorAll('.swiper-slide-duplicate').forEach(dup => dup.remove());
                     }
-    
-                    // Reinitialize with loop enabled
+
+                    // Reinit with loop true & centeredSlides false
                     portfolioSwiperInstance = new Swiper(swiperContainer, {
                         initialSlide: 0,
                         loop: true,
                         slidesPerView: 1,
                         spaceBetween: 30,
                         grabCursor: true,
-                        centeredSlides: true,
+                        centeredSlides: false,
                         breakpoints: {
                             768: { slidesPerView: 1.8, spaceBetween: 40 },
                             1024: { slidesPerView: 2.2, spaceBetween: 50 }
@@ -140,8 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         observeParents: true,
                         observeSlideChildren: true
                     });
-    
-                    // Final snap/refresh
+
                     setTimeout(() => {
                         if (portfolioSwiperInstance && !portfolioSwiperInstance.destroyed) {
                             portfolioSwiperInstance.update();
@@ -151,8 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         }
-    
-        // Load image tracking
+
         if (images.length === 0) {
             onAllImagesLoaded();
         } else {
@@ -170,15 +168,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             });
-    
-            // In case all were already loaded
+
             if (imagesLoaded === images.length) {
                 onAllImagesLoaded();
             }
         }
     }
-    
-    
 
     const hasPreloaderShown = sessionStorage.getItem(PRELOADER_SESSION_KEY);
 
