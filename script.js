@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentWrapper = document.getElementById('content-wrapper');
     const PRELOADER_SESSION_KEY = 'preloaderShown';
 
-    let portfolioSwiperInstance = null;
+    // Removed portfolioSwiperInstance variable
 
     const pageParticlesOptions = {
         interactivity: { events: { onHover: { enable: false }, onClick: { enable: false }, resize: true } },
@@ -60,85 +60,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 preloader.remove();
                 if (callback) callback();
             }, { once: true });
-            setTimeout(() => { if (preloader.parentNode) preloader.remove(); if (callback) callback(); }, 700);
+            setTimeout(() => { if (preloader && preloader.parentNode) preloader.remove(); if (callback) callback(); }, 700); // Increased timeout slightly for safety
         } else if (callback) {
             callback();
         }
     }
 
+
     function showContent() {
         if (contentWrapper) {
             contentWrapper.classList.add('visible');
-            handleScroll();
-            updateActiveNavLink();
-            initScrollAnimations();
+            handleScroll(); // Update nav state immediately
+            updateActiveNavLink(); // Update nav state immediately
+            initScrollAnimations(); // Start observing for animations
         }
     }
 
-    function initPortfolioSwiper() {
-        const swiperContainer = document.querySelector('.portfolio-swiper');
-        if (!swiperContainer || typeof Swiper === 'undefined') {
-            console.error("Swiper not ready or container missing.");
-            return;
-        }
-
-        // Basic non-looped swiper
-        portfolioSwiperInstance = new Swiper(swiperContainer, {
-            loop: false,
-            initialSlide: 0,
-            slidesPerView: 1,
-            spaceBetween: 30,
-            grabCursor: true,
-            centeredSlides: false,
-            breakpoints: {
-                768: { slidesPerView: 1.8, spaceBetween: 40 },
-                1024: { slidesPerView: 2.2, spaceBetween: 50 }
-            },
-            pagination: { el: '.swiper-pagination', clickable: true },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev'
-            },
-            observer: true,
-            observeParents: true,
-            observeSlideChildren: true
-        });
-
-        // Manual loop logic for next/prev
-        const totalSlides = portfolioSwiperInstance.slides.length;
-        const nextBtn = document.querySelector('.swiper-button-next');
-        const prevBtn = document.querySelector('.swiper-button-prev');
-
-        nextBtn.addEventListener('click', () => {
-            const lastSlideIndex = totalSlides - 1;
-            if (portfolioSwiperInstance.activeIndex === lastSlideIndex) {
-                portfolioSwiperInstance.slideTo(0);
-            } else {
-                portfolioSwiperInstance.slideNext();
-            }
-        });
-
-        prevBtn.addEventListener('click', () => {
-            if (portfolioSwiperInstance.activeIndex === 0) {
-                portfolioSwiperInstance.slideTo(totalSlides - 1);
-            } else {
-                portfolioSwiperInstance.slidePrev();
-            }
-        });
-    }
+    // Removed initPortfolioSwiper function
 
     function updateActiveNavLink() {
         let currentSectionId = '';
         const headerHeight = header ? header.offsetHeight : 0;
-        const scrollPosition = window.scrollY + headerHeight + 60;
+        const scrollPosition = window.scrollY + headerHeight + 60; // Offset for activation point
 
         sections.forEach(section => {
             const top = section.offsetTop;
             const height = section.offsetHeight;
+            // Check if the scroll position is within the section boundaries
             if (scrollPosition >= top && scrollPosition < top + height) {
                 currentSectionId = section.getAttribute('id');
             }
         });
+
+        // If no section is currently active (e.g., very top or very bottom not quite hitting a section), check edge cases
+        if (!currentSectionId) {
+            // Check if near the top (Hero section)
+             if (window.scrollY < sections[0].offsetTop + sections[0].offsetHeight - headerHeight - 60) {
+                 currentSectionId = 'hero';
+             } else {
+                 // Check if near the bottom (Contact section)
+                 const isNearBottom = (window.innerHeight + Math.ceil(window.scrollY)) >= document.body.offsetHeight - 50;
+                 if (isNearBottom && document.getElementById('contact')) {
+                    currentSectionId = 'contact';
+                 }
+             }
+        }
+
 
         mainNavLinks.forEach(link => {
             link.classList.remove('active');
@@ -146,100 +113,98 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.classList.add('active');
             }
         });
-
-        const isNearBottom = (window.innerHeight + Math.ceil(window.scrollY)) >= document.body.offsetHeight - 50;
-        if (isNearBottom && document.getElementById('contact')) {
-            mainNavLinks.forEach(link => link.classList.remove('active'));
-            const contactLink = document.querySelector('.main-nav a[href="#contact"]');
-            if (contactLink) contactLink.classList.add('active');
-        } else if (window.scrollY < sections[0].offsetTop - headerHeight - 60) {
-            mainNavLinks.forEach(link => link.classList.remove('active'));
-            const homeLink = document.querySelector('.main-nav a[href="#hero"]');
-            if (homeLink) homeLink.classList.add('active');
-        }
     }
+
 
     function handleScroll() {
         if (header) {
             header.classList.toggle('scrolled', window.scrollY > 50);
         }
-        updateActiveNavLink();
+        updateActiveNavLink(); // Update active link on scroll
     }
 
     let scrollTimeout;
     window.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(handleScroll, 50);
+        scrollTimeout = setTimeout(handleScroll, 50); // Debounce scroll event
     });
 
     function initScrollAnimations() {
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 }; // Trigger when 15% visible
         const observerCallback = (entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
+                    observer.unobserve(entry.target); // Stop observing once animated
                 }
             });
         };
         const observer = new IntersectionObserver(observerCallback, observerOptions);
         elementsToAnimate.forEach(el => {
-            if (!el.closest('.swiper-slide')) {
-                observer.observe(el);
-            }
+            // The check !el.closest('.swiper-slide') is no longer needed
+            observer.observe(el);
         });
     }
 
+    // Mobile Menu Toggle Logic
     if (menuToggle && mobileNavOverlay) {
         menuToggle.addEventListener('click', () => {
             const isActive = mobileNavOverlay.classList.toggle('active');
             menuToggle.classList.toggle('active');
             menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-            document.body.style.overflow = isActive ? 'hidden' : '';
+            document.body.style.overflow = isActive ? 'hidden' : ''; // Prevent body scroll when mobile nav is open
         });
     }
 
+    // Mobile Menu Link Click Logic
     if (mobileNavLinks.length > 0) {
         mobileNavLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileNavOverlay.classList.remove('active');
                 menuToggle.classList.remove('active');
                 menuToggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
+                document.body.style.overflow = ''; // Restore body scroll
             });
         });
     }
 
+    // Preloader Logic
     const hasPreloaderShown = sessionStorage.getItem(PRELOADER_SESSION_KEY);
 
     if (!hasPreloaderShown && preloader) {
+        // Preloader hasn't been shown this session, run animation
         animateKeywords(() => {
             hidePreloader(() => {
                 showContent();
-                sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true');
+                sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true'); // Mark as shown
             });
         });
     } else {
-        if (preloader) preloader.remove();
+        // Preloader has been shown or doesn't exist, show content immediately
+        if (preloader) preloader.remove(); // Remove preloader instantly
         if (contentWrapper) {
+            // Apply classes to show content instantly without fade-in transition
             contentWrapper.classList.add('no-transition', 'visible');
+            // Use requestAnimationFrame to remove 'no-transition' after the browser has rendered the 'visible' state
             requestAnimationFrame(() => {
-                requestAnimationFrame(() => contentWrapper.classList.remove('no-transition'));
+                requestAnimationFrame(() => {
+                     contentWrapper.classList.remove('no-transition');
+                 });
             });
-            handleScroll();
-            updateActiveNavLink();
-            initScrollAnimations();
+            handleScroll(); // Initialize header state and nav links
+            updateActiveNavLink(); // Initialize nav links
+            initScrollAnimations(); // Initialize scroll animations
         }
     }
 
+    // Initialize Background Particles
     initBackgroundParticles();
 
+    // Set Current Year in Footer
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // Swiper initialized only after full page load
-    window.addEventListener('load', () => {
-        initPortfolioSwiper();
-    });
+    // Removed window.addEventListener('load', ...) for Swiper
+
 });

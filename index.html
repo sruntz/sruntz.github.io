@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jared Banks - Modern Content & Copywriting Portfolio</title>
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <!-- Removed Swiper CSS -->
     <!-- Your Custom CSS -->
     <link rel="stylesheet" href="style.css">
     <!-- Google Fonts -->
@@ -88,103 +87,68 @@
                 <div class="container">
                     <h2 class="section-title animate-on-scroll fade-in-up">Portfolio Projects</h2>
                     <p class="section-intro animate-on-scroll fade-in-up delay-1">
-                        Slide through projects. Hover over the current project for details.
+                        A selection of projects showcasing content strategy, copywriting, and technical communication skills.
                     </p>
-                    <!-- Swiper Container -->
-                    <div class="swiper portfolio-swiper">
-                        <!-- Swiper Wrapper -->
-                        <div class="swiper-wrapper">
-                            <!-- Slide 1 -->
-                            <div class="swiper-slide">
-                                <div class="portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-image-container">
-                                            <img src="images/project-1.jpg" alt="Portfolio Project 1 Preview" loading="lazy">
-                                            <div class="portfolio-hover-overlay">
-                                                <div class="portfolio-hover-content">
-                                                    <p><strong>Goal:</strong> Target small businesses researching VoIP solutions, aiming for relevant keyword ranking.</p>
-                                                    <a href="seo-blog.html" class="portfolio-view-link">View Project</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-text">
-                                            <h3>SEO Blog Post: "Unlocking Growth with VoIP"</h3>
-                                            <div class="skills-tags"><span>SEO</span><span>B2B</span><span>Tech</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Slide 2 -->
-                            <div class="swiper-slide">
-                                <div class="portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-image-container">
-                                            <img src="images/skincare-project2.png" alt="Portfolio Project 2 Preview" loading="lazy">
-                                            <div class="portfolio-hover-overlay">
-                                                <div class="portfolio-hover-content">
-                                                    <p><strong>Goal:</strong> Write engaging, benefit-driven product descriptions focused on conversion and brand voice.</p>
-                                                    <a href="website-copy.html" class="portfolio-view-link">View Project</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-text">
-                                            <h3>Website Copy: Skincare Brand</h3>
-                                            <div class="skills-tags"><span>E-commerce</span><span>Copywriting</span><span>Brand Voice</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Slide 3 -->
-                            <div class="swiper-slide">
-                                <div class="portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-image-container">
-                                            <img src="images/project-3.jpg" alt="Portfolio Project 3 Preview" loading="lazy">
-                                             <div class="portfolio-hover-overlay">
-                                                <div class="portfolio-hover-content">
-                                                    <p><strong>Goal:</strong> Clearly explain a complex "Advanced Chart Analysis" feature on a trading platform for end-users.</p>
-                                                    <a href="tech-guide.html" class="portfolio-view-link">View Project</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-text">
-                                            <h3>User Guide: Trading Platform Feature</h3>
-                                             <div class="skills-tags"><span>Technical</span><span>User Guide</span><span>Finance</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Slide 4 -->
-                            <div class="swiper-slide">
-                                <div class="portfolio-item-wrapper">
-                                    <div class="portfolio-item">
-                                        <div class="portfolio-image-container">
-                                            <img src="images/project-4.jpg" alt="Portfolio Project 4 Preview" loading="lazy">
-                                             <div class="portfolio-hover-overlay">
-                                                <div class="portfolio-hover-content">
-                                                     <p><strong>Goal:</strong> Develop a user-centric script for agents handling passport application status inquiries efficiently.</p>
-                                                     <a href="gov-script.html" class="portfolio-view-link">View Project</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="portfolio-text">
-                                            <h3>Contact Centre Script: Passport Queries</h3>
-                                             <div class="skills-tags"><span>Scripting</span><span>User-Centric</span><span>Gov Comms</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- End swiper-wrapper -->
 
-                        <!-- Add Pagination -->
-                        <div class="swiper-pagination portfolio-pagination"></div>
-                        <!-- Add Navigation -->
-                        <div class="swiper-button-prev portfolio-nav-prev"></div>
-                        <div class="swiper-button-next portfolio-nav-next"></div>
+                    <!-- NEW Portfolio Grid -->
+                    <div class="portfolio-grid">
 
-                    </div> <!-- End Swiper Container -->
+                        <!-- Project Card 1 -->
+                        <div class="portfolio-card animate-on-scroll scale-in delay-1">
+                            <div class="portfolio-image-container">
+                                <img src="images/project-1.jpg" alt="Portfolio Project 1 Preview - VoIP Blog Post" loading="lazy">
+                            </div>
+                            <div class="portfolio-card-content">
+                                <h3>SEO Blog Post: "Unlocking Growth with VoIP"</h3>
+                                <div class="skills-tags"><span>SEO</span><span>B2B</span><span>Tech</span></div>
+                                <p class="portfolio-goal"><strong>Goal:</strong> Target small businesses researching VoIP solutions, aiming for relevant keyword ranking.</p>
+                                <a href="seo-blog.html" class="portfolio-view-link">View Project Details</a>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 2 -->
+                        <div class="portfolio-card animate-on-scroll scale-in delay-2">
+                            <div class="portfolio-image-container">
+                                <img src="images/skincare-project2.png" alt="Portfolio Project 2 Preview - Skincare Website Copy" loading="lazy">
+                            </div>
+                            <div class="portfolio-card-content">
+                                <h3>Website Copy: Skincare Brand</h3>
+                                <div class="skills-tags"><span>E-commerce</span><span>Copywriting</span><span>Brand Voice</span></div>
+                                <p class="portfolio-goal"><strong>Goal:</strong> Write engaging, benefit-driven product descriptions focused on conversion and brand voice.</p>
+                                <a href="website-copy.html" class="portfolio-view-link">View Project Details</a>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 3 -->
+                        <div class="portfolio-card animate-on-scroll scale-in delay-1"> {/* Stagger delays */}
+                            <div class="portfolio-image-container">
+                                <img src="images/project-3.jpg" alt="Portfolio Project 3 Preview - Trading Platform User Guide" loading="lazy">
+                            </div>
+                            <div class="portfolio-card-content">
+                                <h3>User Guide: Trading Platform Feature</h3>
+                                <div class="skills-tags"><span>Technical</span><span>User Guide</span><span>Finance</span></div>
+                                <p class="portfolio-goal"><strong>Goal:</strong> Clearly explain a complex "Advanced Chart Analysis" feature for end-users.</p>
+                                <a href="tech-guide.html" class="portfolio-view-link">View Project Details</a>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 4 -->
+                        <div class="portfolio-card animate-on-scroll scale-in delay-2"> {/* Stagger delays */}
+                            <div class="portfolio-image-container">
+                                <img src="images/project-4.jpg" alt="Portfolio Project 4 Preview - Contact Centre Script" loading="lazy">
+                            </div>
+                            <div class="portfolio-card-content">
+                                <h3>Contact Centre Script: Passport Queries</h3>
+                                <div class="skills-tags"><span>Scripting</span><span>User-Centric</span><span>Gov Comms</span></div>
+                                 <p class="portfolio-goal"><strong>Goal:</strong> Develop a user-centric script for agents handling passport application status inquiries efficiently.</p>
+                                <a href="gov-script.html" class="portfolio-view-link">View Project Details</a>
+                            </div>
+                        </div>
+
+                    </div> <!-- End Portfolio Grid -->
                 </div> <!-- End Container -->
             </section>
+
 
             <!-- About Section -->
             <section id="about" class="about-section section">
@@ -275,8 +239,7 @@
         </footer>
     </div> <!-- End #content-wrapper -->
 
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <!-- Removed Swiper JS -->
     <!-- tsParticles JS -->
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
     <!-- Your Custom JS -->
