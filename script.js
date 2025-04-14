@@ -1,3 +1,5 @@
+// --- START OF REPLACEMENT SCRIPT.JS ---
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Element Selections ---
     const preloader = document.getElementById('preloader');
@@ -14,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentWrapper = document.getElementById('content-wrapper');
     const PRELOADER_SESSION_KEY = 'preloaderShown';
 
+    let portfolioSwiperInstance = null; // Variable to hold the Swiper instance
+
     // --- Config: Background Particles ---
     const pageParticlesOptions = {
         interactivity: { events: { onHover: { enable: false }, onClick: { enable: false }, resize: true, }, },
@@ -27,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tsParticles.load(pageParticlesContainerId, pageParticlesOptions)
                 .then(container => { console.log("Background tsParticles loaded"); })
                 .catch(error => { console.error("Error loading background tsParticles:", error); });
-        } else { console.error("Page particles container or tsParticles library not found."); }
+        } else { console.warn("Page particles container or tsParticles library not found."); }
     }
 
     // --- Preloader Animation Sequence ---
@@ -50,116 +54,151 @@ document.addEventListener('DOMContentLoaded', () => {
         let callbackCalled = false;
         function runCallback() { if (!callbackCalled) { callbackCalled = true; if (callback) callback(); } }
         if (preloader) {
-            preloader.classList.add('hidden'); // Start fade out
+            preloader.classList.add('hidden');
             preloader.addEventListener('transitionend', () => { if (preloader && preloader.parentNode) { preloader.remove(); } runCallback(); }, { once: true });
              setTimeout(() => { if(preloader && preloader.parentNode) { preloader.remove(); } runCallback(); }, 700); // Fallback
-        } else { runCallback(); } // Run immediately if no preloader
+        } else { runCallback(); }
     }
 
     // --- Content Visibility and Initializations ---
     function showContent() {
         console.log("showContent called");
         if (contentWrapper) {
-            // Apply 'visible' class to trigger CSS transition (if any)
             contentWrapper.classList.add('visible');
             console.log("Content wrapper class 'visible' added.");
 
             // Initialize other functions that depend on content being visible
-            handleScroll(); // Update header immediately
-            updateActiveNavLink(); // Update nav immediately
-            initScrollAnimations(); // Start observing elements for scroll reveal
+            handleScroll();
+            updateActiveNavLink();
+            initScrollAnimations();
             initPortfolioSwiper(); // Initialize Swiper *after* wrapper is visible
         } else {
             console.error("Content wrapper not found!");
         }
     }
 
-// --- Portfolio Swiper Initialization ---
-function initPortfolioSwiper() {
-    if (typeof Swiper !== 'undefined' && document.querySelector('.portfolio-swiper')) {
-        try {
-            const swiper = new Swiper('.portfolio-swiper', {
-                // --- Add or ensure this line is present ---
-                initialSlide: 0, // Explicitly start at the first logical slide
-
-                slidesPerView: 1,
-                spaceBetween: 30,
-               // loop: true,          // Keep loop: true if desired
-                grabCursor: true,
-               // centeredSlides: true, // Keep centeredSlides: true if desired
-                breakpoints: {
-                    768: { slidesPerView: 1.8, spaceBetween: 40 },
-                    1024: { slidesPerView: 2.2, spaceBetween: 50 }
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                // --- Optional: Add observer for dynamic content/resizing ---
-                // observer: true,
-                // observeParents: true,
-            });
-            console.log("Portfolio Swiper initialized successfully.");
-
-            // --- Force update after initialization ---
-            requestAnimationFrame(() => {
-                if (swiper && !swiper.destroyed) { // Check if swiper instance exists and wasn't destroyed
-                     swiper.update(); // Recalculate size, position etc.
-                     swiper.slideToLoop(0, 0); // Ensure it visibly snaps to the first LOGICAL slide instantly
-                     console.log("Swiper updated and snapped to initial slide after initialization.");
-                }
-            });
-
-        } catch (error) {
-            console.error("Swiper initialization failed:", error);
+    // --- Portfolio Swiper Initialization ---
+    function initPortfolioSwiper() {
+        // Prevent double initialization
+        if (portfolioSwiperInstance) {
+             console.warn("Portfolio Swiper already initialized.");
+             return;
         }
-    } else {
-        if (typeof Swiper === 'undefined') console.error("Swiper library not loaded.");
-        if (!document.querySelector('.portfolio-swiper')) console.error("Portfolio Swiper container not found.");
+
+        const swiperContainer = document.querySelector('.portfolio-swiper');
+
+        if (typeof Swiper !== 'undefined' && swiperContainer) {
+             console.log("Attempting to initialize Portfolio Swiper...");
+             try {
+                 portfolioSwiperInstance = new Swiper(swiperContainer, {
+                     // Core settings
+                     initialSlide: 0, // Start on the first logical slide
+                     slidesPerView: 1,
+                     spaceBetween: 30,
+                     loop: true,          // Enable looping
+                     grabCursor: true,
+                     centeredSlides: true, // Center the active slide
+
+                     // Responsive Breakpoints
+                     breakpoints: {
+                         768: {
+                             slidesPerView: 1.8,
+                             spaceBetween: 40
+                         },
+                         1024: {
+                             slidesPerView: 2.2,
+                             spaceBetween: 50
+                         }
+                     },
+
+                     // Navigation & Pagination
+                     pagination: {
+                         el: '.swiper-pagination',
+                         clickable: true,
+                     },
+                     navigation: {
+                         nextEl: '.swiper-button-next',
+                         prevEl: '.swiper-button-prev',
+                     },
+
+                     // --- Important for dynamic content / visibility ---
+                     observer: true,        // Re-init Swiper on container mutations
+                     observeParents: true,  // Re-init Swiper on parent mutations
+                     observeSlideChildren: true, // Re-init Swiper on slide children mutations
+
+                     // Add a small delay before first calculation can sometimes help
+                     // init: false // Initialize manually slightly later (alternative approach, but timeout below is often sufficient)
+
+                 });
+
+                 console.log("Portfolio Swiper instance created.");
+
+                 // Manually initialize if using init: false
+                 // portfolioSwiperInstance.init();
+
+                 // --- Force update shortly after initialization ---
+                 // This helps ensure calculations are correct after layout settles
+                 // and explicitly sets the visual state to match the logical start.
+                 setTimeout(() => {
+                     if (portfolioSwiperInstance && !portfolioSwiperInstance.destroyed) {
+                         console.log("Updating Swiper state after short delay...");
+                         portfolioSwiperInstance.update(); // Recalculate size, position etc.
+                         portfolioSwiperInstance.slideToLoop(0, 0); // Go to logical slide 0 *instantly*
+                         console.log("Swiper updated and snapped to initial slide after delay.");
+                     } else {
+                         console.log("Swiper instance not available or destroyed during timeout.");
+                     }
+                 }, 50); // 50ms delay - adjust if needed, but keep it short
+
+             } catch (error) {
+                 console.error("Swiper initialization failed:", error);
+                 portfolioSwiperInstance = null; // Reset instance on error
+             }
+         } else {
+             if (typeof Swiper === 'undefined') console.error("Swiper library not loaded.");
+             if (!swiperContainer) console.error("Portfolio Swiper container (.portfolio-swiper) not found.");
+         }
     }
-}
+
 
     // --- Preloader Logic ---
     const hasPreloaderShown = sessionStorage.getItem(PRELOADER_SESSION_KEY);
 
     if (!hasPreloaderShown && preloader) {
-        // First visit: Animate Preloader, then hide it, then show content
         console.log("First visit. Showing preloader animation.");
-        if (contentWrapper) {
-            // Ensure content starts hidden (CSS should handle this with #content-wrapper opacity/visibility)
-            console.log("Content wrapper prepared for preloader.");
-        }
+        if (contentWrapper) { /* Content starts hidden via CSS */ }
         animateKeywords(() => {
-            // After keyword animation finishes...
              hidePreloader(() => {
-                 // After preloader fades out...
-                 showContent(); // Make content visible and initialize scripts
+                 showContent();
                  sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true');
              });
         });
     } else {
-        // Subsequent visit or no preloader: Hide preloader instantly, show content
-        if (hasPreloaderShown) console.log("Preloader already shown.");
+        if (hasPreloaderShown) console.log("Preloader already shown in this session.");
         else console.log("Preloader element not found, skipping animation.");
 
-        if (preloader) {
-            preloader.remove(); // Remove preloader immediately
-        }
+        if (preloader) preloader.remove();
+
         if (contentWrapper) {
-             contentWrapper.classList.add('no-transition'); // Add class to disable CSS transition
-             contentWrapper.classList.add('visible'); // Make visible immediately
-             // Remove the no-transition class shortly after to re-enable transitions for other potential effects
-             requestAnimationFrame(() => { // Ensures styles are applied before removing class
+             contentWrapper.classList.add('no-transition');
+             contentWrapper.classList.add('visible');
+             requestAnimationFrame(() => {
                  requestAnimationFrame(() => {
                      contentWrapper.classList.remove('no-transition');
                  });
              });
+             // Directly call showContent logic IF content wrapper exists
+             handleScroll();
+             updateActiveNavLink();
+             initScrollAnimations();
+             initPortfolioSwiper(); // Initialize Swiper immediately
+        } else {
+            console.error("Content wrapper not found on subsequent load path!");
+            // Fallback: Try initializing swiper anyway, but it might fail if container isn't ready
+             initPortfolioSwiper();
         }
-        showContent(); // Initialize scripts immediately
+
+
     }
 
     // --- Initialize Background Particles (Runs always) ---
@@ -181,11 +220,12 @@ function initPortfolioSwiper() {
             if (!link) return; link.classList.remove('active'); const linkHref = link.getAttribute('href');
             if (linkHref === `#${currentSectionId}`) { link.classList.add('active'); }
         });
+        // Edge cases for top and bottom of page
         if (sections.length > 0 && window.scrollY < sections[0].offsetTop - headerHeight - 60) {
              mainNavLinks.forEach(link => link && link.classList.remove('active')); const homeLink = document.querySelector('.main-nav a[href="#hero"]'); if (homeLink) homeLink.classList.add('active');
         } else if ((window.innerHeight + Math.ceil(window.scrollY)) >= document.body.offsetHeight - 2) {
             mainNavLinks.forEach(link => link && link.classList.remove('active')); const contactLink = document.querySelector('.main-nav a[href="#contact"]'); if (contactLink) contactLink.classList.add('active');
-        } else if (!currentSectionId && window.scrollY < 100) {
+        } else if (!currentSectionId && window.scrollY < 100) { // Handle very top when no section is active yet
              mainNavLinks.forEach(link => link && link.classList.remove('active')); const homeLink = document.querySelector('.main-nav a[href="#hero"]'); if (homeLink) homeLink.classList.add('active');
         }
     };
@@ -204,7 +244,15 @@ function initPortfolioSwiper() {
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const observerCallback = (entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }); };
         const observer = new IntersectionObserver(observerCallback, observerOptions);
-        if (elementsToAnimate.length > 0) { elementsToAnimate.forEach(el => { if (!el.closest('.portfolio-swiper')) { observer.observe(el); } }); }
+        // Ensure elements *inside* the swiper are not animated by this observer
+        if (elementsToAnimate.length > 0) {
+            elementsToAnimate.forEach(el => {
+                 // Check if the element is inside a swiper slide
+                 if (!el.closest('.swiper-slide')) {
+                     observer.observe(el);
+                 }
+             });
+        }
     }
 
     // --- Mobile Menu Toggle ---
@@ -213,4 +261,6 @@ function initPortfolioSwiper() {
     // --- Close Mobile Menu on Link Click ---
     if (mobileNavLinks.length > 0) { mobileNavLinks.forEach(link => { link.addEventListener('click', () => { if (mobileNavOverlay) mobileNavOverlay.classList.remove('active'); if (menuToggle) { menuToggle.classList.remove('active'); menuToggle.setAttribute('aria-expanded', 'false'); } document.body.style.overflow = ''; }); }); }
 
-});
+}); // End DOMContentLoaded
+
+// --- END OF REPLACEMENT SCRIPT.JS ---
