@@ -121,12 +121,21 @@ main { position: relative; z-index: 1; }
 /* --- Portfolio Section Grid --- */
 .portfolio-grid {
     display: grid;
-    /* Creates 2 columns on medium screens and up, 1 column below */
-    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-    gap: 2.5rem; /* Adjust gap as needed */
+    /* Default to a single column (mobile first) */
+    grid-template-columns: 1fr;
+    gap: 2rem; /* Smaller gap for single column */
     margin-top: 4rem; /* Space below intro text */
 }
 
+/* Apply two columns for medium screens and up */
+@media (min-width: 768px) { /* Adjust breakpoint if needed */
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr); /* Creates exactly 2 equal columns */
+        gap: 2.5rem; /* Larger gap for two columns */
+    }
+}
+
+/* Portfolio Card Styles */
 .portfolio-card {
     background: var(--surface-medium);
     border-radius: var(--border-radius-lg);
@@ -241,17 +250,6 @@ main { position: relative; z-index: 1; }
     box-shadow: 0 4px 10px rgba(160, 32, 240, 0.4);
 }
 
-/* Responsive adjustments for the grid */
-@media (max-width: 768px) {
-    .portfolio-grid {
-        grid-template-columns: 1fr; /* Single column */
-        gap: 2rem;
-    }
-    .portfolio-card-content {
-        padding: 1.2rem;
-    }
-}
-
 /* --- About Section --- */
 .about-section { background-color: var(--surface-dark); }
 .about-layout { display: grid; grid-template-columns: 1fr 1.5fr; align-items: center; gap: 4rem; }
@@ -314,6 +312,44 @@ main { position: relative; z-index: 1; }
 .back-link svg { width: 18px; height: 18px; transition: transform var(--transition-medium) ease; }
 .back-link:hover { color: var(--primary-glow); transform: translateX(-5px); } .back-link:hover svg { transform: translateX(-3px); }
 /* --- Responsive Design --- */
-@media (max-width: 992px) { .about-layout { grid-template-columns: 1fr; text-align: center; gap: 3rem; } .about-text { order: 1; } .about-image-wrapper { order: 2; max-width: 350px; } .about-text .section-title--left { text-align: center; } }
-@media (max-width: 768px) { html { font-size: 15px; } .section { padding: 80px 0; } .container { padding: 0 20px; } .main-nav { display: none; } .menu-toggle { display: block; } .hero-section { min-height: 90vh; padding-top: 100px; } h1 { font-size: clamp(2.5rem, 7vw, 3.5rem); } h2 { font-size: clamp(2rem, 6vw, 2.6rem); } .section-intro { max-width: 90%; font-size: 1rem; margin-bottom: 3rem;} .skills-grid { grid-template-columns: 1fr; gap: 1.5rem;} .contact-info { padding: 2rem; } .project-content { padding: 60px 20px; } #preloader-headline-container { font-size: clamp(1.8rem, 5vw, 3rem); } .portfolio-section .container { padding-left: 15px; padding-right: 15px; } /* Removed swiper specific responsive */ }
-@media (max-width: 480px) { html { font-size: 14px; } .section { padding: 60px 0; } .container { padding: 0 15px; } .logo a { font-size: 1.5rem; } .cta-button { padding: 0.9rem 2rem; font-size: 1rem; } /* .portfolio-text replaced by .portfolio-card-content */ .portfolio-card-content { padding: 1.2rem; } .skill-item { padding: 2rem 1.5rem; } .contact-info { padding: 1.5rem; } .contact-links p { flex-direction: column; align-items: center; gap: 0.3rem; text-align: center;} .contact-links svg { margin-bottom: 0.2rem; } .project-detail-header { padding: 120px 0 50px 0; } .project-sample { padding: 1.2rem 1.5rem; font-size: 0.85rem; } #preloader-headline-container { font-size: clamp(1.5rem, 5.5vw, 2.5rem); } /* Removed swiper specific responsive */ .portfolio-card-content h3 { font-size: 1rem; } }
+@media (max-width: 992px) {
+    .about-layout { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+    .about-text { order: 1; }
+    .about-image-wrapper { order: 2; max-width: 350px; }
+    .about-text .section-title--left { text-align: center; }
+}
+@media (max-width: 768px) {
+    html { font-size: 15px; }
+    .section { padding: 80px 0; }
+    .container { padding: 0 20px; }
+    .main-nav { display: none; }
+    .menu-toggle { display: block; }
+    .hero-section { min-height: 90vh; padding-top: 100px; }
+    h1 { font-size: clamp(2.5rem, 7vw, 3.5rem); }
+    h2 { font-size: clamp(2rem, 6vw, 2.6rem); }
+    .section-intro { max-width: 90%; font-size: 1rem; margin-bottom: 3rem;}
+    /* Ensure portfolio grid gap is updated for mobile */
+    .portfolio-grid { gap: 2rem; }
+    .portfolio-card-content { padding: 1.2rem; }
+    .skills-grid { grid-template-columns: 1fr; gap: 1.5rem;}
+    .contact-info { padding: 2rem; }
+    .project-content { padding: 60px 20px; }
+    #preloader-headline-container { font-size: clamp(1.8rem, 5vw, 3rem); }
+    .portfolio-section .container { padding-left: 15px; padding-right: 15px; }
+}
+@media (max-width: 480px) {
+    html { font-size: 14px; }
+    .section { padding: 60px 0; }
+    .container { padding: 0 15px; }
+    .logo a { font-size: 1.5rem; }
+    .cta-button { padding: 0.9rem 2rem; font-size: 1rem; }
+    .portfolio-card-content { padding: 1.2rem; }
+    .portfolio-card-content h3 { font-size: 1rem; }
+    .skill-item { padding: 2rem 1.5rem; }
+    .contact-info { padding: 1.5rem; }
+    .contact-links p { flex-direction: column; align-items: center; gap: 0.3rem; text-align: center;}
+    .contact-links svg { margin-bottom: 0.2rem; }
+    .project-detail-header { padding: 120px 0 50px 0; }
+    .project-sample { padding: 1.2rem 1.5rem; font-size: 0.85rem; }
+    #preloader-headline-container { font-size: clamp(1.5rem, 5.5vw, 2.5rem); }
+}
