@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Global Variables ---
     const preloader = document.getElementById('preloader');
     const preloaderKeywords = document.querySelectorAll('#preloader .preloader-keyword');
     const pageParticlesContainerId = 'page-particles';
@@ -13,8 +14,80 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentWrapper = document.getElementById('content-wrapper');
     const PRELOADER_SESSION_KEY = 'preloaderShown';
 
-    // Removed portfolioSwiperInstance variable
+    // --- NEW Portfolio Slider Variables ---
+    const portfolioNavContainer = document.querySelector('.portfolio-nav-inner');
+    const portfolioDisplayImg = document.getElementById('portfolio-display-img');
+    const portfolioDisplayTitle = document.getElementById('portfolio-display-title');
+    const portfolioDisplayTags = document.getElementById('portfolio-display-tags');
+    const portfolioDisplayGoal = document.getElementById('portfolio-display-goal');
+    const portfolioDisplayLink = document.getElementById('portfolio-display-link');
+    const portfolioSliderContainer = document.querySelector('.portfolio-slider-container'); // For hover pause
+    const portfolioMainDisplay = document.querySelector('.portfolio-main-display'); // Reference to hide if no projects
 
+    let currentProjectIndex = 0;
+    let autoPlayInterval = null;
+    const AUTOPLAY_DELAY = 6000; // 6 seconds delay
+
+    // --- Portfolio Project Data ---
+    // IMPORTANT: Update image paths! Use full paths or create specific thumbnails.
+    // Suggestion: Create smaller thumbnail versions (e.g., project1preview_thumb.jpg) for thumbSrc
+    const portfolioProjects = [
+        {
+            thumbSrc: 'images/project1preview.jpg', // Consider: 'images/project1preview_thumb.jpg'
+            thumbAlt: 'Thumbnail for VoIP Blog Post',
+            imageSrc: 'images/project1preview.jpg',
+            altText: 'Portfolio Project 1 Preview - VoIP Blog Post',
+            title: 'SEO Blog Post: "Unlocking Growth with VoIP"',
+            tags: ['SEO', 'B2B', 'Tech'],
+            goal: 'Target small businesses researching VoIP solutions, aiming for relevant keyword ranking.',
+            link: 'seo-blog.html'
+        },
+        {
+            thumbSrc: 'images/project2preview.jpg', // Consider: 'images/project2preview_thumb.jpg'
+            thumbAlt: 'Thumbnail for Skincare Website Copy',
+            imageSrc: 'images/project2preview.jpg',
+            altText: 'Portfolio Project 2 Preview - Skincare Website Copy',
+            title: 'Website Copy: Skincare Brand',
+            tags: ['E-commerce', 'Copywriting', 'Brand Voice'],
+            goal: 'Write engaging, benefit-driven product descriptions focused on conversion and brand voice.',
+            link: 'website-copy.html'
+        },
+        {
+            thumbSrc: 'images/project3preview.jpg', // Consider: 'images/project3preview_thumb.jpg'
+            thumbAlt: 'Thumbnail for Trading Platform User Guide',
+            imageSrc: 'images/project3preview.jpg',
+            altText: 'Portfolio Project 3 Preview - Trading Platform User Guide',
+            title: 'User Guide: Trading Platform Feature',
+            tags: ['Technical', 'User Guide', 'Finance'],
+            goal: 'Clearly explain a complex "Advanced Chart Analysis" feature for end-users.',
+            link: 'tech-file.html'
+        },
+        {
+            thumbSrc: 'images/project4preview.jpg', // Consider: 'images/project4preview_thumb.jpg'
+            thumbAlt: 'Thumbnail for Contact Centre Script',
+            imageSrc: 'images/project4preview.jpg',
+            altText: 'Portfolio Project 4 Preview - Contact Centre Script',
+            title: 'Contact Centre Script: Passport Queries',
+            tags: ['Scripting', 'User-Centric', 'Gov Comms'],
+            goal: 'Develop a user-centric script for agents handling passport application status inquiries efficiently.',
+            link: 'gov-script.html'
+        },
+        // --- ADD MORE PROJECTS HERE following the same structure ---
+        /*
+        {
+            thumbSrc: 'images/project5preview_thumb.jpg',
+            thumbAlt: 'Thumbnail for Project 5',
+            imageSrc: 'images/project5preview.jpg',
+            altText: 'Portfolio Project 5 Preview - Some Description',
+            title: 'Project 5: Email Campaign',
+            tags: ['Email Marketing', 'B2C', 'Automation'],
+            goal: 'Goal for project 5 goes here.',
+            link: 'project5-detail.html' // Link to the project detail page
+        },
+        */
+    ];
+
+    // --- Particle Background ---
     const pageParticlesOptions = {
         interactivity: { events: { onHover: { enable: false }, onClick: { enable: false }, resize: true } },
         particles: {
@@ -28,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             size: { value: { min: 1, max: 2 } }
         },
         detectRetina: true,
-        fullScreen: { enable: false }
+        fullScreen: { enable: false } // Important: set to false for page background
     };
 
     function initBackgroundParticles() {
@@ -39,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- Preloader Functions ---
     function animateKeywords(callback) {
         if (!preloaderKeywords || preloaderKeywords.length === 0) { if (callback) callback(); return; }
         const delay = 300;
@@ -47,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 keyword.classList.add('visible');
                 if (index === preloaderKeywords.length - 1) {
-                    setTimeout(callback, 1100);
+                    setTimeout(callback, 1100); // Wait after last keyword
                 }
             }, delay + (index * interval));
         });
@@ -60,53 +134,170 @@ document.addEventListener('DOMContentLoaded', () => {
                 preloader.remove();
                 if (callback) callback();
             }, { once: true });
-            setTimeout(() => { if (preloader && preloader.parentNode) preloader.remove(); if (callback) callback(); }, 700); // Increased timeout slightly for safety
+            // Safety timeout if transitionend doesn't fire
+            setTimeout(() => { if (preloader && preloader.parentNode) preloader.remove(); }, 700);
         } else if (callback) {
-            callback();
+            callback(); // Execute callback immediately if preloader doesn't exist
         }
     }
-
 
     function showContent() {
         if (contentWrapper) {
             contentWrapper.classList.add('visible');
             handleScroll(); // Update nav state immediately
             updateActiveNavLink(); // Update nav state immediately
-            initScrollAnimations(); // Start observing for animations
+            initScrollAnimations(); // Start observing for scroll animations
+            initPortfolioSlider(); // Initialize the portfolio slider AFTER content is shown
         }
     }
 
-    // Removed initPortfolioSwiper function
+    // --- Portfolio Slider Functions ---
+    function renderPortfolioNav() {
+        if (!portfolioNavContainer) return;
+        portfolioNavContainer.innerHTML = ''; // Clear existing nav items
 
+        portfolioProjects.forEach((project, index) => {
+            const navItem = document.createElement('div');
+            navItem.classList.add('portfolio-nav-item');
+            navItem.setAttribute('data-project-index', index);
+
+            const img = document.createElement('img');
+            img.src = project.thumbSrc; // Use the thumbnail source
+            img.alt = project.thumbAlt;
+            img.loading = 'lazy';
+
+            const title = document.createElement('h4');
+            title.textContent = project.title;
+
+            navItem.appendChild(img);
+            navItem.appendChild(title);
+
+            // Click event listener for manual navigation
+            navItem.addEventListener('click', () => {
+                stopAutoPlay(); // Stop autoplay on user interaction
+                showProject(index);
+                // Optional: You could restart autoplay after a longer delay here if desired
+                // setTimeout(startAutoPlay, AUTOPLAY_DELAY * 3);
+            });
+
+            portfolioNavContainer.appendChild(navItem);
+        });
+    }
+
+    function showProject(index) {
+        if (index < 0 || index >= portfolioProjects.length) {
+            console.error("Invalid project index:", index);
+            return; // Exit if index is out of bounds
+        }
+
+        currentProjectIndex = index; // Update the current index tracker
+        const project = portfolioProjects[index];
+
+        // Update main display elements safely
+        if (portfolioDisplayImg) {
+            portfolioDisplayImg.classList.add('loading'); // Add class for potential transition
+             // Update image source after a slight delay for fade effect
+             setTimeout(() => {
+                portfolioDisplayImg.src = project.imageSrc;
+                portfolioDisplayImg.alt = project.altText;
+                // Remove loading class once image is actually loaded
+                portfolioDisplayImg.onload = () => {
+                    portfolioDisplayImg.classList.remove('loading');
+                };
+                // Fallback in case onload doesn't fire (e.g., cached image)
+                setTimeout(() => portfolioDisplayImg.classList.remove('loading'), 50);
+             }, 150); // Adjust timing based on CSS transition duration
+        }
+        if (portfolioDisplayTitle) portfolioDisplayTitle.textContent = project.title;
+        if (portfolioDisplayGoal) portfolioDisplayGoal.innerHTML = `<strong>Goal:</strong> ${project.goal}`; // Use innerHTML for the <strong> tag
+        if (portfolioDisplayLink) portfolioDisplayLink.href = project.link;
+
+        // Update tags
+        if (portfolioDisplayTags) {
+            portfolioDisplayTags.innerHTML = ''; // Clear previous tags
+            project.tags.forEach(tagText => {
+                const tagElement = document.createElement('span');
+                tagElement.textContent = tagText;
+                portfolioDisplayTags.appendChild(tagElement);
+            });
+        }
+
+        // Update active class in the navigation thumbnails
+        const navItems = portfolioNavContainer?.querySelectorAll('.portfolio-nav-item');
+        navItems?.forEach((item, i) => {
+            item.classList.toggle('active', i === index); // Add 'active' if index matches, remove otherwise
+             // Scroll the newly active item into view if the nav is scrollable
+             if (i === index && item.scrollIntoView) {
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); // 'nearest' prevents unnecessary scrolling
+            }
+        });
+    }
+
+    function nextProject() {
+        // Calculate the index of the next project, looping back to 0 if at the end
+        const nextIndex = (currentProjectIndex + 1) % portfolioProjects.length;
+        showProject(nextIndex);
+    }
+
+    function startAutoPlay() {
+        if (autoPlayInterval) clearInterval(autoPlayInterval); // Clear any existing interval first
+        // Only start autoplay if there's more than one project
+        if (portfolioProjects.length > 1) {
+             autoPlayInterval = setInterval(nextProject, AUTOPLAY_DELAY);
+        }
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval); // Stop the interval
+        autoPlayInterval = null; // Reset the interval variable
+    }
+
+    function initPortfolioSlider() {
+        // Check if the main container and project data exist
+        if (portfolioNavContainer && portfolioProjects.length > 0) {
+            renderPortfolioNav(); // Build the thumbnail navigation
+            showProject(0); // Display the first project initially
+            startAutoPlay(); // Begin automatic cycling
+
+             // Add event listeners to pause/resume autoplay on hover
+             if (portfolioSliderContainer) {
+                 portfolioSliderContainer.addEventListener('mouseenter', stopAutoPlay);
+                 portfolioSliderContainer.addEventListener('mouseleave', startAutoPlay);
+             }
+        } else if (portfolioNavContainer) {
+             // Optional: Handle the case where there are no projects defined
+             portfolioNavContainer.innerHTML = '<p style="color: var(--text-muted); padding: 1rem;">No projects added yet.</p>';
+             if(portfolioMainDisplay) portfolioMainDisplay.style.display = 'none'; // Hide the main display area
+        }
+    }
+
+    // --- Navigation & Scroll Handling ---
     function updateActiveNavLink() {
         let currentSectionId = '';
         const headerHeight = header ? header.offsetHeight : 0;
-        const scrollPosition = window.scrollY + headerHeight + 60; // Offset for activation point
+        const scrollPosition = window.scrollY + headerHeight + 60; // Offset for better activation timing
 
         sections.forEach(section => {
             const top = section.offsetTop;
             const height = section.offsetHeight;
-            // Check if the scroll position is within the section boundaries
             if (scrollPosition >= top && scrollPosition < top + height) {
                 currentSectionId = section.getAttribute('id');
             }
         });
 
-        // If no section is currently active (e.g., very top or very bottom not quite hitting a section), check edge cases
+        // Edge cases for top and bottom of the page
         if (!currentSectionId) {
-            // Check if near the top (Hero section)
              if (window.scrollY < sections[0].offsetTop + sections[0].offsetHeight - headerHeight - 60) {
-                 currentSectionId = 'hero';
+                 currentSectionId = 'hero'; // Default to hero if near top
              } else {
-                 // Check if near the bottom (Contact section)
                  const isNearBottom = (window.innerHeight + Math.ceil(window.scrollY)) >= document.body.offsetHeight - 50;
                  if (isNearBottom && document.getElementById('contact')) {
-                    currentSectionId = 'contact';
+                    currentSectionId = 'contact'; // Default to contact if near bottom
                  }
              }
         }
 
-
+        // Apply active class to the correct main navigation link
         mainNavLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === `#${currentSectionId}`) {
@@ -115,48 +306,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     function handleScroll() {
+        // Add 'scrolled' class to header for styling changes on scroll
         if (header) {
             header.classList.toggle('scrolled', window.scrollY > 50);
         }
-        updateActiveNavLink(); // Update active link on scroll
+        updateActiveNavLink(); // Update active nav link on scroll
     }
 
+    // Debounced scroll handler
     let scrollTimeout;
     window.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(handleScroll, 50); // Debounce scroll event
+        scrollTimeout = setTimeout(handleScroll, 50); // Adjust debounce delay if needed
     });
 
+    // --- Scroll Animations ---
     function initScrollAnimations() {
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 }; // Trigger when 15% visible
         const observerCallback = (entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
+                    entry.target.classList.add('is-visible'); // Add class to trigger animation
                     observer.unobserve(entry.target); // Stop observing once animated
                 }
             });
         };
         const observer = new IntersectionObserver(observerCallback, observerOptions);
         elementsToAnimate.forEach(el => {
-            // The check !el.closest('.swiper-slide') is no longer needed
-            observer.observe(el);
+            observer.observe(el); // Observe each element designated for animation
         });
     }
 
-    // Mobile Menu Toggle Logic
+    // --- Mobile Menu Logic ---
     if (menuToggle && mobileNavOverlay) {
         menuToggle.addEventListener('click', () => {
             const isActive = mobileNavOverlay.classList.toggle('active');
             menuToggle.classList.toggle('active');
             menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-            document.body.style.overflow = isActive ? 'hidden' : ''; // Prevent body scroll when mobile nav is open
+            // Prevent body scroll when mobile nav is open
+            document.body.style.overflow = isActive ? 'hidden' : '';
         });
     }
 
-    // Mobile Menu Link Click Logic
+    // Close mobile menu when a link is clicked
     if (mobileNavLinks.length > 0) {
         mobileNavLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -168,24 +361,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Preloader Logic
+    // --- Initialization Logic ---
+
+    // Preloader Handling
     const hasPreloaderShown = sessionStorage.getItem(PRELOADER_SESSION_KEY);
 
     if (!hasPreloaderShown && preloader) {
-        // Preloader hasn't been shown this session, run animation
+        // First visit this session: Show preloader animation
         animateKeywords(() => {
             hidePreloader(() => {
-                showContent();
+                showContent(); // Shows content and initializes slider
                 sessionStorage.setItem(PRELOADER_SESSION_KEY, 'true'); // Mark as shown
             });
         });
     } else {
-        // Preloader has been shown or doesn't exist, show content immediately
+        // Preloader already shown or doesn't exist: Show content immediately
         if (preloader) preloader.remove(); // Remove preloader instantly
         if (contentWrapper) {
-            // Apply classes to show content instantly without fade-in transition
+            // Apply classes for instant visibility without fade-in
             contentWrapper.classList.add('no-transition', 'visible');
-            // Use requestAnimationFrame to remove 'no-transition' after the browser has rendered the 'visible' state
+            // Remove the 'no-transition' class shortly after render
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                      contentWrapper.classList.remove('no-transition');
@@ -194,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
             handleScroll(); // Initialize header state and nav links
             updateActiveNavLink(); // Initialize nav links
             initScrollAnimations(); // Initialize scroll animations
+            initPortfolioSlider(); // Initialize the portfolio slider immediately
         }
     }
 
@@ -204,7 +400,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
-
-    // Removed window.addEventListener('load', ...) for Swiper
 
 });

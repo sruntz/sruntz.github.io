@@ -1,3 +1,5 @@
+--- START OF FILE style.css ---
+
 /* --- Global Styles & Variables --- */
 :root {
     --primary-glow: #a020f0; --secondary-accent: #c879ff; --background-dark: #0a0a10;
@@ -118,50 +120,43 @@ main { position: relative; z-index: 1; }
 .scroll-down-indicator svg { stroke: var(--secondary-accent); width: 30px; height: 30px; }
 @keyframes bounceArrow { 0%, 100% { transform: translate(-50%, 0); opacity: 0.8; } 50% { transform: translate(-50%, 10px); opacity: 1; } }
 
-/* --- Portfolio Section Grid --- */
+/* --- OLD Portfolio Section Grid (COMMENTED OUT) --- */
+/*
 .portfolio-grid {
     display: grid;
-    /* Default to a single column (mobile first) */
     grid-template-columns: 1fr;
-    gap: 2rem; /* Smaller gap for single column */
-    margin-top: 4rem; /* Space below intro text */
+    gap: 2rem;
+    margin-top: 4rem;
 }
-
-/* Apply two columns for medium screens and up */
-@media (min-width: 768px) { /* Adjust breakpoint if needed */
+@media (min-width: 768px) {
     .portfolio-grid {
-        grid-template-columns: repeat(2, 1fr); /* Creates exactly 2 equal columns */
-        gap: 2.5rem; /* Larger gap for two columns */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
     }
 }
-
-/* Portfolio Card Styles */
 .portfolio-card {
     background: var(--surface-medium);
     border-radius: var(--border-radius-lg);
     border: 1px solid var(--border-color);
-    overflow: hidden; /* Clip image corners and potential overflow */
+    overflow: hidden;
     transition: transform var(--transition-medium) ease, box-shadow var(--transition-medium) ease;
     display: flex;
-    flex-direction: column; /* Stack image and content vertically */
-    height: 100%; /* Ensure cards in the same row have equal height if needed by grid */
+    flex-direction: column;
+    height: 100%;
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
-
 .portfolio-card:hover {
     transform: translateY(-8px) scale(1.02);
     box-shadow: 0 12px 28px rgba(0,0,0,0.2), 0 0 20px var(--shadow-color-hover);
-    border-color: rgba(160, 32, 240, 0.5); /* Optional: brighter border on hover */
+    border-color: rgba(160, 32, 240, 0.5);
 }
-
 .portfolio-card .portfolio-image-container {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 16 / 10; /* Maintain aspect ratio */
+    aspect-ratio: 16 / 10;
     width: 100%;
-    background-color: #2a2a35; /* Placeholder background */
+    background-color: #2a2a35;
 }
-
 .portfolio-card .portfolio-image-container img {
     position: absolute;
     top: 0;
@@ -173,35 +168,29 @@ main { position: relative; z-index: 1; }
     transition: transform var(--transition-slow) ease, filter var(--transition-medium) ease;
     filter: brightness(1) saturate(1);
 }
-
-/* Image effect on card hover */
 .portfolio-card:hover .portfolio-image-container img {
     transform: scale(1.05);
     filter: brightness(0.85);
 }
-
 .portfolio-card-content {
     padding: 1.5rem;
-    flex-grow: 1; /* Allows content area to expand if needed */
+    flex-grow: 1;
     display: flex;
-    flex-direction: column; /* Stack elements inside content area */
+    flex-direction: column;
 }
-
 .portfolio-card-content h3 {
     margin-bottom: 0.75rem;
     color: var(--text-primary);
     font-weight: 600;
     font-size: clamp(1.1rem, 3vw, 1.3rem);
 }
-
 .portfolio-card-content .skills-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    margin-top: 0.5rem; /* Space above tags */
-    margin-bottom: 1rem; /* Space below tags */
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
 }
-
 .portfolio-card-content .skills-tags span {
     background-color: rgba(160, 32, 240, 0.15);
     color: var(--secondary-accent);
@@ -211,28 +200,218 @@ main { position: relative; z-index: 1; }
     font-weight: 500;
     border: 1px solid rgba(160, 32, 240, 0.3);
 }
-
 .portfolio-card-content .portfolio-goal {
     font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.6;
-    margin-bottom: 1.5rem; /* Space before the button */
-    flex-grow: 1; /* Pushes button to bottom if content is short */
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
 }
-
 .portfolio-card-content .portfolio-goal strong {
     color: var(--text-primary);
     font-weight: 600;
 }
-
 .portfolio-view-link {
     display: inline-block;
     background: var(--primary-glow);
     color: #fff;
-    padding: 0.7rem 1.5rem; /* Button padding */
+    padding: 0.7rem 1.5rem;
     border-radius: var(--border-radius-sm);
     font-weight: 600;
     font-size: 0.9rem;
+    font-family: var(--heading-font);
+    text-decoration: none;
+    text-align: center;
+    transition: background-color var(--transition-medium) ease, transform var(--transition-medium) ease, box-shadow var(--transition-medium) ease;
+    margin-top: auto;
+    align-self: flex-start;
+    cursor: pointer;
+    border: none;
+}
+.portfolio-view-link:hover {
+    background-color: var(--secondary-accent);
+    color: var(--background-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(160, 32, 240, 0.4);
+}
+*/
+
+/* --- NEW Portfolio Slider Styles --- */
+.portfolio-slider-container {
+    display: flex;
+    gap: 2rem; /* Adjust gap between nav and display */
+    margin-top: 4rem; /* Space below intro text */
+    background: var(--surface-medium); /* Background for the whole component */
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    min-height: 550px; /* Give it some minimum height */
+    position: relative; /* For potential absolute elements if needed later */
+}
+
+/* Vertical Navigation (Thumbnails) */
+.portfolio-nav {
+    flex: 0 0 250px; /* Fixed width for the nav column, don't grow or shrink */
+    max-height: 550px; /* Match min-height or adjust */
+    overflow-y: auto; /* Enable scrolling if thumbnails exceed height */
+    padding-right: 1rem; /* Add some spacing before the scrollbar */
+    border-right: 1px solid var(--border-color); /* Separator line */
+}
+
+.portfolio-nav-inner {
+     display: flex;
+     flex-direction: column;
+     gap: 1rem; /* Spacing between thumbnails */
+}
+
+/* Custom Scrollbar for Webkit Browsers (Chrome, Safari) */
+.portfolio-nav::-webkit-scrollbar {
+    width: 6px;
+}
+.portfolio-nav::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+    border-radius: 3px;
+}
+.portfolio-nav::-webkit-scrollbar-thumb {
+    background-color: var(--text-muted);
+    border-radius: 3px;
+}
+.portfolio-nav::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-secondary);
+}
+
+
+.portfolio-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    border: 1px solid transparent; /* Placeholder for active state */
+    transition: background-color var(--transition-fast) ease, border-color var(--transition-fast) ease;
+    background-color: rgba(255, 255, 255, 0.03); /* Subtle background */
+}
+
+.portfolio-nav-item:hover {
+    background-color: rgba(160, 32, 240, 0.1);
+}
+
+.portfolio-nav-item.active {
+    background-color: rgba(160, 32, 240, 0.2);
+    border-color: var(--primary-glow);
+}
+
+.portfolio-nav-item img {
+    width: 60px; /* Thumbnail image size */
+    height: 40px;
+    object-fit: cover;
+    border-radius: var(--border-radius-sm);
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+.portfolio-nav-item h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    line-height: 1.4;
+    transition: color var(--transition-fast) ease;
+}
+
+.portfolio-nav-item.active h4 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Main Display Area */
+.portfolio-main-display {
+    flex: 1 1 auto; /* Allow display area to grow and shrink */
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Prevents flex item overflow issues */
+}
+
+.portfolio-display-image-container {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Or adjust as needed */
+    background-color: #2a2a35; /* Placeholder */
+    border-radius: var(--border-radius-md);
+    overflow: hidden; /* Clip image */
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+#portfolio-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* Add transition for smooth image change (optional) */
+    opacity: 1;
+    transition: opacity var(--transition-medium) ease-in-out;
+}
+/* Style for during image load/change */
+#portfolio-display-img.loading {
+    opacity: 0.5;
+}
+
+
+.portfolio-display-content {
+    flex-grow: 1; /* Take remaining vertical space */
+    display: flex;
+    flex-direction: column;
+}
+
+#portfolio-display-title {
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: clamp(1.2rem, 3vw, 1.6rem); /* Slightly larger title */
+}
+
+/* Shared tag style for main display */
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.skills-tags span {
+    background-color: rgba(160, 32, 240, 0.15);
+    color: var(--secondary-accent);
+    padding: 0.3rem 0.9rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(160, 32, 240, 0.3);
+}
+
+/* Shared goal style */
+.portfolio-goal {
+    font-size: 1rem; /* Slightly larger goal text */
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    flex-grow: 1; /* Pushes button down */
+}
+.portfolio-goal strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Shared button style */
+.portfolio-view-link {
+    display: inline-block;
+    background: var(--primary-glow);
+    color: #fff;
+    padding: 0.8rem 1.8rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
     font-family: var(--heading-font);
     text-decoration: none;
     text-align: center;
@@ -242,13 +421,64 @@ main { position: relative; z-index: 1; }
     cursor: pointer;
     border: none;
 }
-
 .portfolio-view-link:hover {
     background-color: var(--secondary-accent);
     color: var(--background-dark);
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(160, 32, 240, 0.4);
 }
+
+
+/* Responsive adjustments for the slider */
+@media (max-width: 992px) {
+    .portfolio-slider-container {
+        flex-direction: column; /* Stack nav on top of display */
+        min-height: unset; /* Remove fixed min-height */
+        padding: 1rem;
+    }
+    .portfolio-nav {
+        flex: 0 0 auto; /* Let height be determined by content */
+        max-height: 250px; /* Limit height, allow scrolling */
+        width: 100%;
+        border-right: none; /* Remove side border */
+        border-bottom: 1px solid var(--border-color); /* Add bottom border */
+        padding-right: 0;
+        padding-bottom: 1rem; /* Space below thumbnails */
+        margin-bottom: 1.5rem; /* Space between nav and display */
+    }
+     .portfolio-nav-inner {
+         /* Optional: Allow horizontal scrolling on smaller screens if needed */
+         /* flex-direction: row; */
+         /* overflow-x: auto; */
+         /* gap: 0.8rem; */
+    }
+
+    .portfolio-display-image-container {
+         aspect-ratio: 16 / 10; /* Adjust aspect ratio if needed */
+    }
+}
+
+@media (max-width: 768px) {
+    /* Further adjustments if needed */
+     .portfolio-nav {
+         max-height: 200px; /* Reduce max height further */
+     }
+    .portfolio-nav-item h4 {
+        font-size: 0.85rem;
+    }
+     #portfolio-display-title {
+        font-size: clamp(1.1rem, 4vw, 1.4rem);
+    }
+     .portfolio-goal { /* Applied directly */
+        font-size: 0.95rem;
+    }
+     .portfolio-view-link { /* Applied directly */
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* --- End NEW Portfolio Slider Styles --- */
 
 /* --- About Section --- */
 .about-section { background-color: var(--surface-dark); }
@@ -328,14 +558,14 @@ main { position: relative; z-index: 1; }
     h1 { font-size: clamp(2.5rem, 7vw, 3.5rem); }
     h2 { font-size: clamp(2rem, 6vw, 2.6rem); }
     .section-intro { max-width: 90%; font-size: 1rem; margin-bottom: 3rem;}
-    /* Ensure portfolio grid gap is updated for mobile */
-    .portfolio-grid { gap: 2rem; }
-    .portfolio-card-content { padding: 1.2rem; }
+    /* Ensure portfolio grid gap is updated for mobile (Now handled by slider styles) */
+    /* .portfolio-grid { gap: 2rem; } */
+    /* .portfolio-card-content { padding: 1.2rem; } */
     .skills-grid { grid-template-columns: 1fr; gap: 1.5rem;}
     .contact-info { padding: 2rem; }
     .project-content { padding: 60px 20px; }
     #preloader-headline-container { font-size: clamp(1.8rem, 5vw, 3rem); }
-    .portfolio-section .container { padding-left: 15px; padding-right: 15px; }
+    .portfolio-section .container { padding-left: 15px; padding-right: 15px; } /* Kept this, seems useful */
 }
 @media (max-width: 480px) {
     html { font-size: 14px; }
@@ -343,8 +573,8 @@ main { position: relative; z-index: 1; }
     .container { padding: 0 15px; }
     .logo a { font-size: 1.5rem; }
     .cta-button { padding: 0.9rem 2rem; font-size: 1rem; }
-    .portfolio-card-content { padding: 1.2rem; }
-    .portfolio-card-content h3 { font-size: 1rem; }
+    /* .portfolio-card-content { padding: 1.2rem; } */
+    /* .portfolio-card-content h3 { font-size: 1rem; } */
     .skill-item { padding: 2rem 1.5rem; }
     .contact-info { padding: 1.5rem; }
     .contact-links p { flex-direction: column; align-items: center; gap: 0.3rem; text-align: center;}
