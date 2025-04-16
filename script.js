@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (navItem.scrollIntoView) {
                    navItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
-                // Optional: You could restart autoplay after a longer delay here if desired
+                // Optional: Restart autoplay after click if desired (currently doesn't)
                 // setTimeout(startAutoPlay, AUTOPLAY_DELAY * 3);
             });
 
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 portfolioDisplayImg.alt = project.altText;
                 // Remove loading class once image is actually loaded
                 portfolioDisplayImg.onload = () => {
-                    portfolioDisplayImg.classList.remove('loading');
+                    if (portfolioDisplayImg) portfolioDisplayImg.classList.remove('loading');
                 };
                 // Fallback in case onload doesn't fire (e.g., cached image)
                 setTimeout(() => { if (portfolioDisplayImg) portfolioDisplayImg.classList.remove('loading'); }, 50);
@@ -231,36 +231,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const navItems = portfolioNavContainer?.querySelectorAll('.portfolio-nav-item');
         navItems?.forEach((item, i) => {
             item.classList.toggle('active', i === index); // Add 'active' if index matches, remove otherwise
-
-            // *** scrollIntoView was REMOVED from here to prevent automatic page scroll ***
+            // *** scrollIntoView was intentionally REMOVED from here ***
         });
     }
 
     function nextProject() {
         // Calculate the index of the next project, looping back to 0 if at the end
         const nextIndex = (currentProjectIndex + 1) % portfolioProjects.length;
+        console.log(`Autoplaying to project index: ${nextIndex}`); // Debugging log
         showProject(nextIndex);
     }
 
     function startAutoPlay() {
-        if (autoPlayInterval) clearInterval(autoPlayInterval); // Clear any existing interval first
-        // Only start autoplay if there's more than one project
+        // Stop any previous interval *before* checking length and starting a new one
+        if (autoPlayInterval) clearInterval(autoPlayInterval);
+        autoPlayInterval = null; // Explicitly clear the ID
+
         if (portfolioProjects.length > 1) {
+             console.log("Attempting to start autoplay interval..."); // Debugging log
              autoPlayInterval = setInterval(nextProject, AUTOPLAY_DELAY);
+        } else {
+             console.log("Autoplay not started: Not enough projects."); // Debugging log
         }
     }
 
     function stopAutoPlay() {
-        clearInterval(autoPlayInterval); // Stop the interval
-        autoPlayInterval = null; // Reset the interval variable
+        if (autoPlayInterval) {
+            console.log("Stopping autoplay interval..."); // Debugging log
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
     }
 
     function initPortfolioSlider() {
         // Check if the main container and project data exist
         if (portfolioNavContainer && portfolioProjects.length > 0) {
+            console.log("Initializing portfolio slider..."); // Debugging log
             renderPortfolioNav(); // Build the thumbnail navigation
             showProject(0); // Display the first project initially (without page scroll)
-            startAutoPlay(); // Begin automatic cycling
+            startAutoPlay(); // Attempt to begin automatic cycling
 
              // Add event listeners to pause/resume autoplay on hover
              if (portfolioSliderContainer) {
@@ -269,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
              }
         } else if (portfolioNavContainer) {
              // Optional: Handle the case where there are no projects defined
+             console.log("No projects found to initialize slider."); // Debugging log
              portfolioNavContainer.innerHTML = '<p style="color: var(--text-muted); padding: 1rem;">No projects added yet.</p>';
              if(portfolioMainDisplay) portfolioMainDisplay.style.display = 'none'; // Hide the main display area
         }
