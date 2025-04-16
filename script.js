@@ -131,11 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (preloader) {
             preloader.classList.add('hidden');
             preloader.addEventListener('transitionend', () => {
-                preloader.remove();
+                if (preloader && preloader.parentNode) preloader.remove(); // Ensure removal
                 if (callback) callback();
             }, { once: true });
             // Safety timeout if transitionend doesn't fire
-            setTimeout(() => { if (preloader && preloader.parentNode) preloader.remove(); }, 700);
+            setTimeout(() => { if (preloader && preloader.parentNode) { preloader.remove(); if (callback) callback(); } }, 700);
         } else if (callback) {
             callback(); // Execute callback immediately if preloader doesn't exist
         }
@@ -175,7 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Click event listener for manual navigation
             navItem.addEventListener('click', () => {
                 stopAutoPlay(); // Stop autoplay on user interaction
-                showProject(index);
+                showProject(index); // Update the main display
+
+                // Scroll the CLICKED item into view within its container ONLY on click
+                if (navItem.scrollIntoView) {
+                   navItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
                 // Optional: You could restart autoplay after a longer delay here if desired
                 // setTimeout(startAutoPlay, AUTOPLAY_DELAY * 3);
             });
@@ -205,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     portfolioDisplayImg.classList.remove('loading');
                 };
                 // Fallback in case onload doesn't fire (e.g., cached image)
-                setTimeout(() => portfolioDisplayImg.classList.remove('loading'), 50);
+                setTimeout(() => { if (portfolioDisplayImg) portfolioDisplayImg.classList.remove('loading'); }, 50);
              }, 150); // Adjust timing based on CSS transition duration
         }
         if (portfolioDisplayTitle) portfolioDisplayTitle.textContent = project.title;
@@ -226,10 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const navItems = portfolioNavContainer?.querySelectorAll('.portfolio-nav-item');
         navItems?.forEach((item, i) => {
             item.classList.toggle('active', i === index); // Add 'active' if index matches, remove otherwise
-             // Scroll the newly active item into view if the nav is scrollable
-             if (i === index && item.scrollIntoView) {
-                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); // 'nearest' prevents unnecessary scrolling
-            }
+
+            // *** scrollIntoView was REMOVED from here to prevent automatic page scroll ***
         });
     }
 
@@ -256,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check if the main container and project data exist
         if (portfolioNavContainer && portfolioProjects.length > 0) {
             renderPortfolioNav(); // Build the thumbnail navigation
-            showProject(0); // Display the first project initially
+            showProject(0); // Display the first project initially (without page scroll)
             startAutoPlay(); // Begin automatic cycling
 
              // Add event listeners to pause/resume autoplay on hover
@@ -383,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Remove the 'no-transition' class shortly after render
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
-                     contentWrapper.classList.remove('no-transition');
+                     if (contentWrapper) contentWrapper.classList.remove('no-transition');
                  });
             });
             handleScroll(); // Initialize header state and nav links
