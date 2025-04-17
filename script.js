@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             thumbAlt: 'Thumbnail for Skincare Website Copy',
             imageSrc: 'images/project2preview.jpg',
             altText: 'Portfolio Project 2 Preview - Skincare Website Copy',
-            title: 'Product Launch Campaign: - Biotech Skincare Brand',
+            title: 'Product Launch Campaign: Skincare Brand',
             tags: ['E-commerce', 'Copywriting', 'Brand Voice'],
             goal: 'Write engaging, benefit-driven product descriptions focused on conversion and brand voice.',
             link: 'project-biotech-serum.html'
