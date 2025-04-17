@@ -4,10 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project: SEO Blog Post - Jared Banks Portfolio</title>
+    <!-- Link to the main stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Add specific styles for project page tabs here or in style.css -->
+    <style>
+        /* --- Project Page Tab Styles --- */
+        .project-tabs {
+            margin-top: 3rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            background-color: var(--surface-medium);
+            overflow: hidden; /* Contain borders and radius */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .project-tab-nav {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(0,0,0,0.1); /* Slightly different background for nav */
+        }
+
+        .project-tab-nav li {
+            margin: 0;
+        }
+
+        .project-tab-button {
+            display: block;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--heading-font);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color var(--transition-fast) ease, background-color var(--transition-fast) ease, border-bottom-color var(--transition-fast) ease;
+            border-bottom: 3px solid transparent; /* Indicator space */
+            position: relative;
+            top: 1px; /* Align with content border */
+        }
+
+        .project-tab-button:hover {
+            color: var(--text-primary);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .project-tab-button.active {
+            color: var(--primary-glow);
+            background-color: var(--surface-medium); /* Match content background */
+            border-bottom-color: var(--primary-glow);
+            border-left: 1px solid var(--border-color); /* Subtle separators for active */
+            border-right: 1px solid var(--border-color);
+        }
+        .project-tab-nav li:first-child .project-tab-button.active {
+             border-left-color: transparent; /* Remove separator on first item */
+        }
+
+
+        .project-tab-content {
+            padding: 2rem 2.5rem; /* Padding inside the content area */
+        }
+
+        .project-tab-pane {
+            display: none; /* Hide inactive panes */
+            animation: fadeIn 0.5s ease forwards; /* Simple fade-in */
+        }
+
+        .project-tab-pane.active {
+            display: block; /* Show active pane */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Style adjustments within tabs */
+        .project-tab-pane h2 {
+            margin-top: 0; /* Remove top margin for heading inside tab */
+            color: var(--secondary-accent); /* Different color for emphasis */
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+        .project-tab-pane h3 { /* For blog subheadings */
+             margin-top: 1.5rem;
+             margin-bottom: 0.8rem;
+             font-size: clamp(1.1rem, 3vw, 1.4rem); /* Slightly larger */
+             color: var(--text-primary);
+        }
+         .project-tab-pane h4 { /* For sub-subheadings */
+             margin-top: 1.2rem;
+             margin-bottom: 0.6rem;
+             font-size: clamp(1rem, 2.8vw, 1.2rem);
+             color: var(--text-secondary);
+             font-weight: 600;
+        }
+        .project-tab-pane h3:first-of-type,
+        .project-tab-pane h4:first-of-type {
+            margin-top: 0;
+        }
+
+
+        .project-tab-pane ul {
+            margin-left: 0;
+            list-style-position: inside;
+        }
+         /* Deeper nested lists */
+        .project-tab-pane ul ul {
+            margin-left: 1.5rem; /* Indent nested list */
+            margin-top: 0.5rem;
+            list-style-type: circle; /* Different marker */
+        }
+
+        .project-tab-pane li {
+             margin-bottom: 0.7rem; /* Consistent spacing */
+        }
+
+        /* Responsive Tab Navigation */
+        @media (max-width: 768px) {
+            .project-tab-nav {
+                flex-direction: column; /* Stack tabs vertically */
+                border-bottom: none;
+                border-right: 1px solid var(--border-color); /* Border on the side now */
+            }
+            .project-tab-button {
+                 width: 100%;
+                 text-align: left;
+                 border-bottom: none;
+                 border-left: 3px solid transparent; /* Indicator on the left */
+                 top: 0;
+                 border-right: none; /* Remove side borders */
+                 padding: 0.8rem 1.2rem;
+            }
+             .project-tab-button.active {
+                 border-left-color: var(--primary-glow);
+                 border-bottom-color: transparent;
+                 border-top: 1px solid var(--border-color); /* Add top/bottom separators */
+                 border-bottom: 1px solid var(--border-color);
+                 border-right: none;
+                 margin-bottom: -1px; /* Overlap border */
+             }
+             .project-tab-nav li:first-child .project-tab-button.active {
+                  border-top-color: transparent; /* Remove top separator on first active item */
+             }
+
+             .project-tabs {
+                 display: flex; /* Arrange nav and content side-by-side */
+                 flex-direction: row;
+             }
+             .project-tab-content {
+                  flex-grow: 1; /* Allow content to take remaining space */
+                  padding: 1.5rem;
+             }
+        }
+         @media (max-width: 600px) {
+              .project-tabs {
+                 flex-direction: column; /* Stack nav fully on top on very small screens */
+             }
+             .project-tab-nav {
+                 flex-direction: row; /* Go back to horizontal */
+                 overflow-x: auto; /* Allow horizontal scrolling for tabs */
+                 border-right: none;
+                 border-bottom: 1px solid var(--border-color);
+             }
+             .project-tab-button {
+                 width: auto; /* Let buttons size naturally */
+                 text-align: center;
+                 border-left: none;
+                 border-bottom: 3px solid transparent; /* Back to bottom indicator */
+                 padding: 0.8rem 1rem; /* Adjust padding */
+             }
+             .project-tab-button.active {
+                  border-left-color: transparent;
+                  border-bottom-color: var(--primary-glow);
+                  border-top: none; /* Remove top/bottom borders */
+                  border-bottom: 3px solid var(--primary-glow); /* Ensure indicator thickness */
+                  border-right: none;
+                  margin-bottom: 0;
+             }
+         }
+
+    </style>
 </head>
 <body>
     <header class="project-detail-header">
@@ -18,71 +201,138 @@
     </header>
 
     <main class="project-content container">
-        <a href="index.html#portfolio" class="back-link">Back to Portfolio</a>
+        <a href="index.html#portfolio" class="back-link">← Back to Portfolio</a>
 
-        <h2>Project Overview</h2>
-        <p>This synthetic project involved creating a comprehensive, SEO-focused blog post aimed at small business owners considering Voice over Internet Protocol (VoIP) telephone systems. The goal was to demonstrate the ability to research a technical B2B topic, identify relevant keywords, structure content logically, and write in an informative yet accessible style to attract and engage the target audience.</p>
+        <!-- Main Project Image -->
+        <img src="images/project1preview.jpg" alt="Visual representation of the blog post project" class="project-visual" style="margin-top: 2rem;">
 
-        <img src="images/project1preview.jpg" alt="Visual representation of the blog post project" class="project-visual">
-
-        <h2>The Challenge</h2>
-        <p>Small business owners often lack deep technical knowledge but need reliable information to make informed decisions about essential services like phone systems. The challenge was to create content that ranks well for relevant search terms (e.g., "VoIP benefits for small business," "small business phone system options") while clearly explaining the advantages and considerations of VoIP without overwhelming jargon.</p>
-
-        <h2>My Approach</h2>
-        <ul>
-            <li><strong>Keyword Research:</strong> Identified primary and secondary keywords related to small business VoIP solutions, focusing on terms indicating research and purchase intent.</li>
-            <li><strong>Content Structuring:</strong> Outlined the post logically, starting with common pain points, introducing VoIP as a solution, detailing key benefits (cost savings, flexibility, features), addressing potential concerns, and concluding with a clear call-to-action.</li>
-            <li><strong>Tone & Style:</strong> Adopted a professional yet approachable tone, translating technical features into tangible business benefits. Used headings, subheadings, bullet points, and bold text for readability.</li>
-            <li><strong>SEO Optimization:</strong> Naturally integrated target keywords into headings, body text, and image alt text. Focused on providing valuable, comprehensive information to satisfy search intent.</li>
-        </ul>
-
-        <h2>Sample Content</h2>
-        <p>Below is an excerpt demonstrating the style and structure:</p>
-        <div class="project-sample prose">
-            <h3>Is Your Old Phone System Holding Your Business Back?</h3>
-            <p>In today's fast-paced market, efficient communication is non-negotiable. Yet, many small businesses soldier on with traditional landline systems that are costly, inflexible, and lack the modern features needed to compete. Are you struggling with high phone bills? Finding it hard to manage calls when your team is remote? Missing important calls because you're tied to a desk?</p>
-            <p>If this sounds familiar, it might be time to explore <strong>Voice over Internet Protocol (VoIP)</strong>.</p>
-
-            <h4>What Exactly is VoIP?</h4>
-            <p>Simply put, VoIP allows you to make and receive phone calls over your existing internet connection instead of traditional phone lines. Think of it like email for your voice. This shift opens up a world of possibilities for cost savings, flexibility, and powerful features.</p>
-
-            <h4>Key Benefits of VoIP for Your Small Business:</h4>
-            <ul>
-                <li><strong>Significant Cost Savings:</strong> Say goodbye to expensive line rentals and unpredictable long-distance charges. VoIP plans often offer unlimited calling within certain regions for a flat monthly fee, drastically reducing your communication overhead.</li>
-                <li><strong>Unmatched Flexibility:</strong> Work isn't confined to the office anymore, and neither should your phone system be. With VoIP, you can take calls on your desk phone, computer (using a softphone app), or even your smartphone, anywhere with an internet connection. Perfect for remote teams and staying connected on the go.</li>
-                <li><strong>Feature-Rich Communication:</strong> Get access to enterprise-level features often unavailable or costly with traditional systems, such as:
-                    <ul>
-                        <li>Auto-attendant (virtual receptionist)</li>
-                        <li>Voicemail-to-email transcription</li>
-                        <li>Call forwarding and routing</li>
-                        <li>Video conferencing integration</li>
-                        <li>And much more...</li>
-                    </ul>
-                </li>
-                <li><strong>Scalability:</strong> Easily add or remove phone lines as your business grows or seasons change, without needing costly hardware installations.</li>
+        <!-- Tab Structure -->
+        <div class="project-tabs">
+            <!-- Tab Navigation -->
+            <ul class="project-tab-nav" role="tablist">
+                <li><button class="project-tab-button active" data-tab-target="#tab-overview" role="tab" aria-selected="true" id="tab-btn-overview">Overview & Challenge</button></li>
+                <li><button class="project-tab-button" data-tab-target="#tab-approach" role="tab" aria-selected="false" id="tab-btn-approach">Approach</button></li>
+                <li><button class="project-tab-button" data-tab-target="#tab-sample" role="tab" aria-selected="false" id="tab-btn-sample">Sample Content</button></li>
+                <li><button class="project-tab-button" data-tab-target="#tab-skills" role="tab" aria-selected="false" id="tab-btn-skills">Skills Demonstrated</button></li>
             </ul>
-            <p><strong>Ready to explore how VoIP can transform your business communication?</strong> [Simulated Call to Action Link]</p>
-        </div>
+
+            <!-- Tab Content Panes -->
+            <div class="project-tab-content">
+                <!-- Overview & Challenge Pane -->
+                <div class="project-tab-pane active" id="tab-overview" role="tabpanel" aria-labelledby="tab-btn-overview">
+                    <h2>Project Overview</h2>
+                    <p>This synthetic project involved creating a comprehensive, SEO-focused blog post aimed at small business owners considering Voice over Internet Protocol (VoIP) telephone systems. The goal was to demonstrate the ability to research a technical B2B topic, identify relevant keywords, structure content logically, and write in an informative yet accessible style to attract and engage the target audience.</p>
+
+                    <h2>The Challenge</h2>
+                    <p>Small business owners often lack deep technical knowledge but need reliable information to make informed decisions about essential services like phone systems. The challenge was to create content that ranks well for relevant search terms (e.g., "VoIP benefits for small business," "small business phone system options") while clearly explaining the advantages and considerations of VoIP without overwhelming jargon.</p>
+                </div>
+
+                <!-- Approach Pane -->
+                <div class="project-tab-pane" id="tab-approach" role="tabpanel" aria-labelledby="tab-btn-approach">
+                    <h2>My Approach</h2>
+                    <ul class="icon-list">
+                        <li><strong>Keyword Research:</strong> Identified primary and secondary keywords related to small business VoIP solutions, focusing on terms indicating research and purchase intent.</li>
+                        <li><strong>Content Structuring:</strong> Outlined the post logically, starting with common pain points, introducing VoIP as a solution, detailing key benefits (cost savings, flexibility, features), addressing potential concerns, and concluding with a clear call-to-action.</li>
+                        <li><strong>Tone & Style:</strong> Adopted a professional yet approachable tone, translating technical features into tangible business benefits. Used headings, subheadings, bullet points, and bold text for readability.</li>
+                        <li><strong>SEO Optimization:</strong> Naturally integrated target keywords into headings, body text, and image alt text. Focused on providing valuable, comprehensive information to satisfy search intent.</li>
+                    </ul>
+                </div>
+
+                <!-- Sample Content Pane -->
+                <div class="project-tab-pane" id="tab-sample" role="tabpanel" aria-labelledby="tab-btn-sample">
+                    <h2>Sample Blog Post Excerpt</h2>
+                    <div class="project-sample prose"> <!-- Use prose class for blog-like styling -->
+                        <h3>Is Your Old Phone System Holding Your Business Back?</h3>
+                        <p>In today's fast-paced market, efficient communication is non-negotiable. Yet, many small businesses soldier on with traditional landline systems that are costly, inflexible, and lack the modern features needed to compete. Are you struggling with high phone bills? Finding it hard to manage calls when your team is remote? Missing important calls because you're tied to a desk?</p>
+                        <p>If this sounds familiar, it might be time to explore <strong>Voice over Internet Protocol (VoIP)</strong>.</p>
+
+                        <h4>What Exactly is VoIP?</h4>
+                        <p>Simply put, VoIP allows you to make and receive phone calls over your existing internet connection instead of traditional phone lines. Think of it like email for your voice. This shift opens up a world of possibilities for cost savings, flexibility, and powerful features.</p>
+
+                        <h4>Key Benefits of VoIP for Your Small Business:</h4>
+                        <ul>
+                            <li><strong>Significant Cost Savings:</strong> Say goodbye to expensive line rentals and unpredictable long-distance charges. VoIP plans often offer unlimited calling within certain regions for a flat monthly fee, drastically reducing your communication overhead.</li>
+                            <li><strong>Unmatched Flexibility:</strong> Work isn't confined to the office anymore, and neither should your phone system be. With VoIP, you can take calls on your desk phone, computer (using a softphone app), or even your smartphone, anywhere with an internet connection. Perfect for remote teams and staying connected on the go.</li>
+                            <li><strong>Feature-Rich Communication:</strong> Get access to enterprise-level features often unavailable or costly with traditional systems, such as:
+                                <ul>
+                                    <li>Auto-attendant (virtual receptionist)</li>
+                                    <li>Voicemail-to-email transcription</li>
+                                    <li>Call forwarding and routing</li>
+                                    <li>Video conferencing integration</li>
+                                    <li>And much more...</li>
+                                </ul>
+                            </li>
+                            <li><strong>Scalability:</strong> Easily add or remove phone lines as your business grows or seasons change, without needing costly hardware installations.</li>
+                        </ul>
+                        <p><strong>Ready to explore how VoIP can transform your business communication?</strong> [Simulated Call to Action Link]</p>
+                    </div>
+                </div>
+
+                <!-- Skills Pane -->
+                <div class="project-tab-pane" id="tab-skills" role="tabpanel" aria-labelledby="tab-btn-skills">
+                    <h2>Key Skills Demonstrated</h2>
+                    <ul class="icon-list">
+                        <li>SEO Writing & On-Page Optimization</li>
+                        <li>Keyword Research & Analysis (Conceptual)</li>
+                        <li>B2B Content Creation</li>
+                        <li>Technical Simplification</li>
+                        <li>Audience Analysis (Small Business Owners)</li>
+                        <li>Content Structuring & Readability</li>
+                        <li>Benefit-Driven Copywriting</li>
+                    </ul>
+                </div>
+            </div> <!-- End .project-tab-content -->
+        </div> <!-- End .project-tabs -->
 
 
-        <h2>Key Skills Demonstrated</h2>
-        <ul>
-            <li>SEO Writing & On-Page Optimization</li>
-            <li>Keyword Research & Analysis (Conceptual)</li>
-            <li>B2B Content Creation</li>
-            <li>Technical Simplification</li>
-            <li>Audience Analysis (Small Business Owners)</li>
-            <li>Content Structuring & Readability</li>
-            <li>Benefit-Driven Copywriting</li>
-        </ul>
-
-        <a href="index.html#portfolio" class="back-link">Back to Portfolio</a>
+        <a href="index.html#portfolio" class="back-link" style="margin-top: 3rem;">← Back to Portfolio</a>
     </main>
 
     <footer class="site-footer-bottom">
         <div class="container">
-            <p>© 2024 Jared Banks.</p>
+             <!-- Update year dynamically -->
+            <p>© <span id="current-year">2024</span> Jared Banks.</p>
         </div>
     </footer>
+
+    <!-- Simple Tab Switching JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabsContainer = document.querySelector('.project-tabs');
+            const tabButtons = tabsContainer?.querySelectorAll('.project-tab-button');
+            const tabPanes = tabsContainer?.querySelectorAll('.project-tab-pane');
+            const currentYearSpan = document.getElementById('current-year');
+
+            if (tabButtons && tabPanes) {
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetPaneId = button.getAttribute('data-tab-target');
+
+                        // Update button states
+                        tabButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                            btn.setAttribute('aria-selected', 'false');
+                        });
+                        button.classList.add('active');
+                        button.setAttribute('aria-selected', 'true');
+
+                        // Update pane states
+                        tabPanes.forEach(pane => {
+                            if (`#${pane.id}` === targetPaneId) {
+                                pane.classList.add('active');
+                            } else {
+                                pane.classList.remove('active');
+                            }
+                        });
+                    });
+                });
+            }
+
+             // Update footer year
+             if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
 </body>
 </html>

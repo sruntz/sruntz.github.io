@@ -4,10 +4,206 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project: Contact Centre Script - Jared Banks Portfolio</title>
+    <!-- Link to the main stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Add specific styles for project page tabs here or in style.css -->
+    <style>
+        /* --- Project Page Tab Styles --- */
+        .project-tabs {
+            margin-top: 3rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            background-color: var(--surface-medium);
+            overflow: hidden; /* Contain borders and radius */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .project-tab-nav {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(0,0,0,0.1); /* Slightly different background for nav */
+        }
+
+        .project-tab-nav li {
+            margin: 0;
+        }
+
+        .project-tab-button {
+            display: block;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--heading-font);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color var(--transition-fast) ease, background-color var(--transition-fast) ease, border-bottom-color var(--transition-fast) ease;
+            border-bottom: 3px solid transparent; /* Indicator space */
+            position: relative;
+            top: 1px; /* Align with content border */
+        }
+
+        .project-tab-button:hover {
+            color: var(--text-primary);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .project-tab-button.active {
+            color: var(--primary-glow);
+            background-color: var(--surface-medium); /* Match content background */
+            border-bottom-color: var(--primary-glow);
+            border-left: 1px solid var(--border-color); /* Subtle separators for active */
+            border-right: 1px solid var(--border-color);
+        }
+        .project-tab-nav li:first-child .project-tab-button.active {
+             border-left-color: transparent; /* Remove separator on first item */
+        }
+
+
+        .project-tab-content {
+            padding: 2rem 2.5rem; /* Padding inside the content area */
+        }
+
+        .project-tab-pane {
+            display: none; /* Hide inactive panes */
+            animation: fadeIn 0.5s ease forwards; /* Simple fade-in */
+        }
+
+        .project-tab-pane.active {
+            display: block; /* Show active pane */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Style adjustments within tabs */
+        .project-tab-pane h2 {
+            margin-top: 0; /* Remove top margin for heading inside tab */
+            color: var(--secondary-accent); /* Different color for emphasis */
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+        .project-tab-pane h3 { /* For sample subheadings */
+             margin-top: 2rem;
+             margin-bottom: 0.8rem;
+             font-size: clamp(1.1rem, 3vw, 1.3rem);
+             color: var(--text-primary);
+             border-bottom: 1px dashed var(--border-color);
+             padding-bottom: 0.5rem;
+        }
+        .project-tab-pane h3:first-of-type {
+            margin-top: 0; /* Remove top margin if h3 is first element */
+        }
+
+        .project-tab-pane ul {
+            margin-left: 0; /* Remove default indent if desired */
+            list-style-position: inside; /* Or keep default */
+        }
+        .project-tab-pane li {
+             margin-bottom: 0.7rem; /* Consistent spacing */
+        }
+        
+        
+        /* Adjust sample script formatting */
+        .project-tab-pane .project-sample p {
+            margin-bottom: 0.8rem; /* Tighter spacing for script lines */
+        }
+         .project-tab-pane .project-sample p strong {
+            color: var(--text-primary); /* Make agent names stand out more */
+         }
+         .project-tab-pane .project-sample em { /* Style notes/actions */
+            color: var(--text-muted);
+            font-style: italic;
+            display: block;
+            margin: 0.5rem 0;
+            font-size: 0.9em;
+         }
+         .project-tab-pane .project-sample .scenario-heading { /* Style scenario titles */
+            font-weight: bold;
+            color: var(--secondary-accent);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+         }
+
+
+        /* Responsive Tab Navigation */
+        @media (max-width: 768px) {
+            .project-tab-nav {
+                flex-direction: column; /* Stack tabs vertically */
+                border-bottom: none;
+                border-right: 1px solid var(--border-color); /* Border on the side now */
+            }
+            .project-tab-button {
+                 width: 100%;
+                 text-align: left;
+                 border-bottom: none;
+                 border-left: 3px solid transparent; /* Indicator on the left */
+                 top: 0;
+                 border-right: none; /* Remove side borders */
+                 padding: 0.8rem 1.2rem;
+            }
+             .project-tab-button.active {
+                 border-left-color: var(--primary-glow);
+                 border-bottom-color: transparent;
+                 border-top: 1px solid var(--border-color); /* Add top/bottom separators */
+                 border-bottom: 1px solid var(--border-color);
+                 border-right: none;
+                 margin-bottom: -1px; /* Overlap border */
+             }
+             .project-tab-nav li:first-child .project-tab-button.active {
+                  border-top-color: transparent; /* Remove top separator on first active item */
+             }
+
+             .project-tabs {
+                 display: flex; /* Arrange nav and content side-by-side */
+                 flex-direction: row;
+             }
+             .project-tab-content {
+                  flex-grow: 1; /* Allow content to take remaining space */
+                  padding: 1.5rem;
+             }
+        }
+         @media (max-width: 600px) {
+              .project-tabs {
+                 flex-direction: column; /* Stack nav fully on top on very small screens */
+             }
+             .project-tab-nav {
+                 flex-direction: row; /* Go back to horizontal */
+                 overflow-x: auto; /* Allow horizontal scrolling for tabs */
+                 border-right: none;
+                 border-bottom: 1px solid var(--border-color);
+             }
+             .project-tab-button {
+                 width: auto; /* Let buttons size naturally */
+                 text-align: center;
+                 border-left: none;
+                 border-bottom: 3px solid transparent; /* Back to bottom indicator */
+                 padding: 0.8rem 1rem; /* Adjust padding */
+             }
+             .project-tab-button.active {
+                  border-left-color: transparent;
+                  border-bottom-color: var(--primary-glow);
+                  border-top: none; /* Remove top/bottom borders */
+                  border-bottom: 3px solid var(--primary-glow); /* Ensure indicator thickness */
+                  border-right: none;
+                  margin-bottom: 0;
+             }
+         }
+
+    </style>
 </head>
 <body>
      <header class="project-detail-header">
@@ -18,73 +214,141 @@
     </header>
 
     <main class="project-content container">
-        <a href="index.html#portfolio" class="back-link">Back to Portfolio</a>
+        <a href="index.html#portfolio" class="back-link">← Back to Portfolio</a>
 
-        <h2>Project Overview</h2>
-        <p>This synthetic project involved developing a clear, empathetic, and efficient script for contact centre agents handling inquiries about the status of passport applications for a fictional government agency (similar to the Australian Passport Office context). The objective was to demonstrate the ability to write user-centric scripts that guide agents, ensure consistent messaging, and improve the citizen experience.</p>
+        <!-- Main Project Image -->
+        <img src="images/project4preview.jpg" alt="Visual representation of a contact centre script flow" class="project-visual" style="margin-top: 2rem;">
 
-        <img src="images/project4preview.jpg" alt="Visual representation of a contact centre script flow" class="project-visual">
+        <!-- Tab Structure -->
+        <div class="project-tabs">
+            <!-- Tab Navigation -->
+            <ul class="project-tab-nav" role="tablist">
+                <li><button class="project-tab-button active" data-tab-target="#tab-overview" role="tab" aria-selected="true" id="tab-btn-overview">Overview & Challenge</button></li>
+                <li><button class="project-tab-button" data-tab-target="#tab-approach" role="tab" aria-selected="false" id="tab-btn-approach">Approach</button></li>
+                <li><button class="project-tab-button" data-tab-target="#tab-sample" role="tab" aria-selected="false" id="tab-btn-sample">Sample Script</button></li>
+                <li><button class="project-tab-button" data-tab-target="#tab-skills" role="tab" aria-selected="false" id="tab-btn-skills">Skills Demonstrated</button></li>
+            </ul>
 
-        <h2>The Challenge</h2>
-        <p>Citizens contacting a government agency about essential documents like passports are often anxious or frustrated, especially if experiencing delays. Agents need scripts that empower them to quickly access information, provide accurate updates, manage expectations effectively, and maintain a professional and empathetic tone, even when delivering potentially disappointing news (like processing delays).</p>
+            <!-- Tab Content Panes -->
+            <div class="project-tab-content">
+                <!-- Overview & Challenge Pane -->
+                <div class="project-tab-pane active" id="tab-overview" role="tabpanel" aria-labelledby="tab-btn-overview">
+                    <h2>Project Overview</h2>
+                    <p>This synthetic project involved developing a clear, empathetic, and efficient script for contact centre agents handling inquiries about the status of passport applications for a fictional government agency (similar to the Australian Passport Office context). The objective was to demonstrate the ability to write user-centric scripts that guide agents, ensure consistent messaging, and improve the citizen experience.</p>
 
-        <h2>My Approach</h2>
-        <ul>
-            <li><strong>User-Centric Focus:</strong> Prioritized the citizen's perspective, anticipating common questions and emotional states.</li>
-            <li><strong>Information Gathering:</strong> Structured the script to guide the agent in collecting necessary identifying information (e.g., application number, name, DOB) efficiently and securely at the start of the call.</li>
-            <li><strong>Clear Call Flow:</strong> Designed a logical flow: Greeting -> Identification -> Inquiry Confirmation -> Information Retrieval (Simulated) -> Status Update Delivery -> Next Steps/Expectation Setting -> Closing.</li>
-            <li><strong>Empathetic Language:</strong> Incorporated phrases demonstrating understanding and empathy (e.g., "I understand waiting can be frustrating," "Let me check that for you right away").</li>
-            <li><strong>Conciseness & Clarity:</strong> Kept sentences direct and easy for agents to read and citizens to understand. Avoided overly bureaucratic language.</li>
-            <li><strong>Scenario Handling (Conceptual):</strong> Included placeholders or brief notes for handling common scenarios like "application processing normally," "application delayed," or "further information required."</li>
-        </ul>
+                    <h2>The Challenge</h2>
+                    <p>Citizens contacting a government agency about essential documents like passports are often anxious or frustrated, especially if experiencing delays. Agents need scripts that empower them to quickly access information, provide accurate updates, manage expectations effectively, and maintain a professional and empathetic tone, even when delivering potentially disappointing news (like processing delays).</p>
+                </div>
 
-        <h2>Simulated Sample Content (Script Excerpt)</h2>
-        <p>Below is a sample excerpt focusing on the core interaction after initial identification:</p>
-        <div class="project-sample">
-            <p><strong>Agent:</strong> Okay Mr./Ms. [Citizen's Last Name], thank you for confirming those details. So you're calling today to check the status of your recent passport application, is that correct?</p>
-            <p><strong>Citizen:</strong> Yes, that's right.</p>
-            <p><strong>Agent:</strong> Great, I can certainly help you with that. Please give me just a moment while I access your application details in our system.</p>
-            <p><em>[Agent accesses system - Allow 15-30 seconds pause]</em></p>
+                <!-- Approach Pane -->
+                <div class="project-tab-pane" id="tab-approach" role="tabpanel" aria-labelledby="tab-btn-approach">
+                    <h2>My Approach</h2>
+                    <ul class="icon-list">
+                        <li><strong>User-Centric Focus:</strong> Prioritized the citizen's perspective, anticipating common questions and emotional states.</li>
+                        <li><strong>Information Gathering:</strong> Structured the script to guide the agent in collecting necessary identifying information (e.g., application number, name, DOB) efficiently and securely at the start of the call.</li>
+                        <li><strong>Clear Call Flow:</strong> Designed a logical flow: Greeting -> Identification -> Inquiry Confirmation -> Information Retrieval (Simulated) -> Status Update Delivery -> Next Steps/Expectation Setting -> Closing.</li>
+                        <li><strong>Empathetic Language:</strong> Incorporated phrases demonstrating understanding and empathy (e.g., "I understand waiting can be frustrating," "Let me check that for you right away").</li>
+                        <li><strong>Conciseness & Clarity:</strong> Kept sentences direct and easy for agents to read and citizens to understand. Avoided overly bureaucratic language.</li>
+                        <li><strong>Scenario Handling (Conceptual):</strong> Included placeholders or brief notes for handling common scenarios like "application processing normally," "application delayed," or "further information required."</li>
+                    </ul>
+                </div>
 
-            <p><strong>Agent:</strong> Alright, I have your application details here now.</p>
+                <!-- Sample Script Pane -->
+                <div class="project-tab-pane" id="tab-sample" role="tabpanel" aria-labelledby="tab-btn-sample">
+                    <h2>Simulated Sample Script Excerpt</h2>
+                    <p>Focusing on the core interaction after initial identification:</p>
+                    <div class="project-sample"> <!-- Keep project-sample for distinct background/border -->
+                        <p><strong>Agent:</strong> Okay Mr./Ms. [Citizen's Last Name], thank you for confirming those details. So you're calling today to check the status of your recent passport application, is that correct?</p>
+                        <p><strong>Citizen:</strong> Yes, that's right.</p>
+                        <p><strong>Agent:</strong> Great, I can certainly help you with that. Please give me just a moment while I access your application details in our system.</p>
+                        <em>[Agent accesses system - Allow 15-30 seconds pause]</em>
 
-            <p><em><strong>--- Scenario A: Processing Normally ---</strong></em></p>
-            <p><strong>Agent:</strong> Good news! Your application reference [Application Number] is currently processing normally within our standard timeframe. At this stage, we expect it to be finalized and dispatched within the next [Number] business days. You'll receive an email notification once it's been sent.</p>
-            <p><strong>Agent:</strong> Is there anything else I can help you with regarding this application today?</p>
+                        <p><strong>Agent:</strong> Alright, I have your application details here now.</p>
 
-            <p><em><strong>--- Scenario B: Delay Identified ---</strong></em></p>
-            <p><strong>Agent:</strong> Okay, I see here that your application reference [Application Number] is still currently in processing. I understand waiting can be frustrating. At the moment, due to [Brief, standardized reason, e.g., current high volumes], processing times are slightly extended. We are working hard to finalize all applications as quickly as possible. While I can't give an exact date right now, please continue to monitor your email for updates. We anticipate providing a further update within [Number] business days.</p>
-            <p><strong>Agent:</strong> I know that might not be the news you were hoping for, but please be assured it is actively being processed. Is there anything else I can assist you with?</p>
+                        <span class="scenario-heading">--- Scenario A: Processing Normally ---</span>
+                        <p><strong>Agent:</strong> Good news! Your application reference [Application Number] is currently processing normally within our standard timeframe. At this stage, we expect it to be finalized and dispatched within the next [Number] business days. You'll receive an email notification once it's been sent.</p>
+                        <p><strong>Agent:</strong> Is there anything else I can help you with regarding this application today?</p>
 
-            <p><em><strong>--- Scenario C: Further Information Required ---</strong></em></p>
-            <p><strong>Agent:</strong> Okay, I see that your application reference [Application Number] is currently on hold because we require some additional information or documentation. Did you receive an email or letter from us recently requesting [Specific item, e.g., new photos, clarification on details]?</p>
-            <p><em>[Agent guides citizen based on response, explains how to provide the required info]</em></p>
-            <p><strong>Agent:</strong> Once we receive that information, we can continue processing your application. Do you have any questions about how to provide [Specific item]?</p>
+                        <span class="scenario-heading">--- Scenario B: Delay Identified ---</span>
+                        <p><strong>Agent:</strong> Okay, I see here that your application reference [Application Number] is still currently in processing. I understand waiting can be frustrating. At the moment, due to [Brief, standardized reason, e.g., current high volumes], processing times are slightly extended. We are working hard to finalize all applications as quickly as possible. While I can't give an exact date right now, please continue to monitor your email for updates. We anticipate providing a further update within [Number] business days.</p>
+                        <p><strong>Agent:</strong> I know that might not be the news you were hoping for, but please be assured it is actively being processed. Is there anything else I can assist you with?</p>
 
-            <p><em><strong>--- Closing (Applicable to all scenarios) ---</strong></em></p>
-            <p><strong>Agent:</strong> Thank you for calling the [Agency Name] contact centre today, Mr./Ms. [Citizen's Last Name]. Have a great day.</p>
-        </div>
+                        <span class="scenario-heading">--- Scenario C: Further Information Required ---</span>
+                        <p><strong>Agent:</strong> Okay, I see that your application reference [Application Number] is currently on hold because we require some additional information or documentation. Did you receive an email or letter from us recently requesting [Specific item, e.g., new photos, clarification on details]?</p>
+                        <em>[Agent guides citizen based on response, explains how to provide the required info]</em>
+                        <p><strong>Agent:</strong> Once we receive that information, we can continue processing your application. Do you have any questions about how to provide [Specific item]?</p>
+
+                        <span class="scenario-heading">--- Closing (Applicable to all scenarios) ---</span>
+                        <p><strong>Agent:</strong> Thank you for calling the [Agency Name] contact centre today, Mr./Ms. [Citizen's Last Name]. Have a great day.</p>
+                    </div>
+                </div>
+
+                <!-- Skills Pane -->
+                <div class="project-tab-pane" id="tab-skills" role="tabpanel" aria-labelledby="tab-btn-skills">
+                    <h2>Key Skills Demonstrated</h2>
+                    <ul class="icon-list">
+                        <li>Script Writing (Contact Centre)</li>
+                        <li>User-Centric Communication</li>
+                        <li>Government Communications (Simulated)</li>
+                        <li>Empathy in Customer Service Writing</li>
+                        <li>Clarity, Conciseness, and Accuracy</li>
+                        <li>Logical Flow & Information Structuring</li>
+                        <li>Handling Different Scenarios</li>
+                        <li>Process Improvement (Standardizing Responses)</li>
+                    </ul>
+                </div>
+            </div> <!-- End .project-tab-content -->
+        </div> <!-- End .project-tabs -->
 
 
-        <h2>Key Skills Demonstrated</h2>
-        <ul>
-            <li>Script Writing (Contact Centre)</li>
-            <li>User-Centric Communication</li>
-            <li>Government Communications (Simulated)</li>
-            <li>Empathy in Customer Service Writing</li>
-            <li>Clarity, Conciseness, and Accuracy</li>
-            <li>Logical Flow & Information Structuring</li>
-            <li>Handling Different Scenarios</li>
-            <li>Process Improvement (Standardizing Responses)</li>
-        </ul>
-
-        <a href="index.html#portfolio" class="back-link">Back to Portfolio</a>
+        <a href="index.html#portfolio" class="back-link" style="margin-top: 3rem;">← Back to Portfolio</a>
     </main>
 
      <footer class="site-footer-bottom">
         <div class="container">
-            <p>© 2024 Jared Banks.</p>
+            <!-- Update year dynamically -->
+            <p>© <span id="current-year">2024</span> Jared Banks.</p>
         </div>
     </footer>
+
+    <!-- Simple Tab Switching JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabsContainer = document.querySelector('.project-tabs');
+            const tabButtons = tabsContainer?.querySelectorAll('.project-tab-button');
+            const tabPanes = tabsContainer?.querySelectorAll('.project-tab-pane');
+            const currentYearSpan = document.getElementById('current-year');
+
+            if (tabButtons && tabPanes) {
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetPaneId = button.getAttribute('data-tab-target');
+
+                        // Update button states
+                        tabButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                            btn.setAttribute('aria-selected', 'false');
+                        });
+                        button.classList.add('active');
+                        button.setAttribute('aria-selected', 'true');
+
+                        // Update pane states
+                        tabPanes.forEach(pane => {
+                            if (`#${pane.id}` === targetPaneId) {
+                                pane.classList.add('active');
+                            } else {
+                                pane.classList.remove('active');
+                            }
+                        });
+                    });
+                });
+            }
+
+             // Update footer year
+             if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
 </body>
 </html>
