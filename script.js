@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'Website Copy: Skincare Brand',
             tags: ['E-commerce', 'Copywriting', 'Brand Voice'],
             goal: 'Write engaging, benefit-driven product descriptions focused on conversion and brand voice.',
-            link: 'website-copy.html'
+            link: 'project-biotech-serum.html'
         },
         {
             thumbSrc: 'images/project3preview.jpg', // Consider: 'images/project3preview_thumb.jpg'
