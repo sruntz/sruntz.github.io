@@ -4,10 +4,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project: Biotech Skincare Serum Launch - Jared Banks Portfolio</title>
+    <!-- Link to the main stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Add specific styles for project page tabs here or in style.css -->
+    <style>
+        /* --- Project Page Tab Styles --- */
+        .project-tabs {
+            margin-top: 3rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            background-color: var(--surface-medium);
+            overflow: hidden; /* Contain borders and radius */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .project-tab-nav {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(0,0,0,0.1); /* Slightly different background for nav */
+        }
+
+        .project-tab-nav li {
+            margin: 0;
+        }
+
+        .project-tab-button {
+            display: block;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--heading-font);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color var(--transition-fast) ease, background-color var(--transition-fast) ease, border-bottom-color var(--transition-fast) ease;
+            border-bottom: 3px solid transparent; /* Indicator space */
+            position: relative;
+            top: 1px; /* Align with content border */
+        }
+
+        .project-tab-button:hover {
+            color: var(--text-primary);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .project-tab-button.active {
+            color: var(--primary-glow);
+            background-color: var(--surface-medium); /* Match content background */
+            border-bottom-color: var(--primary-glow);
+            border-left: 1px solid var(--border-color); /* Subtle separators for active */
+            border-right: 1px solid var(--border-color);
+        }
+        .project-tab-nav li:first-child .project-tab-button.active {
+             border-left-color: transparent; /* Remove separator on first item */
+        }
+
+
+        .project-tab-content {
+            padding: 2rem 2.5rem; /* Padding inside the content area */
+        }
+
+        .project-tab-pane {
+            display: none; /* Hide inactive panes */
+            animation: fadeIn 0.5s ease forwards; /* Simple fade-in */
+        }
+
+        .project-tab-pane.active {
+            display: block; /* Show active pane */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Style adjustments within tabs */
+        .project-tab-pane h2 {
+            margin-top: 0; /* Remove top margin for heading inside tab */
+            color: var(--secondary-accent); /* Different color for emphasis */
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+        .project-tab-pane h3 { /* For sample subheadings */
+             margin-top: 2rem;
+             margin-bottom: 0.8rem;
+             font-size: clamp(1.1rem, 3vw, 1.3rem);
+             color: var(--text-primary);
+             border-bottom: 1px dashed var(--border-color);
+             padding-bottom: 0.5rem;
+        }
+
+        .project-tab-pane ul {
+            margin-left: 0; /* Remove default indent if desired */
+            list-style-position: inside; /* Or keep default */
+        }
+        .project-tab-pane li {
+             margin-bottom: 0.7rem; /* Consistent spacing */
+        }
+
+
+        /* Responsive Tab Navigation */
+        @media (max-width: 768px) {
+            .project-tab-nav {
+                flex-direction: column; /* Stack tabs vertically */
+                border-bottom: none;
+                border-right: 1px solid var(--border-color); /* Border on the side now */
+            }
+            .project-tab-button {
+                 width: 100%;
+                 text-align: left;
+                 border-bottom: none;
+                 border-left: 3px solid transparent; /* Indicator on the left */
+                 top: 0;
+                 border-right: none; /* Remove side borders */
+                 padding: 0.8rem 1.2rem;
+            }
+             .project-tab-button.active {
+                 border-left-color: var(--primary-glow);
+                 border-bottom-color: transparent;
+                 border-top: 1px solid var(--border-color); /* Add top/bottom separators */
+                 border-bottom: 1px solid var(--border-color);
+                 border-right: none;
+                 margin-bottom: -1px; /* Overlap border */
+             }
+             .project-tab-nav li:first-child .project-tab-button.active {
+                  border-top-color: transparent; /* Remove top separator on first active item */
+             }
+
+             .project-tabs {
+                 display: flex; /* Arrange nav and content side-by-side */
+                 flex-direction: row;
+             }
+             .project-tab-content {
+                  flex-grow: 1; /* Allow content to take remaining space */
+                  padding: 1.5rem;
+             }
+        }
+         @media (max-width: 600px) {
+              .project-tabs {
+                 flex-direction: column; /* Stack nav fully on top on very small screens */
+             }
+             .project-tab-nav {
+                 flex-direction: row; /* Go back to horizontal */
+                 overflow-x: auto; /* Allow horizontal scrolling for tabs */
+                 border-right: none;
+                 border-bottom: 1px solid var(--border-color);
+             }
+             .project-tab-button {
+                 width: auto; /* Let buttons size naturally */
+                 text-align: center;
+                 border-left: none;
+                 border-bottom: 3px solid transparent; /* Back to bottom indicator */
+                 padding: 0.8rem 1rem; /* Adjust padding */
+             }
+             .project-tab-button.active {
+                  border-left-color: transparent;
+                  border-bottom-color: var(--primary-glow);
+                  border-top: none; /* Remove top/bottom borders */
+                  border-bottom: 3px solid var(--primary-glow); /* Ensure indicator thickness */
+                  border-right: none;
+                  margin-bottom: 0;
+             }
+         }
+
+    </style>
 </head>
 <body>
      <header class="project-detail-header">
@@ -18,99 +185,165 @@
     </header>
 
     <main class="project-content container">
-        <a href="index.html#portfolio" class="back-link">Back to Portfolio</a>
+        <a href="index.html#portfolio" class="back-link">← Back to Portfolio</a>
 
-        <h2>Project Overview</h2>
-        <p>This synthetic project simulates the copywriting requirements for launching a flagship product – a "Cellular Renewal Peptide Serum" – for a rapidly growing biotech skincare brand. The core objective was to translate complex scientific concepts (peptide technology, cellular signaling) into compelling, benefit-driven narratives that resonate with discerning beauty consumers, address their specific skin concerns (pain points), and align with a premium, efficacy-focused brand identity across multiple digital touchpoints.</p>
+        <!-- Main Project Image - Moved higher for visual prominence -->
+        <img src="images/project2preview.jpg" alt="Conceptual visual for biotech serum project" class="project-visual" style="margin-top: 2rem;">
 
-        <!-- Remember to replace placeholder with a relevant conceptual image -->
-        <img src="images/project2preview.jpg" alt="Conceptual visual for biotech serum project" class="project-visual">
-
-        <h2>The Challenge</h2>
-        <p>The primary challenge was to move beyond simple feature listing and ingredient callouts. It required crafting persuasive copy that not only explains <b>what</b> the serum does but <b>how</b> it interacts with the skin on a deeper level, telling a cohesive story about skin health and renewal. This involved simplifying complex science without losing credibility, addressing consumer pain points (like loss of firmness, dullness) empathetically, and maintaining a sophisticated brand voice consistent with a premium, science-backed positioning. Adherence to simulated advertising guidelines (like TGA principles) was also a background consideration.</p>
-
-        <h2>My Approach & Process</h2>
-        <ul>
-            <li><strong>Science Immersion:</strong> Deeply familiarized myself with the core peptide technology, its mechanism of action (e.g., stimulating collagen synthesis, improving cellular communication), and clinical efficacy data points.</li>
-            <li><strong>Target Audience Insight:</strong> Focused on the "modern beauty consumer" identified in the brief – likely informed, seeking tangible results, concerned with visible signs of aging, and appreciative of both science and sensorial experience. Identified key pain points: visible lines, loss of elasticity, uneven texture, desire for proactive skin health.</li>
-            <li><strong>Narrative Development:</strong> Crafted a core story around "empowering the skin's own renewal processes," positioning the serum as an intelligent partner supporting natural cellular function.</li>
-            <li><strong>Ingredient Storytelling:</strong> Focused on explaining the <b>role</b> of the key peptides, illustrating how they "signal" skin cells to behave more youthfully, rather than just naming them.</li>
-            <li><strong>Multi-Channel Adaptation:</strong> Developed distinct copy angles tailored for different platforms:
-                <ul>
-                    <li><em>Website/Landing Page:</em> Detailed, informative, blending story with scientific credibility and clear benefits.</li>
-                    <li><em>Email Marketing:</em> More personal, focused on pain points, building desire, and driving clicks.</li>
-                    <li><em>Social Media/Ads:</em> Concise, attention-grabbing, benefit-led, visually driven copy.</li>
-                </ul>
-            </li>
-            <li><strong>Brand Voice Consistency:</strong> Maintained a tone that was knowledgeable, sophisticated, empowering, and trustworthy across all pieces.</li>
-            <li><strong>Optimization Considerations:</strong> Integrated relevant keywords (e.g., "peptide serum," "skin firmness," "cellular renewal") naturally for SEO and focused on clear calls-to-action for conversion.</li>
-        </ul>
-
-        <h2>Sample Content</h2>
-        <p>Excerpts demonstrating the tailored copy across different channels:</p>
-
-        <h3 class="sample-heading">1. Website Product Description Excerpt:</h3>
-        <div class="project-sample prose">
-            <h4>Awaken Your Skin's Potential: Cellular Renewal Peptide Serum</h4>
-            <p>Go beyond surface-level fixes and empower your skin's innate intelligence. Our groundbreaking Cellular Renewal Peptide Serum harnesses the power of advanced biotech peptides to fundamentally improve skin health from within. This concentrated elixir works in harmony with your skin's natural processes, encouraging a visibly firmer, smoother, and more luminous complexion.</p>
-            <p>At its heart lies our proprietary <strong class="highlight">Cellular Renewal Peptide Serum™</strong>, a blend of bio-engineered signal peptides. These intelligent molecules mimic the skin's own communication pathways, effectively 'reminding' cells to optimize collagen production and reinforce the skin's vital support structure. Witness a remarkable improvement in elasticity and a reduction in the appearance of fine lines as your skin rediscovers its youthful resilience.</p>
-            <p>Lightweight, fast-absorbing, and formulated for optimal bioavailability. Experience the fusion of potent science and luxurious texture.</p>
-            <p><strong>Key Benefits:</strong></p>
-            <ul>
-                <li>Visibly improves firmness and elasticity by supporting collagen synthesis.</li>
-                <li>Smooths the appearance of fine lines and wrinkles.</li>
-                <li>Enhances cellular communication for healthier skin function.</li>
-                <li>Boosts radiance and evens skin texture.</li>
-                <li>Provides deep, lasting hydration with Hyaluronic Acid.</li>
+        <!-- Tab Structure -->
+        <div class="project-tabs">
+            <!-- Tab Navigation -->
+            <ul class="project-tab-nav" role="tablist">
+                <li><button class="project-tab-button active" data-tab-target="#tab-overview" role="tab" aria-selected="true" id="tab-btn-overview">Overview & Challenge</button></li>
+                <li><button class="project-tab-button" data-tab-target="#tab-process" role="tab" aria-selected="false" id="tab-btn-process">Approach & Process</button></li>
+                <li><button class="project-tab-button" data-tab-target="#tab-samples" role="tab" aria-selected="false" id="tab-btn-samples">Sample Content</button></li>
+                <li><button class="project-tab-button" data-tab-target="#tab-skills" role="tab" aria-selected="false" id="tab-btn-skills">Skills Demonstrated</button></li>
             </ul>
-            <p><em>How to Use: Apply 2-3 pumps to clean face and neck, morning and evening, before moisturizer.</em></p>
-        </div>
 
-        <h3 class="sample-heading">2. Email Campaign Excerpt (Pain Point Focus):</h3>
-        <div class="project-sample prose">
-            <p><strong>Subject: Feeling like your skin isn't bouncing back like it used to?</strong></p>
-            <p>You look in the mirror, and maybe you notice... things feel a little less firm? Those fine lines seem more defined? Your skin just doesn't have that 'snap' anymore?</p>
-            <p>It's a common story, but it doesn't have to be yours. Skin aging is complex, involving a slowdown in crucial cellular processes. But what if you could gently encourage your skin to remember its youthful vitality?</p>
-            <p>Introducing our Cellular Renewal Peptide Serum – a revolutionary approach born from biotech research. We didn't just create another anti-aging cream; we formulated an intelligent serum designed to work <b>with</b> your skin, supporting its natural ability to rebuild and renew.</p>
-            <p>Imagine smoother texture, renewed firmness, a radiance you thought was fading... It's possible.</p>
-            <p><strong>Ready to re-ignite your skin's potential?</strong></p>
-            <p><a href="#" class="highlight">[Discover the Science of Renewal →]</a></p>
-        </div>
+            <!-- Tab Content Panes -->
+            <div class="project-tab-content">
+                <!-- Overview & Challenge Pane -->
+                <div class="project-tab-pane active" id="tab-overview" role="tabpanel" aria-labelledby="tab-btn-overview">
+                    <h2>Project Overview</h2>
+                    <p>This synthetic project simulates the copywriting requirements for launching a flagship product – a "Cellular Renewal Peptide Serum" – for a rapidly growing biotech skincare brand. The core objective was to translate complex scientific concepts (peptide technology, cellular signaling) into compelling, benefit-driven narratives that resonate with discerning beauty consumers, address their specific skin concerns (pain points), and align with a premium, efficacy-focused brand identity across multiple digital touchpoints.</p>
 
-        <h3 class="sample-heading">3. Social Media Ad Copy Example (Instagram/Facebook):</h3>
-        <div class="project-sample prose">
-            <p><strong>Tired of skin that feels less firm? 🤔 Support your skin from within! ✨</strong></p>
-            <p>Our NEW Cellular Renewal Peptide Serum uses advanced biotech peptides to 'talk' to your skin cells, encouraging natural collagen production for visibly firmer, smoother results. 🧬</p>
-            <p>Science-backed efficacy meets luxurious skincare. Tap to unlock your skin's potential!</p>
-            <p>#PeptidePower #BiotechSkincare #[BrandName] #AntiAging #SkinFirmness #CellularRenewal #SkincareScience</p>
-            <p><strong>[Shop Now]</strong> </p>
-        </div>
+                    <h2>The Challenge</h2>
+                    <p>The primary challenge was to move beyond simple feature listing and ingredient callouts. It required crafting persuasive copy that not only explains <b>what</b> the serum does but <b>how</b> it interacts with the skin on a deeper level, telling a cohesive story about skin health and renewal. This involved simplifying complex science without losing credibility, addressing consumer pain points (like loss of firmness, dullness) empathetically, and maintaining a sophisticated brand voice consistent with a premium, science-backed positioning. Adherence to simulated advertising guidelines (like TGA principles) was also a background consideration.</p>
+                </div>
+
+                <!-- Process Pane -->
+                <div class="project-tab-pane" id="tab-process" role="tabpanel" aria-labelledby="tab-btn-process">
+                    <h2>My Approach & Process</h2>
+                    <ul class="icon-list"> <!-- Optional: Add class if you want icons -->
+                        <li><strong>Science Immersion:</strong> Deeply familiarized myself with the core peptide technology, its mechanism of action (e.g., stimulating collagen synthesis, improving cellular communication), and clinical efficacy data points.</li>
+                        <li><strong>Target Audience Insight:</strong> Focused on the "modern beauty consumer" identified in the brief – likely informed, seeking tangible results, concerned with visible signs of aging, and appreciative of both science and sensorial experience. Identified key pain points: visible lines, loss of elasticity, uneven texture, desire for proactive skin health.</li>
+                        <li><strong>Narrative Development:</strong> Crafted a core story around "empowering the skin's own renewal processes," positioning the serum as an intelligent partner supporting natural cellular function.</li>
+                        <li><strong>Ingredient Storytelling:</strong> Focused on explaining the <b>role</b> of the key peptides, illustrating how they "signal" skin cells to behave more youthfully, rather than just naming them.</li>
+                        <li><strong>Multi-Channel Adaptation:</strong> Developed distinct copy angles tailored for different platforms:
+                            <ul>
+                                <li><em>Website/Landing Page:</em> Detailed, informative, blending story with scientific credibility and clear benefits.</li>
+                                <li><em>Email Marketing:</em> More personal, focused on pain points, building desire, and driving clicks.</li>
+                                <li><em>Social Media/Ads:</em> Concise, attention-grabbing, benefit-led, visually driven copy.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Brand Voice Consistency:</strong> Maintained a tone that was knowledgeable, sophisticated, empowering, and trustworthy across all pieces.</li>
+                        <li><strong>Optimization Considerations:</strong> Integrated relevant keywords (e.g., "peptide serum," "skin firmness," "cellular renewal") naturally for SEO and focused on clear calls-to-action for conversion.</li>
+                    </ul>
+                </div>
+
+                <!-- Samples Pane -->
+                <div class="project-tab-pane" id="tab-samples" role="tabpanel" aria-labelledby="tab-btn-samples">
+                    <h2>Sample Content</h2>
+                    <p>Excerpts demonstrating the tailored copy across different channels:</p>
+
+                    <h3>1. Website Product Description Excerpt:</h3>
+                    <div class="project-sample prose">
+                        <h4>Awaken Your Skin's Potential: Cellular Renewal Peptide Serum</h4>
+                        <p>Go beyond surface-level fixes and empower your skin's innate intelligence. Our groundbreaking Cellular Renewal Peptide Serum harnesses the power of advanced biotech peptides to fundamentally improve skin health from within. This concentrated elixir works in harmony with your skin's natural processes, encouraging a visibly firmer, smoother, and more luminous complexion.</p>
+                        <p>At its heart lies our proprietary <strong class="highlight">Cellular Renewal Peptide Serum™</strong>, a blend of bio-engineered signal peptides. These intelligent molecules mimic the skin's own communication pathways, effectively 'reminding' cells to optimize collagen production and reinforce the skin's vital support structure. Witness a remarkable improvement in elasticity and a reduction in the appearance of fine lines as your skin rediscovers its youthful resilience.</p>
+                        <p>Lightweight, fast-absorbing, and formulated for optimal bioavailability. Experience the fusion of potent science and luxurious texture.</p>
+                        <p><strong>Key Benefits:</strong></p>
+                        <ul>
+                            <li>Visibly improves firmness and elasticity by supporting collagen synthesis.</li>
+                            <li>Smooths the appearance of fine lines and wrinkles.</li>
+                            <li>Enhances cellular communication for healthier skin function.</li>
+                            <li>Boosts radiance and evens skin texture.</li>
+                            <li>Provides deep, lasting hydration with Hyaluronic Acid.</li>
+                        </ul>
+                        <p><em>How to Use: Apply 2-3 pumps to clean face and neck, morning and evening, before moisturizer.</em></p>
+                    </div>
+
+                    <h3>2. Email Campaign Excerpt (Pain Point Focus):</h3>
+                    <div class="project-sample prose">
+                        <p><strong>Subject: Feeling like your skin isn't bouncing back like it used to?</strong></p>
+                        <p>You look in the mirror, and maybe you notice... things feel a little less firm? Those fine lines seem more defined? Your skin just doesn't have that 'snap' anymore?</p>
+                        <p>It's a common story, but it doesn't have to be yours. Skin aging is complex, involving a slowdown in crucial cellular processes. But what if you could gently encourage your skin to remember its youthful vitality?</p>
+                        <p>Introducing our Cellular Renewal Peptide Serum – a revolutionary approach born from biotech research. We didn't just create another anti-aging cream; we formulated an intelligent serum designed to work <b>with</b> your skin, supporting its natural ability to rebuild and renew.</p>
+                        <p>Imagine smoother texture, renewed firmness, a radiance you thought was fading... It's possible.</p>
+                        <p><strong>Ready to re-ignite your skin's potential?</strong></p>
+                        <p><a href="#" class="highlight">[Discover the Science of Renewal →]</a></p>
+                    </div>
+
+                    <h3>3. Social Media Ad Copy Example (Instagram/Facebook):</h3>
+                    <div class="project-sample prose">
+                        <p><strong>Tired of skin that feels less firm? 🤔 Support your skin from within! ✨</strong></p>
+                        <p>Our NEW Cellular Renewal Peptide Serum uses advanced biotech peptides to 'talk' to your skin cells, encouraging natural collagen production for visibly firmer, smoother results. 🧬</p>
+                        <p>Science-backed efficacy meets luxurious skincare. Tap to unlock your skin's potential!</p>
+                        <p>#PeptidePower #BiotechSkincare #[BrandName] #AntiAging #SkinFirmness #CellularRenewal #SkincareScience</p>
+                        <p><strong>[Shop Now]</strong> </p>
+                    </div>
+                </div>
+
+                <!-- Skills Pane -->
+                <div class="project-tab-pane" id="tab-skills" role="tabpanel" aria-labelledby="tab-btn-skills">
+                    <h2>Key Skills Demonstrated</h2>
+                    <ul class="icon-list"> <!-- Optional: Add class if you want icons -->
+                        <li>Advanced Skincare Copywriting</li>
+                        <li>Brand Storytelling & Narrative Development</li>
+                        <li>Science Communication (Translating complex concepts)</li>
+                        <li>Ingredient Integration & Mechanism Explanation (Cellular level)</li>
+                        <li>Addressing Customer Pain Points</li>
+                        <li>Premium/Luxury Brand Voice Consistency</li>
+                        <li>Multi-Channel Copy Adaptation (Web, Email, Social, Ads)</li>
+                        <li>Benefit-Driven & Persuasive Writing</li>
+                        <li>Understanding of E-commerce & Digital Marketing Context</li>
+                        <li>Conceptual SEO & Conversion Optimization</li>
+                        <li>Audience Analysis</li>
+                        <li>Adherence to Advertising Guidelines</li>
+                    </ul>
+                </div>
+            </div> <!-- End .project-tab-content -->
+        </div> <!-- End .project-tabs -->
 
 
-        <h2>Key Skills Demonstrated</h2>
-        <ul>
-            <li>Advanced Skincare Copywriting</li>
-            <li>Brand Storytelling & Narrative Development</li>
-            <li>Science Communication (Translating complex concepts)</li>
-            <li>Ingredient Integration & Mechanism Explanation (Cellular level)</li>
-            <li>Addressing Customer Pain Points</li>
-            <li>Premium/Luxury Brand Voice Consistency</li>
-            <li>Multi-Channel Copy Adaptation (Web, Email, Social, Ads)</li>
-            <li>Benefit-Driven & Persuasive Writing</li>
-            <li>Understanding of E-commerce & Digital Marketing Context</li>
-            <li>Conceptual SEO & Conversion Optimization</li>
-            <li>Audience Analysis</li>
-            <li>Adherence to Advertising Guidelines</li>
-        </ul>
-
-        <a href="index.html#portfolio" class="back-link">Back to Portfolio</a>
+        <a href="index.html#portfolio" class="back-link" style="margin-top: 3rem;">← Back to Portfolio</a>
     </main>
 
      <footer class="site-footer-bottom">
         <div class="container">
-            <p>© 2025 Jared Banks.</p>
+            <!-- Update year dynamically -->
+             <p>© <span id="current-year">2024</span> Jared Banks.</p>
         </div>
     </footer>
-    <!-- No separate script needed unless you add page-specific JS -->
+
+    <!-- Simple Tab Switching JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabsContainer = document.querySelector('.project-tabs');
+            const tabButtons = tabsContainer?.querySelectorAll('.project-tab-button');
+            const tabPanes = tabsContainer?.querySelectorAll('.project-tab-pane');
+            const currentYearSpan = document.getElementById('current-year');
+
+            if (tabButtons && tabPanes) {
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetPaneId = button.getAttribute('data-tab-target');
+
+                        // Update button states
+                        tabButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                            btn.setAttribute('aria-selected', 'false');
+                        });
+                        button.classList.add('active');
+                        button.setAttribute('aria-selected', 'true');
+
+                        // Update pane states
+                        tabPanes.forEach(pane => {
+                            if (`#${pane.id}` === targetPaneId) {
+                                pane.classList.add('active');
+                            } else {
+                                pane.classList.remove('active');
+                            }
+                        });
+                    });
+                });
+            }
+
+             // Update footer year
+             if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
 </body>
 </html>
